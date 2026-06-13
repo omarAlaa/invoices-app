@@ -1,25 +1,30 @@
-import { Session } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
+import { useAuthStore } from '@/store/useAuthStore';
 import { Slot, useRouter, useSegments } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import "../global.css";
-import { supabase } from '../lib/supabase';
 
 export default function RootLayout() {
-  const [session, setSession] = useState<Session | null>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const { userId, isInitialized, setAuth, clearAuthInfo, setIsInitialized } = useAuthStore();
 
   const segments = useSegments();
   const router = useRouter();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
+      if (session?.user) {
+        setAuth(session.user.id, session.user.email ?? null);
+      }
       setIsInitialized(true);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
+      if (session?.user) {
+        setAuth(session.user.id, session.user.email ?? null);
+      } else {
+        clearAuthInfo();
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -29,13 +34,14 @@ export default function RootLayout() {
     if (!isInitialized) return;
 
     const inAuthGroup = segments[0] === '(auth)';
+    const isLoggedIn = !!userId;
 
-    if (!session && !inAuthGroup) {
+    if (!isLoggedIn && !inAuthGroup) {
       router.replace('/(auth)');
-    } else if (session && inAuthGroup) {
+    } else if (isLoggedIn && inAuthGroup) {
       router.replace('/(app)');
     }
-  }, [session, isInitialized, segments]);
+  }, [userId, isInitialized, segments]);
 
   if (!isInitialized) {
     return (

@@ -47,7 +47,7 @@ export default function AuthScreen() {
 
     return (
         <KeyboardProvider>
-            <KeyboardAwareScrollView scrollEnabled={false}>
+            <KeyboardAwareScrollView keyboardShouldPersistTaps="handled" scrollEnabled={false}>
                 <SafeAreaView className='flex-1 gap-10 px-6 pt-10'>
                     <View className="flex-1 justify-center items-center">
                         <Image source={require('@/assets/images/capture.png')} style={styles.image} />
