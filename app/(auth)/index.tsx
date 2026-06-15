@@ -50,7 +50,7 @@ export default function AuthScreen() {
             <KeyboardAwareScrollView keyboardShouldPersistTaps="handled" scrollEnabled={false}>
                 <SafeAreaView className='flex-1 gap-10 px-6 pt-10'>
                     <View className="flex-1 justify-center items-center">
-                        <Image source={require('@/assets/images/capture.png')} style={styles.image} />
+                        <Image source={require('@/assets/images/appLogo.png')} style={styles.image} />
                     </View>
 
                     <Text className='text-center font-bold text-4xl text-sky-800'>{isLogin ? 'Welcome back' : 'Create account'}</Text>
