@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import ChangePassword from "./ChangePassword";
+import ChangePassword from "./ChangePasswordLink";
 import SignOut from './SignOut';
 
 export default function AccountOptions() {
