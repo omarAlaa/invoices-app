@@ -5,7 +5,7 @@ import PasswordField from "@/components/shared/PasswordField";
 import { Image } from "expo-image";
 import { useState } from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';
-import { KeyboardAwareScrollView, KeyboardProvider } from 'react-native-keyboard-controller';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { supabase } from '../../lib/supabase';
 
@@ -47,35 +47,33 @@ export default function AuthScreen() {
     }
 
     return (
-        <KeyboardProvider>
-            <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
-                <SafeAreaView className='flex-1 gap-10 px-6 pt-10'>
-                    <View className="flex-1 justify-center items-center">
-                        <Image source={require('@/assets/images/appLogo.png')} style={styles.image} />
-                    </View>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="handled" bottomOffset={40}>
+            <SafeAreaView className='flex-1 gap-10 px-6 pt-10'>
+                <View className="flex-1 justify-center items-center">
+                    <Image source={require('@/assets/images/appLogo.png')} style={styles.image} />
+                </View>
 
-                    <Text className='text-center font-bold text-4xl text-sky-800'>{isLogin ? 'Welcome back' : 'Create account'}</Text>
+                <Text className='text-center font-bold text-4xl text-sky-800'>{isLogin ? 'Welcome back' : 'Create account'}</Text>
 
-                    <View className='flex-row p-1 rounded-full bg-gray-200'>
-                        <SignButton label="Sign In" pressed={isLogin} onPress={() => setIsLogin(true)} />
+                <View className='flex-row p-1 rounded-full bg-gray-200'>
+                    <SignButton label="Sign In" pressed={isLogin} onPress={() => setIsLogin(true)} />
 
-                        <SignButton label="Sign Up" pressed={!isLogin} onPress={() => setIsLogin(false)} />
-                    </View>
+                    <SignButton label="Sign Up" pressed={!isLogin} onPress={() => setIsLogin(false)} />
+                </View>
 
-                    <View className='gap-4'>
-                        <InputField isEmail={true} setValue={setEmail} />
+                <View className='gap-4'>
+                    <InputField isEmail={true} setValue={setEmail} />
 
-                        <PasswordField password={password} setPassword={setPassword} placeholder={true} />
-                    </View>
+                    <PasswordField password={password} setPassword={setPassword} placeholder={true} />
+                </View>
 
-                    <ActionButton
-                        label={isLogin ? 'Sign In' : 'Sign Up'}
-                        loading={loading}
-                        bttnDisabled={bttnDisabled}
-                        onPress={isLogin ? signInWithEmail : signUpWithEmail} />
-                </SafeAreaView>
-            </KeyboardAwareScrollView>
-        </KeyboardProvider>
+                <ActionButton
+                    label={isLogin ? 'Sign In' : 'Sign Up'}
+                    loading={loading}
+                    bttnDisabled={bttnDisabled}
+                    onPress={isLogin ? signInWithEmail : signUpWithEmail} />
+            </SafeAreaView>
+        </KeyboardAwareScrollView>
     );
 }
 

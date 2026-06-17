@@ -3,7 +3,7 @@ import PasswordField from "@/components/shared/PasswordField";
 import { supabase } from "@/lib/supabase";
 import { useRef, useState } from "react";
 import { Alert, Text, TextInput, View } from "react-native";
-import { KeyboardAwareScrollView, KeyboardProvider } from "react-native-keyboard-controller";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 export default function ChangePasswordScreen() {
     const [newPassword, setNewPassword] = useState('')
@@ -32,25 +32,23 @@ export default function ChangePasswordScreen() {
     }
 
     return (
-        <KeyboardProvider>
-            <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
-                <View className="p-8 gap-6">
-                    <View className="gap-2">
-                        <Text>New password</Text>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
+            <View className="p-8 gap-6">
+                <View className="gap-2">
+                    <Text>New password</Text>
 
-                        <PasswordField
-                            password={newPassword}
-                            setPassword={setNewPassword}
-                            passwordRef={passwordRef} />
-                    </View>
-
-                    <ActionButton
-                        label="Change"
-                        loading={loading}
-                        bttnDisabled={bttnDisabled}
-                        onPress={changePassword} />
+                    <PasswordField
+                        password={newPassword}
+                        setPassword={setNewPassword}
+                        passwordRef={passwordRef} />
                 </View>
-            </KeyboardAwareScrollView>
-        </KeyboardProvider>
+
+                <ActionButton
+                    label="Change"
+                    loading={loading}
+                    bttnDisabled={bttnDisabled}
+                    onPress={changePassword} />
+            </View>
+        </KeyboardAwareScrollView>
     )
 }
