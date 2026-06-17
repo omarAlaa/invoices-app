@@ -15,7 +15,6 @@ export default function AuthScreen() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const bttnDisabled = loading || !email || !password
-    const [focusedField, setFocusedField] = useState('');
 
     async function signInWithEmail() {
         setLoading(true);
