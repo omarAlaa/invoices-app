@@ -9,9 +9,9 @@ type Props = {
 export default function SignButton({ label, pressed, onPress }: Props) {
     return (
         <TouchableOpacity
-            className={`flex-1 items-center justify-center rounded-full py-3 ${pressed ? 'bg-white border-[3px] border-blue-600' : ''}`}
+            className={`flex-1 items-center justify-center rounded-full py-3 ${pressed ? 'bg-white dark:bg-zinc-600 border-[3px] border-blue-600 dark:border-sky-400' : ''}`}
             onPress={onPress}>
-            <Text className='font-bold'>{label}</Text>
+            <Text className='font-bold dark:text-white'>{label}</Text>
         </TouchableOpacity>
     )
 }

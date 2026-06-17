@@ -29,19 +29,19 @@ export default function UpdateForm() {
     return (
         <View className="gap-10">
             <View className="gap-2">
-                <Text>Email</Text>
+                <Text className="dark:text-white">Email</Text>
 
                 <InputField value={email || ''} notEditable={true} />
             </View>
 
             <View className="gap-2">
-                <Text>First name</Text>
+                <Text className="dark:text-white">First name</Text>
 
                 <InputField value={fName || ''} setValue={setFName} />
             </View>
 
             <View className="gap-2">
-                <Text>Last name</Text>
+                <Text className="dark:text-white">Last name</Text>
 
                 <InputField value={lName || ''} setValue={setLName} />
             </View>

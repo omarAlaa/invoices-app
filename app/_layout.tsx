@@ -1,8 +1,9 @@
 import { supabase } from '@/lib/supabase';
 import { useAuthStore } from '@/store/useAuthStore';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Slot, useRouter, useSegments } from 'expo-router';
 import { useEffect } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, useColorScheme, View } from 'react-native';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import "../global.css";
 
@@ -11,6 +12,23 @@ export default function RootLayout() {
 
   const segments = useSegments();
   const router = useRouter();
+
+  const systemColorScheme = useColorScheme();
+
+  const CustomLightTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+    },
+  };
+
+  const CustomDarkTheme = {
+    ...DarkTheme,
+    colors: {
+      ...DarkTheme.colors,
+      background: 'black',
+    },
+  };
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -54,7 +72,9 @@ export default function RootLayout() {
 
   return (
     <KeyboardProvider>
-      <Slot />
+      <ThemeProvider value={systemColorScheme === 'dark' ? CustomDarkTheme : CustomLightTheme}>
+        <Slot />
+      </ThemeProvider>
     </KeyboardProvider>
   )
 }

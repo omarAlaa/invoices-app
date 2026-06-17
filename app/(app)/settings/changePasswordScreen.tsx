@@ -35,7 +35,7 @@ export default function ChangePasswordScreen() {
         <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
             <View className="p-8 gap-6">
                 <View className="gap-2">
-                    <Text>New password</Text>
+                    <Text className="dark:text-white">New password</Text>
 
                     <PasswordField
                         password={newPassword}

@@ -16,8 +16,8 @@ export default function SignOut() {
 
     return (
         <TouchableOpacity className="flex-row gap-2 pl-2 py-3" onPress={handleLogOut}>
-            <LogOut color={'red'} />
-            <Text className="font-bold text-lg text-[rgb(255,0,0)]">Log out</Text>
+            <LogOut color={'#f87171'} />
+            <Text className="font-bold text-lg text-[rgb(255,0,0)] dark:text-red-400">Log out</Text>
         </TouchableOpacity>
     )
 }
