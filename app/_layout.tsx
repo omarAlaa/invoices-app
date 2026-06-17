@@ -3,6 +3,7 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { Slot, useRouter, useSegments } from 'expo-router';
 import { useEffect } from 'react';
 import { ActivityIndicator, View } from 'react-native';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import "../global.css";
 
 export default function RootLayout() {
@@ -51,5 +52,9 @@ export default function RootLayout() {
     );
   }
 
-  return <Slot />;
+  return (
+    <KeyboardProvider>
+      <Slot />
+    </KeyboardProvider>
+  )
 }
