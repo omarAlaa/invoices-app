@@ -1,20 +1,82 @@
 import Avatar from "@/components/settingsScreen/Avatar";
-import DeleteImageButton from "@/components/settingsScreen/DeleteImageButton";
-import UploadImageButton from "@/components/settingsScreen/UploadImageButton";
+import { deleteImage, uploadImage } from "@/lib/actions";
 import { useAuthStore } from "@/store/useAuthStore";
-import { View } from "react-native";
+import { useState } from "react";
+import { Alert, View } from "react-native";
+import ActionButton from "../shared/ActionButton";
 
 export default function AvatarController() {
     const { avatarURL } = useAuthStore()
+    const [uploading, setUploading] = useState(false)
+    const [deleting, setDeleting] = useState(false)
+
+    const handleUpload = async () => {
+        try {
+            setUploading(true)
+
+            await uploadImage()
+
+        } catch (error: any) {
+            if (error) {
+                Alert.alert(error.message)
+            } else {
+                throw error
+            }
+        } finally {
+            setUploading(false)
+        }
+    }
+
+    const handleDelete = async () => {
+        Alert.alert(
+            "Delete Image",
+            "Are you sure you want to delete your profile picture?",
+            [
+                { text: "Cancel", style: "cancel" },
+                {
+                    text: "Delete",
+                    style: "destructive",
+                    onPress: async () => {
+                        try {
+                            setDeleting(true)
+
+                            await deleteImage()
+
+                        } catch (error: any) {
+                            if (error) {
+                                Alert.alert("Error", error.message)
+                            } else {
+                                throw error
+                            }
+                        } finally {
+                            setDeleting(false)
+                        }
+                    }
+                }
+            ]
+        )
+    }
 
     return (
         <View className="items-center gap-4">
             <Avatar size='large' />
 
             <View className="flex-row gap-4">
-                <UploadImageButton label={avatarURL ? 'Change' : 'Upload'} />
+                <ActionButton
+                    label={avatarURL ? 'Change' : 'Upload'}
+                    loading={uploading}
+                    bttnDisabled={uploading}
+                    smallBttn={true}
+                    onPress={handleUpload} />
 
-                {avatarURL && <DeleteImageButton />}
+                {avatarURL &&
+                    <ActionButton
+                        label="Delete"
+                        loading={deleting}
+                        bttnDisabled={deleting}
+                        redBttn={true}
+                        smallBttn={true}
+                        onPress={handleDelete} />}
             </View>
         </View>
     )
