@@ -1,6 +1,7 @@
 import { downloadImage } from "@/lib/actions";
 import { useAuthStore } from "@/store/useAuthStore";
 import { Image } from "expo-image";
+import { User } from "lucide-react-native";
 import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -16,7 +17,10 @@ export default function Avatar({ size }: { size: string }) {
             {avatarUri ?
                 <Image source={{ uri: avatarUri }} style={size === 'small' ? styles.smallAvatar : styles.largeAvatar} />
                 :
-                <Text className="font-bold text-3xl color-blue-600">{`${firstName?.[0]}${lastName?.[0]}`.toUpperCase()}</Text>}
+                firstName || lastName ?
+                    <Text className="font-bold text-3xl color-blue-600">{`${firstName?.[0] || ''}${lastName?.[0] || ''}`.toUpperCase()}</Text>
+                    :
+                    <User />}
         </View>
     )
 }

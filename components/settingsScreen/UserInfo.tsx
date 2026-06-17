@@ -13,7 +13,7 @@ export default function UserInfo() {
                 <View className="flex-row items-center gap-2 mr-auto">
                     <Avatar size="small" />
 
-                    <Text className="font-bold text-xl">{`${firstName} ${lastName}`}</Text>
+                    <Text className="font-bold text-xl">{firstName || lastName ? `${firstName || ''} ${lastName || ''}` : 'Complete your profile'}</Text>
                 </View>
 
                 <ChevronRight />
