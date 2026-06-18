@@ -36,7 +36,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
     setAvatarUri: (avatarUri) => { set({ avatarUri }) },
 
-    clearAuthInfo: () => set({ userId: null, email: null, firstName: null, lastName: null, avatarURL: null }),
+    clearAuthInfo: () => set({ userId: null, email: null, firstName: null, lastName: null, avatarURL: null, avatarUri: null }),
 
     setIsInitialized: (isInitialized) => set({ isInitialized }),
 }));

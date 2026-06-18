@@ -1,11 +1,32 @@
 import { useAuthStore } from "@/store/useAuthStore";
 import * as ImagePicker from 'expo-image-picker';
+import { Alert } from "react-native";
 import { supabase } from "./supabase";
 
 interface UpdateProfilePayload {
     first_name?: string;
     last_name?: string;
     avatar_url?: string | null;
+}
+
+export const getProfile = async (userId: string) => {
+    try {
+        let { data, error, status } = await supabase
+            .from('profiles')
+            .select(`first_name, last_name, avatar_url`)
+            .eq('id', userId)
+            .single()
+        if (error && status !== 406) {
+            throw error
+        }
+        if (data) {
+            useAuthStore.getState().setInfo(data.first_name, data.last_name, data.avatar_url)
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            Alert.alert(error.message)
+        }
+    }
 }
 
 export const updateProfile = async (payLoad: UpdateProfilePayload) => {
