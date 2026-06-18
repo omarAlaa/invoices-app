@@ -4,7 +4,7 @@ import StatusMoney from "./StatusMoney";
 
 export default function Outstanding() {
     return (
-        <View className="p-6 bg-gray-200 rounded-xl">
+        <View className="p-6 bg-gray-200 dark:bg-zinc-800 rounded-xl">
             <TextField text="Total outstanding" type="secondary" className="text-xl" />
 
             <TextField text="EGP 20,000" className="text-4xl font-bold mt-2" />

@@ -1,5 +1,7 @@
+import AddButtons from '@/components/homeScreen/AddButtons';
 import GreetingsSection from '@/components/homeScreen/GreetingsSection';
 import Outstanding from '@/components/homeScreen/Outstanding';
+import RecentInvoices from '@/components/homeScreen/RecentInvoices';
 import { getProfile } from '@/lib/actions';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useEffect } from 'react';
@@ -17,6 +19,10 @@ export default function HomeScreen() {
             <GreetingsSection />
 
             <Outstanding />
+
+            <AddButtons />
+
+            <RecentInvoices />
         </SafeAreaView>
     );
 }
