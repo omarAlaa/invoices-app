@@ -9,7 +9,7 @@ type Props = {
     onPress: () => void,
 }
 
-export default function ActionButton({ label, loading, bttnDisabled, redBttn, smallBttn, onPress }: Props) {
+export default function SettingsButton({ label, loading, bttnDisabled, redBttn, smallBttn, onPress }: Props) {
     return (
         <TouchableOpacity
             className={`flex-row gap-2 justify-center items-center rounded-full ${smallBttn ? 'w-40 h-14' : 'p-4'} ${redBttn ? 'bg-red-500' : 'bg-sky-800'} ${bttnDisabled && !loading ? 'opacity-40' : ''}`}

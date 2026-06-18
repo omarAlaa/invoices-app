@@ -2,8 +2,8 @@ import { updateProfile } from "@/lib/actions";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useState } from "react";
 import { Alert, Text, View } from "react-native";
-import ActionButton from "../shared/ActionButton";
 import InputField from "../shared/InputField";
+import SettingsButton from "./SettingsButton";
 
 export default function UpdateForm() {
     const { email, firstName, lastName, setName } = useAuthStore()
@@ -46,7 +46,7 @@ export default function UpdateForm() {
                 <InputField value={lName || ''} setValue={setLName} />
             </View>
 
-            <ActionButton
+            <SettingsButton
                 label="Update"
                 loading={loading}
                 bttnDisabled={bttnDisabled}

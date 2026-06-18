@@ -3,7 +3,7 @@ import { deleteImage, uploadImage } from "@/lib/actions";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useState } from "react";
 import { Alert, View } from "react-native";
-import ActionButton from "../shared/ActionButton";
+import SettingsButton from "./SettingsButton";
 
 export default function AvatarController() {
     const { avatarURL } = useAuthStore()
@@ -62,7 +62,7 @@ export default function AvatarController() {
             <Avatar size='large' />
 
             <View className="flex-row gap-4">
-                <ActionButton
+                <SettingsButton
                     label={avatarURL ? 'Change' : 'Upload'}
                     loading={uploading}
                     bttnDisabled={uploading}
@@ -70,7 +70,7 @@ export default function AvatarController() {
                     onPress={handleUpload} />
 
                 {avatarURL &&
-                    <ActionButton
+                    <SettingsButton
                         label="Delete"
                         loading={deleting}
                         bttnDisabled={deleting}

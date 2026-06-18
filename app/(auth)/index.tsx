@@ -1,5 +1,5 @@
 import SignButton from "@/components/authScreen/SignButton";
-import ActionButton from "@/components/shared/ActionButton";
+import SettingsButton from "@/components/settingsScreen/SettingsButton";
 import InputField from "@/components/shared/InputField";
 import PasswordField from "@/components/shared/PasswordField";
 import { Image } from "expo-image";
@@ -67,7 +67,7 @@ export default function AuthScreen() {
                     <PasswordField password={password} setPassword={setPassword} placeholder={true} />
                 </View>
 
-                <ActionButton
+                <SettingsButton
                     label={isLogin ? 'Sign In' : 'Sign Up'}
                     loading={loading}
                     bttnDisabled={bttnDisabled}

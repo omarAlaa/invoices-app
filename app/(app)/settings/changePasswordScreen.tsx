@@ -1,4 +1,4 @@
-import ActionButton from "@/components/shared/ActionButton";
+import SettingsButton from "@/components/settingsScreen/SettingsButton";
 import PasswordField from "@/components/shared/PasswordField";
 import { supabase } from "@/lib/supabase";
 import { useRef, useState } from "react";
@@ -43,7 +43,7 @@ export default function ChangePasswordScreen() {
                         passwordRef={passwordRef} />
                 </View>
 
-                <ActionButton
+                <SettingsButton
                     label="Change"
                     loading={loading}
                     bttnDisabled={bttnDisabled}
