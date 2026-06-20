@@ -1,5 +1,6 @@
 import { useAuthStore } from "@/store/useAuthStore";
-import { View } from "react-native";
+import { Link } from "expo-router";
+import { TouchableOpacity, View } from "react-native";
 import Avatar from "../settingsScreen/Avatar";
 import TextField from "../shared/TextField";
 
@@ -13,7 +14,11 @@ export default function GreetingsSection() {
                 <TextField text={`${firstName || ''} ${lastName || ''}`} className="text-2xl font-bold" />
             </View>
 
-            <Avatar size="small" />
+            <Link href='/(app)/settings/profile' asChild>
+                <TouchableOpacity>
+                    <Avatar size="small" />
+                </TouchableOpacity>
+            </Link>
         </View>
     )
 }
