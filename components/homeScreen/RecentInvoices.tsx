@@ -4,7 +4,7 @@ import TextField from "../shared/TextField";
 
 export default function RecentInvoices() {
     return (
-        <View className="gap-6">
+        <View className="gap-7">
             <View className="flex-row justify-between">
                 <TextField text="Recent invoices" className="font-bold text-xl" />
 
