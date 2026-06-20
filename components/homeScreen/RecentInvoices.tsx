@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import InvoiceOverview from "../shared/InvoiceOverview";
 import TextField from "../shared/TextField";
 
@@ -9,7 +9,7 @@ export default function RecentInvoices() {
                 <TextField text="Recent invoices" className="font-bold text-xl" />
 
                 <TouchableOpacity>
-                    <TextField text="See all" className="font-bold text-xl text-blue-600" />
+                    <Text className="font-bold text-xl text-blue-600">See all</Text>
                 </TouchableOpacity>
             </View>
 
