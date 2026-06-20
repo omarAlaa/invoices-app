@@ -1,6 +1,6 @@
 import TextField from "@/components/shared/TextField";
 import { Funnel, Search } from "lucide-react-native";
-import { View, useColorScheme } from "react-native";
+import { TouchableOpacity, View, useColorScheme } from "react-native";
 
 export default function InvoicesHeader() {
     const systemColorScheme = useColorScheme()
@@ -10,9 +10,13 @@ export default function InvoicesHeader() {
             <TextField text="Invocies" className="text-3xl font-bold" />
 
             <View className="flex-row gap-8">
-                <Search color={systemColorScheme === 'dark' ? 'white' : 'black'} />
+                <TouchableOpacity>
+                    <Search color={systemColorScheme === 'dark' ? 'white' : 'black'} />
+                </TouchableOpacity>
 
-                <Funnel color={systemColorScheme === 'dark' ? 'white' : 'black'} />
+                <TouchableOpacity>
+                    <Funnel color={systemColorScheme === 'dark' ? 'white' : 'black'} />
+                </TouchableOpacity>
             </View>
         </View>
     )
