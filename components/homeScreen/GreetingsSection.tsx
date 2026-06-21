@@ -1,10 +1,18 @@
 import { useAuthStore } from "@/store/useAuthStore";
-import { Link } from "expo-router";
+import { router } from "expo-router";
 import { TouchableOpacity, View } from "react-native";
 import Avatar from "../settingsScreen/Avatar";
 import TextField from "../shared/TextField";
 
 export default function GreetingsSection() {
+    const handleAvatarPress = () => {
+        router.navigate("/settings")
+
+        setTimeout(() => {
+            router.push("/settings/profile")
+        }, 0)
+    }
+
     const { firstName, lastName } = useAuthStore()
     return (
         <View className="flex-row justify-between items-center">
@@ -14,11 +22,9 @@ export default function GreetingsSection() {
                 <TextField text={`${firstName || ''} ${lastName || ''}`} className="text-2xl font-bold" />
             </View>
 
-            <Link href='/(app)/settings/profile' asChild>
-                <TouchableOpacity>
-                    <Avatar size="small" />
-                </TouchableOpacity>
-            </Link>
+            <TouchableOpacity onPress={handleAvatarPress}>
+                <Avatar size="small" />
+            </TouchableOpacity>
         </View>
     )
 }
