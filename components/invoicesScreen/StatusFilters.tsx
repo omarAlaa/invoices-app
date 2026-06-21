@@ -1,19 +1,26 @@
 import { useState } from "react";
-import { View } from "react-native";
+import { FlatList, View } from "react-native";
 import StatusChip from "./StatusChip";
+
+const CHIPS_DATA = ['All', 'Paid', 'Pending', 'Overdue']
 
 export default function StatusFilters() {
     const [filterSelected, setFilterSelected] = useState('All')
 
     return (
-        <View className="flex-row gap-2">
-            <StatusChip label="All" onPress={() => setFilterSelected('All')} filterSelected={filterSelected} />
-
-            <StatusChip label="Paid" onPress={() => setFilterSelected('Paid')} filterSelected={filterSelected} />
-
-            <StatusChip label="Pending" onPress={() => setFilterSelected('Pending')} filterSelected={filterSelected} />
-
-            <StatusChip label="Overdue" onPress={() => setFilterSelected('Overdue')} filterSelected={filterSelected} />
+        <View>
+            <FlatList
+                data={CHIPS_DATA}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={item => item}
+                contentContainerClassName="gap-2"
+                renderItem={({ item }) =>
+                    <StatusChip
+                        label={item}
+                        onPress={() => setFilterSelected(item)}
+                        filterSelected={filterSelected} />}
+            />
         </View>
     )
 }

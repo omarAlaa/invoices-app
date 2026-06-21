@@ -45,11 +45,11 @@ export default function ItemsList() {
     });
 
     return (
-        <View className="flex-1 mb-[-34px]">
+        <View className="flex-1 mb-[-4rem]">
             <Animated.ScrollView
                 onScroll={scrollHandler}
                 scrollEventThrottle={16}
-                contentContainerClassName="gap-7 pb-5"
+                contentContainerClassName="gap-7 pb-11"
             >
                 {Array.from({ length: 20 }).map((_, index) => (
                     <InvoiceOverview key={index} />

@@ -15,7 +15,7 @@ export default function HomeScreen() {
     }, [userId])
 
     return (
-        <SafeAreaView className='p-8 gap-8'>
+        <SafeAreaView className='flex-1 px-8 pt-8 gap-8'>
             <GreetingsSection />
 
             <Outstanding />
