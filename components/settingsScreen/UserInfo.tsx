@@ -9,7 +9,7 @@ export default function UserInfo() {
     const systemColorScheme = useColorScheme();
 
     return (
-        <Link href="/(app)/settings/profile" asChild>
+        <Link href="/profile" asChild>
             <TouchableOpacity className="flex-row items-center p-4 bg-white rounded-2xl dark:bg-zinc-800">
                 <View className="flex-row items-center gap-2 mr-auto">
                     <Avatar size="small" />

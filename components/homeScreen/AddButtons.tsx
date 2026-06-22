@@ -5,6 +5,7 @@ import TextField from "../shared/TextField";
 
 export default function AddButtons() {
     const systemColorScheme = useColorScheme()
+
     return (
         <View className="flex-row gap-2">
             <ActionButton>
@@ -16,7 +17,7 @@ export default function AddButtons() {
             <ActionButton isSecondary={true}>
                 <UserPlus color={systemColorScheme === 'dark' ? 'white' : 'black'} />
 
-                <TextField text="Add client" className="font-bold text-lg dark:text-gray-400" />
+                <TextField text="Add client" className="font-bold text-lg" />
             </ActionButton>
         </View>
     )
