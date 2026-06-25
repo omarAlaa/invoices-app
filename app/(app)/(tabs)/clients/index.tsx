@@ -11,6 +11,8 @@ export default function Clients() {
             <TextField text="24 clients · $42,180 billed all-time" type="secondary" className="text-lg" />
 
             <Link href="/client/Nova Midea">s</Link>
+
+            <Link href="/createEditClient">l</Link>
         </SafeAreaView>
     )
 }

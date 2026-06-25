@@ -1,6 +1,6 @@
-import ClientInfo from "@/components/clientsTab/ClientInfo";
-import CLientInvoices from "@/components/clientsTab/ClientInvoices";
-import ClientStatusCards from "@/components/clientsTab/ClientStatusCards";
+import ClientInfo from "@/components/clientScreen/ClientInfo";
+import CLientInvoices from "@/components/clientScreen/ClientInvoices";
+import ClientStatusCards from "@/components/clientScreen/ClientStatusCards";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { SquarePen } from "lucide-react-native";
 import { ScrollView, TouchableOpacity, useColorScheme } from "react-native";
