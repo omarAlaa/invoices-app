@@ -6,7 +6,6 @@ import InvoiceItemsSection from "@/components/createEditinvoiceScreen/InvoiceIte
 import SelectClientField from "@/components/createEditinvoiceScreen/SelectClientField";
 import TextField from "@/components/shared/TextField";
 import { Stack } from "expo-router";
-import { X } from "lucide-react-native";
 import { useRef, useState } from "react";
 import { TouchableOpacity, View, useColorScheme } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
@@ -26,11 +25,6 @@ export default function CreateEditInvoice() {
                         options={{
                             title: 'New invoice',
                             headerBackButtonDisplayMode: 'minimal',
-                            headerLeft: () => (
-                                <TouchableOpacity>
-                                    <X color={systemColorScheme === 'dark' ? 'white' : 'black'} />
-                                </TouchableOpacity>
-                            ),
                             headerShadowVisible: false,
                             headerRight: () => (
                                 <TouchableOpacity>
