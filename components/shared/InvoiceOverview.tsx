@@ -5,12 +5,7 @@ import TextField from "./TextField";
 
 export default function InvoiceOverview() {
     return (
-        <Link
-            href={{
-                pathname: '/[invoiceId]',
-                params: { invoiceId: 'INV-0042' }
-            }}
-            asChild>
+        <Link href="/invoice/INV-0042" asChild>
             <TouchableOpacity className="flex-row justify-between">
                 <View className="flex-row gap-2 items-center">
                     <View className="w-12 h-12 rounded-full bg-blue-200 justify-center items-center">
