@@ -26,7 +26,7 @@ export default function ItemCard() {
                 <View className="flex-1 gap-2">
                     <TextField text="Rate" type="secondary" />
 
-                    <InputField value="20" type="numeric" />
+                    <InputField value="20" type="decimal" />
                 </View>
 
                 <View className="flex-1 gap-2">

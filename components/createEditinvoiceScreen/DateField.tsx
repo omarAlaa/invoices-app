@@ -29,7 +29,7 @@ export function DateField({ label, value, otherValue, setDate }: Props) {
 
             <TouchableOpacity
                 onPress={() => setShow(true)}
-                className="relative flex-row justify-between items-center p-3 border border-gray-300 dark:border-zinc-700 rounded-xl bg-gray-200 dark:bg-zinc-800">
+                className="relative flex-row justify-between items-center p-3 dark:border-zinc-700 rounded-xl bg-zinc-200 dark:bg-zinc-800">
 
                 <TextField text={formatDate(value)} className='text-lg' />
 

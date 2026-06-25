@@ -16,11 +16,11 @@ export default function PasswordField({ password, setPassword, passwordRef, plac
     const iconsColor = isFieldFocused === true ? systemColorScheme === 'dark' ? 'white' : 'black' : 'gray'
 
     return (
-        <View className={`flex-row items-center gap-4 border-2 bg-gray-200 rounded-xl p-4 dark:bg-zinc-800 ${isFieldFocused ? 'border-blue-600 dark:border-white' : 'border-gray-300 dark:border-zinc-700'}`}>
+        <View className={`flex-row items-center gap-4 border-2 bg-white rounded-xl px-4 dark:bg-zinc-900 ${isFieldFocused ? 'border-blue-600 dark:border-white' : 'border-white dark:border-zinc-900'}`}>
             <Lock color={iconsColor} />
 
             <TextInput
-                className="flex-1 dark:color-white"
+                className="flex-1 dark:color-white py-4"
                 value={password || ''}
                 ref={passwordRef}
                 onFocus={() => setIsFieldFocused(true)}
