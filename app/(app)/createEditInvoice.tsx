@@ -1,0 +1,63 @@
+import { ClientPickerSheetRef } from "@/components/createEditinvoiceScreen/ClientPickerSheet";
+import ClientsList from "@/components/createEditinvoiceScreen/ClientsList";
+import CreateEditInvoiceActions from "@/components/createEditinvoiceScreen/CreateEditInvoiceActions";
+import DateFieldsSection from "@/components/createEditinvoiceScreen/DateFieldsSection";
+import InvoiceItemsSection from "@/components/createEditinvoiceScreen/InvoiceItemsSection";
+import SelectClientField from "@/components/createEditinvoiceScreen/SelectClientField";
+import TextField from "@/components/shared/TextField";
+import { Stack } from "expo-router";
+import { X } from "lucide-react-native";
+import { useRef, useState } from "react";
+import { TouchableOpacity, View, useColorScheme } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+
+type Client = { id: string; name: string };
+
+export default function CreateEditInvoice() {
+    const systemColorScheme = useColorScheme();
+    const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+    const clientPickerRef = useRef<ClientPickerSheetRef>(null);
+
+    return (
+        <View style={{ flex: 1 }}>
+            <KeyboardAwareScrollView style={{ flex: 1 }} bottomOffset={40}>
+                <View className="flex-1 pt-4 pb-16 px-8 gap-6">
+                    <Stack.Screen
+                        options={{
+                            title: 'New invoice',
+                            headerBackButtonDisplayMode: 'minimal',
+                            headerLeft: () => (
+                                <TouchableOpacity>
+                                    <X color={systemColorScheme === 'dark' ? 'white' : 'black'} />
+                                </TouchableOpacity>
+                            ),
+                            headerShadowVisible: false,
+                            headerRight: () => (
+                                <TouchableOpacity>
+                                    <TextField text="Save" type="highlighted" />
+                                </TouchableOpacity>
+                            )
+                        }}
+                    />
+
+                    <SelectClientField
+                        selectedClient={selectedClient}
+                        onPress={() => clientPickerRef.current?.open()}
+                    />
+
+                    <DateFieldsSection />
+
+                    <InvoiceItemsSection />
+
+                    <CreateEditInvoiceActions />
+                </View>
+            </KeyboardAwareScrollView>
+
+            <ClientsList
+                ref={clientPickerRef}
+                selectedId={selectedClient?.id ?? null}
+                onSelect={setSelectedClient}
+            />
+        </View>
+    );
+}
