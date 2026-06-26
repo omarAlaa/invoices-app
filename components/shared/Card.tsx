@@ -1,10 +1,12 @@
 import { View } from "react-native";
 
-type Props = React.PropsWithChildren
+interface Props extends React.PropsWithChildren {
+    className?: string,
+}
 
-export default function Card({ children }: Props) {
+export default function Card({ className, children }: Props) {
     return (
-        <View className="p-6 bg-zinc-200 dark:bg-zinc-800 rounded-xl">
+        <View className={`p-6 bg-zinc-200 dark:bg-zinc-800 rounded-xl ${className}`}>
             {children}
         </View>
     )
