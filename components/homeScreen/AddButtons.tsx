@@ -17,11 +17,13 @@ export default function AddButtons() {
                 </ActionButton>
             </Link>
 
-            <ActionButton isSecondary={true}>
-                <UserPlus color={systemColorScheme === 'dark' ? 'white' : 'black'} />
+            <Link href='/createEditClient' asChild>
+                <ActionButton isSecondary={true}>
+                    <UserPlus color={systemColorScheme === 'dark' ? 'white' : 'black'} />
 
-                <TextField text="Add client" className="font-bold text-lg" />
-            </ActionButton>
+                    <TextField text="Add client" className="font-bold text-lg" />
+                </ActionButton>
+            </Link>
         </View>
     )
 }
