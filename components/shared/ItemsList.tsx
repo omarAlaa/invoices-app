@@ -1,11 +1,15 @@
 import FloatingAddButton from "@/components/shared/FloatingAddButton";
-import InvoiceOverview from "@/components/shared/InvoiceOverview";
+import { PropsWithChildren } from "react";
 import { View } from "react-native";
 import Animated, { useAnimatedScrollHandler, useAnimatedStyle, useSharedValue, withTiming, } from "react-native-reanimated";
 
-export default function ItemsList() {
-    const previousScrollY = useSharedValue(0);
-    const isVisible = useSharedValue(true);
+interface Props extends PropsWithChildren {
+    screen: string,
+}
+
+export default function ItemsList({ children, screen }: Props) {
+    const previousScrollY = useSharedValue(0)
+    const isVisible = useSharedValue(true)
 
     const scrollHandler = useAnimatedScrollHandler({
         onScroll: (event) => {
@@ -19,7 +23,7 @@ export default function ItemsList() {
 
             previousScrollY.value = currentY;
         },
-    });
+    })
 
     const buttonStyle = useAnimatedStyle(() => {
 
@@ -41,8 +45,8 @@ export default function ItemsList() {
                     ),
                 },
             ],
-        };
-    });
+        }
+    })
 
     return (
         <View className="flex-1 mb-[-4rem]">
@@ -51,12 +55,10 @@ export default function ItemsList() {
                 scrollEventThrottle={16}
                 contentContainerClassName="gap-7 pb-11"
             >
-                {Array.from({ length: 20 }).map((_, index) => (
-                    <InvoiceOverview key={index} />
-                ))}
+                {children}
             </Animated.ScrollView>
 
-            <FloatingAddButton animatedStyle={buttonStyle} />
+            <FloatingAddButton animatedStyle={buttonStyle} screen={screen} />
         </View>
     )
 }
