@@ -9,7 +9,7 @@ export default function RecentInvoices() {
             <View className="flex-row justify-between">
                 <TextField text="Recent invoices" className="font-bold text-xl" />
 
-                <Link href='/(app)/invoices' asChild>
+                <Link href='/invoices' asChild>
                     <TouchableOpacity>
                         <TextField text="See all" type="highlighted" />
                     </TouchableOpacity>

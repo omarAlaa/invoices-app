@@ -5,12 +5,11 @@ import DateFieldsSection from "@/components/createEditinvoiceScreen/DateFieldsSe
 import InvoiceItemsSection from "@/components/createEditinvoiceScreen/InvoiceItemsSection";
 import SelectClientField from "@/components/createEditinvoiceScreen/SelectClientField";
 import TextField from "@/components/shared/TextField";
+import { Client } from "@/lib/definitons";
 import { Stack } from "expo-router";
 import { useRef, useState } from "react";
 import { TouchableOpacity, View, useColorScheme } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
-
-type Client = { id: string; name: string };
 
 export default function CreateEditInvoice() {
     const systemColorScheme = useColorScheme();

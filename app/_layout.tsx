@@ -58,7 +58,7 @@ export default function RootLayout() {
     if (!isLoggedIn && !inAuthGroup) {
       router.replace('/(auth)');
     } else if (isLoggedIn && inAuthGroup) {
-      router.replace('/(app)');
+      router.replace('/(app)/(tabs)');
     }
   }, [userId, isInitialized, segments]);
 

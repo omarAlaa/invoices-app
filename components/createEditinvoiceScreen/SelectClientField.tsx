@@ -1,8 +1,7 @@
 import { ClientSelector } from '@/components/createEditinvoiceScreen/ClientSelector';
+import { Client } from '@/lib/definitons';
 import { View } from 'react-native';
 import TextField from '../shared/TextField';
-
-type Client = { id: string; name: string };
 
 type Props = {
     selectedClient: Client | null;

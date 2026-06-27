@@ -1,3 +1,4 @@
+import { Client } from '@/lib/definitons';
 import { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
 import { router } from 'expo-router';
 import { Check, Plus } from 'lucide-react-native';
@@ -5,11 +6,6 @@ import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'r
 import { Text, TouchableOpacity, View, useColorScheme } from 'react-native';
 import InputField from '../shared/InputField';
 import TextField from '../shared/TextField';
-
-type Client = {
-    id: string;
-    name: string;
-};
 
 type Props = {
     clients: Client[];
@@ -49,7 +45,7 @@ export const ClientPickerSheet = forwardRef<ClientPickerSheetRef, Props>(
 
         const handleAddNewClient = () => {
             bottomSheetRef.current?.dismiss();
-            router.push('/(tabs)/clients/new');
+            router.push('/createEditClient');
         };
 
         const renderItem = useCallback(

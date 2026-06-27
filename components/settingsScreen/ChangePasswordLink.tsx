@@ -6,7 +6,7 @@ export default function ChangePasswordLink() {
     const systemColorScheme = useColorScheme();
 
     return (
-        <Link href="/(app)/settings/changePasswordScreen" asChild>
+        <Link href="/settings/changePasswordScreen" asChild>
             <TouchableOpacity className="flex-row pl-2 py-3">
                 <View className="flex-row gap-2 mr-auto">
                     <LockKeyhole color={systemColorScheme === 'dark' ? 'white' : 'black'} />
