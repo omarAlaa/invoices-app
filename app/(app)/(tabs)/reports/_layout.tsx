@@ -5,7 +5,12 @@ export const unstable_settings = {
 };
 
 export default function ReportsLayout() {
-    return <Stack screenOptions={{ headerShadowVisible: false }}>
-        <Stack.Screen name='index' options={{ headerShown: false }} />
+    return <Stack screenOptions={{
+        headerShadowVisible: false,
+        headerStyle: {
+            backgroundColor: '#f2f2f2',
+        },
+    }}>
+        <Stack.Screen name='index' options={{ title: '' }} />
     </Stack>
 }
