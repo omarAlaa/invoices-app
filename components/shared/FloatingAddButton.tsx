@@ -5,7 +5,7 @@ import Animated from "react-native-reanimated";
 
 type Props = {
     animatedStyle: any;
-    screen: string;
+    screen?: string;
 }
 
 export default function FloatingAddButton({ animatedStyle, screen }: Props) {
