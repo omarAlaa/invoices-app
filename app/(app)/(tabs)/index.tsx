@@ -5,6 +5,7 @@ import RecentInvoices from '@/components/homeScreen/RecentInvoices';
 import { getProfile } from '@/lib/actions';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useEffect } from 'react';
+import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
@@ -15,14 +16,18 @@ export default function HomeScreen() {
     }, [userId])
 
     return (
-        <SafeAreaView className='flex-1 px-8 pt-8 gap-8'>
-            <GreetingsSection />
+        <ScrollView className='flex-1' showsVerticalScrollIndicator={false}>
+            <SafeAreaView className='flex-1 px-8 py-10 gap-8'>
 
-            <Outstanding />
+                <GreetingsSection />
 
-            <AddButtons />
+                <Outstanding />
 
-            <RecentInvoices />
-        </SafeAreaView>
-    );
+                <AddButtons />
+
+                <RecentInvoices />
+
+            </SafeAreaView>
+        </ScrollView>
+    )
 }
