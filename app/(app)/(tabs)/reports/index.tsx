@@ -3,11 +3,11 @@ import ReportsHeader from "@/components/reportstab/ReportsHeader"
 import RevenueChart from "@/components/reportstab/RevenueChart"
 import StatsCard from "@/components/reportstab/StatsCards"
 import TopClients from "@/components/reportstab/TopClients"
-import { View } from "react-native"
+import { ScrollView } from "react-native"
 
 export default function Reports() {
     return (
-        <View className="flex-1 px-8 pb-16 gap-6">
+        <ScrollView contentContainerClassName="px-8 pb-6 gap-6">
             <ReportsHeader />
 
             <StatsCard />
@@ -17,6 +17,6 @@ export default function Reports() {
             <InvoicesStatus />
 
             <TopClients />
-        </View>
+        </ScrollView>
     )
 }
