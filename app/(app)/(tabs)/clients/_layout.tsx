@@ -1,10 +1,13 @@
 import { Stack } from 'expo-router';
+import { useColorScheme } from 'react-native';
 
 export default function ClientsLayout() {
+    const isDark = useColorScheme() === 'dark'
+
     return <Stack screenOptions={{
         headerShadowVisible: false,
         headerStyle: {
-            backgroundColor: '#f2f2f2',
+            backgroundColor: isDark ? 'black' : '#f2f2f2',
         },
     }}>
         <Stack.Screen name='index' options={{ title: '' }} />
