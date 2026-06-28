@@ -6,7 +6,7 @@ interface Props extends React.PropsWithChildren {
 
 export default function Card({ className, children }: Props) {
     return (
-        <View className={`p-6 bg-zinc-200 dark:bg-zinc-800 rounded-xl ${className}`}>
+        <View className={`p-4 bg-zinc-200 dark:bg-zinc-800 rounded-xl ${className}`}>
             {children}
         </View>
     )

@@ -12,7 +12,7 @@ export default function FloatingAddButton({ animatedStyle, screen }: Props) {
     return (
         <Animated.View
             style={animatedStyle}
-            className="absolute bottom-10 right-3"
+            className={`absolute ${screen === 'clientInvoices' ? 'bottom-16 right-12' : 'bottom-10 right-3'}`}
         >
             <Link href={screen === 'client' ? '/createEditClient' : '/createEditInvoice'} asChild>
                 <TouchableOpacity className="items-center justify-center w-20 h-20 rounded-full bg-blue-200 dark:bg-blue-950">

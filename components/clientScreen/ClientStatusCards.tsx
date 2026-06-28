@@ -4,7 +4,7 @@ import TextField from "../shared/TextField";
 
 export default function ClientStatusCards() {
     return (
-        <View className="flex-row justify-between">
+        <View className="flex-row justify-between gap-1">
             <Card>
                 <TextField text="Invoiced" className="text-lg" type="secondary" />
 
