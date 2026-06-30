@@ -4,13 +4,23 @@ import TextField from "../shared/TextField";
 import ItemCard from "./ItemCard";
 import TotalPriceCard from "./TotalPriceCard";
 
-type Item = { id: number };
+type Item = {
+    id: number,
+    name: string,
+    quantity: string,
+    rate: string,
+};
 
 export default function InvoiceItemsSection() {
     const [items, setItems] = useState<Item[]>([])
 
     const addItem = () => {
-        setItems(prev => [...prev, { id: Date.now() }])
+        setItems(prev => [...prev, {
+            id: Date.now(),
+            name: '',
+            quantity: '',
+            rate: '',
+        }])
     }
 
     const removeItem = (id: number) => {
@@ -24,8 +34,14 @@ export default function InvoiceItemsSection() {
             {items.map((item, index) => (
                 <ItemCard
                     key={item.id}
+                    item={item}
+                    onChange={(updated) =>
+                        setItems(prev => prev.map(i => i.id === updated.id ? updated : i))
+                    }
+                    onRemove={() =>
+                        setItems(prev => prev.filter(i => i.id !== item.id))
+                    }
                     autoFocus={index === items.length - 1 && items.length >= 1}
-                    onRemove={() => removeItem(item.id)}
                 />
             ))}
 

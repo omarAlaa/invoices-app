@@ -33,7 +33,7 @@ export default function AnimatedMenu({ actions, onPressAction, children }: Anima
 
             const approximateMenuHeight = actions.length * 44 + 8;
             if (topPosition + approximateMenuHeight > SCREEN_HEIGHT) {
-                topPosition = pageY - approximateMenuHeight - 6;
+                topPosition = pageY - approximateMenuHeight - 16;
             }
 
             let leftPosition = pageX - 10;
