@@ -6,15 +6,15 @@ import InvoiceItemsSection from "@/components/createEditinvoiceScreen/InvoiceIte
 import SelectClientField from "@/components/createEditinvoiceScreen/SelectClientField";
 import TextField from "@/components/shared/TextField";
 import { Client } from "@/lib/definitons";
-import { Stack } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { useRef, useState } from "react";
-import { TouchableOpacity, View, useColorScheme } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 export default function CreateEditInvoice() {
-    const systemColorScheme = useColorScheme();
-    const [selectedClient, setSelectedClient] = useState<Client | null>(null);
-    const clientPickerRef = useRef<ClientPickerSheetRef>(null);
+    const [selectedClient, setSelectedClient] = useState<Client | null>(null)
+    const clientPickerRef = useRef<ClientPickerSheetRef>(null)
+    const { type } = useLocalSearchParams()
 
     return (
         <View style={{ flex: 1 }}>
@@ -22,7 +22,7 @@ export default function CreateEditInvoice() {
                 <View className="flex-1 pt-4 pb-16 px-8 gap-6">
                     <Stack.Screen
                         options={{
-                            title: 'New invoice',
+                            title: `${type} invoice`,
                             headerBackButtonDisplayMode: 'minimal',
                             headerShadowVisible: false,
                             headerRight: () => (
@@ -52,5 +52,5 @@ export default function CreateEditInvoice() {
                 onSelect={setSelectedClient}
             />
         </View>
-    );
+    )
 }

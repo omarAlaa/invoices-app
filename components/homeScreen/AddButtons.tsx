@@ -9,7 +9,11 @@ export default function AddButtons() {
 
     return (
         <View className="flex-row gap-2">
-            <Link href='/createEditInvoice' asChild>
+            <Link href={{
+                pathname: '/createEditInvoice',
+                params: { type: 'New' }
+            }}
+                asChild>
                 <ActionButton>
                     <Plus color='#2563eb' />
 
@@ -17,7 +21,11 @@ export default function AddButtons() {
                 </ActionButton>
             </Link>
 
-            <Link href='/createEditClient' asChild>
+            <Link href={{
+                pathname: '/createEditClient',
+                params: { type: 'New' }
+            }}
+                asChild>
                 <ActionButton isSecondary={true}>
                     <UserPlus color={systemColorScheme === 'dark' ? 'white' : 'black'} />
 

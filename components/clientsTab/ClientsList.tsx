@@ -3,15 +3,25 @@ import { Client, ClientsSection } from "@/lib/definitons"
 import { MOCK_CLIENTS } from "@/lib/placeholder-data"
 import { groupByLetter } from "@/lib/utils"
 import { User } from "lucide-react-native"
-import { useCallback, useMemo } from "react"
-import { SectionList, SectionListRenderItemInfo, View } from "react-native"
+import { useCallback, useMemo, useState } from "react"
+import { RefreshControl, SectionList, SectionListRenderItemInfo, View } from "react-native"
 import FloatingAddButton from "../shared/FloatingAddButton"
 import TextField from "../shared/TextField"
 import ClientOverview from "./ClientOverview"
+import ClientsHeader from "./ClientsHeader"
 
 export default function ClientsList() {
     const { onScroll, buttonStyle } = useScrollFAB()
     const sections = useMemo(() => groupByLetter(MOCK_CLIENTS), [MOCK_CLIENTS])
+    const [refreshing, setRefreshing] = useState(false)
+
+    const onRefresh = () => {
+        setRefreshing(true)
+
+        setTimeout(() => {
+            setRefreshing(false)
+        }, 2000)
+    }
 
     const renderItem = useCallback(
         ({ item }: SectionListRenderItemInfo<Client>) => <ClientOverview client={item} />,
@@ -24,8 +34,15 @@ export default function ClientsList() {
     );
 
     return (
-        <View className="flex-1 mb-[-4rem]">
+        <View className="flex-1 px-8">
             <SectionList<Client, ClientsSection>
+                ListHeaderComponent={
+                    <View className="mb-4">
+                        <ClientsHeader />
+
+                        <TextField text="24 clients · $42,180 billed all-time" type="secondary" className="text-lg" />
+                    </View>
+                }
                 onScroll={onScroll}
                 scrollEventThrottle={16}
                 sections={sections}
@@ -40,6 +57,12 @@ export default function ClientsList() {
                     </View>
                 }
                 contentContainerStyle={{ paddingBottom: 100 }}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
             />
 
             <FloatingAddButton animatedStyle={buttonStyle} screen="client" />

@@ -41,7 +41,7 @@ export default function ItemCard({ item, autoFocus = false, onRemove, onChange }
                         placeholderTextColor="gray"
                     />
 
-                    <TouchableOpacity onPress={onRemove} hitSlop={8}>
+                    <TouchableOpacity onPress={onRemove}>
                         <Trash2 color={isDark ? 'white' : 'black'} />
                     </TouchableOpacity>
                 </View>
