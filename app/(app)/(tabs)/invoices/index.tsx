@@ -4,12 +4,13 @@ import FloatingAddButton from "@/components/shared/FloatingAddButton";
 import InvoiceOverview from "@/components/shared/InvoiceOverview";
 import ItemsList from "@/components/shared/ItemsList";
 import { useScrollFAB } from "@/hooks/useScrollFAB";
+import { Stack } from "expo-router";
 import { useState } from "react";
 import { RefreshControl, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 export default function InvoicesScreen() {
-    const { scrollHandler, buttonStyle } = useScrollFAB()
+    const { scrollHandler, buttonStyle, titleStyle, onHeaderLayout } = useScrollFAB()
     const [refreshing, setRefreshing] = useState(false)
 
     const onRefresh = () => {
@@ -21,7 +22,20 @@ export default function InvoicesScreen() {
     }
 
     return (
-        <View>
+        <View className="flex-1">
+            <Stack.Screen
+                options={{
+                    headerTitle: () => (
+                        <Animated.Text
+                            style={titleStyle}
+                            className="font-semibold text-xl dark:text-white"
+                        >
+                            Invoices
+                        </Animated.Text>
+                    ),
+                }}
+            />
+
             <Animated.ScrollView
                 onScroll={scrollHandler}
                 scrollEventThrottle={16}
@@ -33,7 +47,9 @@ export default function InvoicesScreen() {
                     />
                 }
             >
-                <InvoicesHeader />
+                <View onLayout={onHeaderLayout}>
+                    <InvoicesHeader />
+                </View>
 
                 <StatusFilters />
 

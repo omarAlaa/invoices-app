@@ -9,7 +9,5 @@ export default function InvoicesLayout() {
         headerStyle: {
             backgroundColor: isDark ? 'black' : '#f2f2f2',
         },
-    }}>
-        <Stack.Screen name='index' options={{ title: '' }} />
-    </Stack>
+    }} />
 }

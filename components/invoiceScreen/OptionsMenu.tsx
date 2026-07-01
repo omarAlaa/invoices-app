@@ -3,19 +3,23 @@ import { Ellipsis } from "lucide-react-native"
 import { Alert, TouchableOpacity, useColorScheme } from "react-native"
 import AnimatedMenu from "../shared/AnimatedMenu"
 
-export default function OptionsMenu() {
+type Props = {
+    screen: string,
+}
+
+export default function OptionsMenu({ screen }: Props) {
     const systemColorScheme = useColorScheme()
 
     const handleMenuSelect = (id: string) => {
         if (id === 'edit') {
             router.navigate({
-                pathname: '/createEditInvoice',
+                pathname: screen === 'invoice' ? '/createEditInvoice' : '/createEditClient',
                 params: { type: 'Edit' }
             })
         } else {
             Alert.alert(
-                "Delete Invoice",
-                "Are you sure you want to delete this invoice?",
+                `Delete ${screen}`,
+                `Are you sure you want to delete this ${screen} ?`,
                 [
                     { text: "Cancel", style: "cancel" },
                     {

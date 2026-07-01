@@ -17,7 +17,7 @@ export default function Invoice() {
                     title: `Invoice #${invoiceId}`,
                     headerBackButtonDisplayMode: 'minimal',
                     headerShadowVisible: false,
-                    headerRight: () => <OptionsMenu />
+                    headerRight: () => <OptionsMenu screen="invoice" />
                 }}
             />
 
