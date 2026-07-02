@@ -3,6 +3,7 @@ import ClientsList from "@/components/createEditinvoiceScreen/ClientsList";
 import CreateEditInvoiceActions from "@/components/createEditinvoiceScreen/CreateEditInvoiceActions";
 import DateFieldsSection from "@/components/createEditinvoiceScreen/DateFieldsSection";
 import InvoiceItemsSection from "@/components/createEditinvoiceScreen/InvoiceItemsSection";
+import InvoiceStatusSelector from "@/components/createEditinvoiceScreen/InvoiceStatusSelector";
 import SelectClientField from "@/components/createEditinvoiceScreen/SelectClientField";
 import TextField from "@/components/shared/TextField";
 import { Client } from "@/lib/definitons";
@@ -41,6 +42,8 @@ export default function CreateEditInvoice() {
                     <DateFieldsSection />
 
                     <InvoiceItemsSection />
+
+                    <InvoiceStatusSelector />
 
                     <CreateEditInvoiceActions />
                 </View>
