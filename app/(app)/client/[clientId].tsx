@@ -5,12 +5,11 @@ import OptionsMenu from "@/components/invoiceScreen/OptionsMenu";
 import FloatingAddButton from "@/components/shared/FloatingAddButton";
 import { useScrollFAB } from "@/hooks/useScrollFAB";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { useColorScheme, View } from "react-native";
+import { View } from "react-native";
 import Animated from "react-native-reanimated";
 
 export default function ClientScreen() {
     const { clientId } = useLocalSearchParams()
-    const systemColorScheme = useColorScheme()
     const { scrollHandler, buttonStyle } = useScrollFAB()
 
     return (
