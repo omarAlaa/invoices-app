@@ -1,4 +1,4 @@
-import { Client } from "@/features/clients/api";
+import { Client } from "@/lib/definitons";
 import { Link } from "expo-router";
 import { ChevronRight } from "lucide-react-native";
 import { Text, TouchableOpacity, View } from "react-native";

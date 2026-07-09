@@ -6,7 +6,7 @@ import InvoiceItemsSection from "@/components/createEditinvoiceScreen/InvoiceIte
 import InvoiceStatusSelector from "@/components/createEditinvoiceScreen/InvoiceStatusSelector";
 import SelectClientField from "@/components/createEditinvoiceScreen/SelectClientField";
 import TextField from "@/components/shared/TextField";
-import { Client } from "@/features/clients/api";
+import { Client } from "@/lib/definitons";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useRef, useState } from "react";
 import { TouchableOpacity, View } from "react-native";

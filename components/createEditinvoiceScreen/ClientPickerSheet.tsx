@@ -1,4 +1,4 @@
-import { Client } from '@/features/clients/api';
+import { Client } from "@/lib/definitons";
 import { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
 import { router } from 'expo-router';
 import { Check, Plus } from 'lucide-react-native';

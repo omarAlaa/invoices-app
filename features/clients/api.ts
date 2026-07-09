@@ -1,38 +1,7 @@
+import { Client, ClientStats, NewClient, UpdateClient } from '@/lib/definitons';
 import { supabase } from '@/lib/supabase';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-
-export type Client = {
-    id: string;
-    user_id: string;
-    first_name: string;
-    last_name: string | null;
-    email: string | null;
-    phone: string | null;
-    is_archived: boolean;
-    created_at: string;
-    updated_at: string;
-}
-
-export type NewClient = {
-    first_name: string;
-    last_name?: string;
-    email?: string;
-    phone?: string;
-}
-
-export type UpdateClient = Partial<NewClient> & { id: string }
-
-export type ClientStats = {
-    client_id: string;
-    user_id: string;
-    first_name: string;
-    last_name: string | null;
-    invoice_count: number;
-    total_invoiced: number;
-    total_paid: number;
-    total_owed: number;
-}
 
 export const clientKeys = {
     all: ['clients'] as const,

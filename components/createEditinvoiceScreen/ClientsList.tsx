@@ -1,6 +1,7 @@
-import { Client, useClients } from '@/features/clients/api';
-import { forwardRef } from 'react';
-import { ClientPickerSheet, ClientPickerSheetRef } from './ClientPickerSheet';
+import { useClients } from '@/features/clients/api'
+import { Client } from "@/lib/definitons"
+import { forwardRef } from 'react'
+import { ClientPickerSheet, ClientPickerSheetRef } from './ClientPickerSheet'
 
 type Props = {
     selectedId: string | null;

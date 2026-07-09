@@ -1,4 +1,4 @@
-import { Client } from "@/features/clients/api";
+import { Client } from "@/lib/definitons";
 import { ClientsSection } from "./definitons";
 
 export const formatDate = (date: Date) => {
