@@ -1,5 +1,4 @@
-import { Client } from '@/lib/definitons';
-import { MOCK_CLIENTS } from '@/lib/placeholder-data';
+import { Client, useClients } from '@/features/clients/api';
 import { forwardRef } from 'react';
 import { ClientPickerSheet, ClientPickerSheetRef } from './ClientPickerSheet';
 
@@ -10,10 +9,12 @@ type Props = {
 
 const ClientsList = forwardRef<ClientPickerSheetRef, Props>(
     ({ selectedId, onSelect }, ref) => {
+        const { data: clients, isLoading, isError, refetch, isRefetching } = useClients()
+
         return (
             <ClientPickerSheet
                 ref={ref}
-                clients={MOCK_CLIENTS}
+                clients={clients}
                 selectedId={selectedId}
                 onSelect={onSelect}
             />

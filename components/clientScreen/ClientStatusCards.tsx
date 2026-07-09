@@ -1,26 +1,34 @@
+import { useClientStats } from "@/features/clients/api";
 import { Text, View } from "react-native";
 import Card from "../shared/Card";
 import TextField from "../shared/TextField";
 
-export default function ClientStatusCards() {
+type Props = {
+    clientId: string | string[];
+}
+
+export default function ClientStatusCards({ clientId }: Props) {
+    const { data: clientStats, isLoading, isError, refetch, isRefetching } = useClientStats(clientId.toString())
+
+
     return (
-        <View className="flex-row justify-between gap-1">
+        <View className="flex-row justify-between gap-4">
             <Card>
                 <TextField text="Invoiced" className="text-lg" type="secondary" />
 
-                <TextField text="$11,940" className="font-bold text-lg" />
+                <TextField text={clientStats?.total_invoiced} className="font-bold text-lg" />
             </Card>
 
             <Card>
                 <TextField text="Paid" className="text-lg" type="secondary" />
 
-                <Text className="font-bold text-lg text-green-800 dark:text-green-800">$11,940</Text>
+                <Text className="font-bold text-lg text-green-800 dark:text-green-800">{clientStats?.total_paid}</Text>
             </Card>
 
             <Card>
                 <TextField text="Owed" className="text-lg" type="secondary" />
 
-                <Text className="font-bold text-lg text-red-800 dark:text-red-800">$11,940</Text>
+                <Text className="font-bold text-lg text-red-800 dark:text-red-800">{clientStats?.total_owed}</Text>
             </Card>
         </View>
     )

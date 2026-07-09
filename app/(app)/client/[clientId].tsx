@@ -9,7 +9,7 @@ import { View } from "react-native";
 import Animated from "react-native-reanimated";
 
 export default function ClientScreen() {
-    const { clientId } = useLocalSearchParams()
+    const { clientId, fullName } = useLocalSearchParams()
     const { scrollHandler, buttonStyle } = useScrollFAB()
 
     return (
@@ -21,16 +21,16 @@ export default function ClientScreen() {
             >
                 <Stack.Screen
                     options={{
-                        title: `${clientId}`,
+                        title: `${fullName}`,
                         headerBackButtonDisplayMode: 'minimal',
                         headerShadowVisible: false,
                         headerRight: () => <OptionsMenu screen="client" />
                     }}
                 />
 
-                <ClientInfo />
+                <ClientInfo clientId={clientId} />
 
-                <ClientStatusCards />
+                <ClientStatusCards clientId={clientId} />
 
                 <CLientInvoices />
             </Animated.ScrollView>

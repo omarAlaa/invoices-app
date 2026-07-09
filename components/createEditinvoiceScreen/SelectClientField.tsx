@@ -1,11 +1,11 @@
 import { ClientSelector } from '@/components/createEditinvoiceScreen/ClientSelector';
-import { Client } from '@/lib/definitons';
+import { Client } from '@/features/clients/api';
 import { View } from 'react-native';
 import TextField from '../shared/TextField';
 
 type Props = {
     selectedClient: Client | null;
-    onPress: () => void
+    onPress: () => void;
 }
 
 export default function SelectClientField({ selectedClient, onPress }: Props) {
@@ -14,7 +14,7 @@ export default function SelectClientField({ selectedClient, onPress }: Props) {
             <TextField text="Bill to" type="secondary" />
 
             <ClientSelector
-                name={selectedClient?.name || ''}
+                name={selectedClient ? `${selectedClient.first_name} ${selectedClient.last_name}` : null}
                 onPress={onPress}
             />
         </View>

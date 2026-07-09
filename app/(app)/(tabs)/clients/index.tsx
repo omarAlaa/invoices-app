@@ -2,28 +2,20 @@ import ClientOverview from "@/components/clientsTab/ClientOverview"
 import ClientsHeader from "@/components/clientsTab/ClientsHeader"
 import FloatingAddButton from "@/components/shared/FloatingAddButton"
 import TextField from "@/components/shared/TextField"
+import { Client, useClients } from "@/features/clients/api"
 import { useScrollFAB } from "@/hooks/useScrollFAB"
-import { Client, ClientsSection } from "@/lib/definitons"
-import { MOCK_CLIENTS } from "@/lib/placeholder-data"
+import { ClientsSection } from "@/lib/definitons"
 import { groupByLetter } from "@/lib/utils"
 import { Stack } from "expo-router"
 import { User } from "lucide-react-native"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useMemo } from "react"
 import { RefreshControl, SectionList, SectionListRenderItemInfo, View } from "react-native"
 import Animated from "react-native-reanimated"
 
 export default function Clients() {
+    const { data: clients, isLoading, isError, refetch, isRefetching } = useClients()
     const { onScroll, buttonStyle, titleStyle, onHeaderLayout } = useScrollFAB()
-    const sections = useMemo(() => groupByLetter(MOCK_CLIENTS), [MOCK_CLIENTS])
-    const [refreshing, setRefreshing] = useState(false)
-
-    const onRefresh = () => {
-        setRefreshing(true)
-
-        setTimeout(() => {
-            setRefreshing(false)
-        }, 2000)
-    }
+    const sections = useMemo(() => groupByLetter(clients), [clients])
 
     const renderItem = useCallback(
         ({ item }: SectionListRenderItemInfo<Client>) => <ClientOverview client={item} />,
@@ -76,8 +68,8 @@ export default function Clients() {
                 contentContainerStyle={{ paddingBottom: 100 }}
                 refreshControl={
                     <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
+                        refreshing={isRefetching}
+                        onRefresh={refetch}
                     />
                 }
             />

@@ -1,4 +1,4 @@
-import { Client } from '@/lib/definitons';
+import { Client } from '@/features/clients/api';
 import { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
 import { router } from 'expo-router';
 import { Check, Plus } from 'lucide-react-native';
@@ -8,7 +8,7 @@ import InputField from '../shared/InputField';
 import TextField from '../shared/TextField';
 
 type Props = {
-    clients: Client[];
+    clients: Client[] | undefined;
     selectedId: string | null;
     onSelect: (client: Client) => void;
 };
@@ -61,9 +61,9 @@ export const ClientPickerSheet = forwardRef<ClientPickerSheetRef, Props>(
                     >
                         <View className="flex-row items-center gap-3">
                             <View className="w-12 h-12 rounded-full bg-blue-200 justify-center items-center">
-                                <Text className="font-bold text-xl text-blue-600">{item.name[0]}</Text>
+                                <Text className="font-bold text-xl text-blue-600">{`${item.first_name[0]}${item.last_name && item.last_name[0]}`}</Text>
                             </View>
-                            <TextField text={item.name} />
+                            <TextField text={`${item.first_name} ${item.last_name}`} />
                         </View>
                         {isSelected && <Check color="#2563EB" />}
                     </TouchableOpacity>

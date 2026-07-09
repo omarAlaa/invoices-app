@@ -1,4 +1,5 @@
-import { Client, ClientsSection } from "./definitons";
+import { Client } from "@/features/clients/api";
+import { ClientsSection } from "./definitons";
 
 export const formatDate = (date: Date) => {
     return date.toLocaleDateString(undefined, {
@@ -16,13 +17,17 @@ export function formatCurrency(amount: number): string {
     }).format(amount);
 }
 
-export function groupByLetter(clients: Client[]): ClientsSection[] {
-    const sorted = [...clients].sort((a, b) => a.name.localeCompare(b.name));
-    const map = new Map<string, Client[]>();
-    for (const client of sorted) {
-        const letter = client.name[0].toUpperCase();
-        if (!map.has(letter)) map.set(letter, []);
-        map.get(letter)!.push(client);
+export function groupByLetter(clients: Client[] | undefined): ClientsSection[] {
+    if (clients) {
+        const sorted = [...clients].sort((a, b) => a.first_name.localeCompare(b.first_name));
+        const map = new Map<string, Client[]>();
+        for (const client of sorted) {
+            const letter = client.first_name[0].toUpperCase();
+            if (!map.has(letter)) map.set(letter, []);
+            map.get(letter)!.push(client);
+        }
+        return Array.from(map.entries()).map(([title, data]) => ({ title, data }));
     }
-    return Array.from(map.entries()).map(([title, data]) => ({ title, data }));
+
+    return []
 }

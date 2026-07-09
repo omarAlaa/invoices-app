@@ -1,7 +1,7 @@
 import { Text } from "react-native";
 
 type Props = {
-    text: string,
+    text: string | number | undefined | null,
     type?: string
     className?: string
 }

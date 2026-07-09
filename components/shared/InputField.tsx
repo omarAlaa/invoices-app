@@ -48,7 +48,7 @@ export default function InputField({ value, setValue, isEmail, type, notEditable
                 autoCorrect={!isEmail && !isNumeric && !isCurrency}
                 placeholderTextColor={isEmail || isSearch || isNumeric || isCurrency ? "gray" : undefined}
                 keyboardType={isEmail ? "email-address" : (isNumeric || isCurrency) ? "decimal-pad" : 'default'}
-                autoCapitalize={isEmail ? "none" : undefined}
+                autoCapitalize={isEmail || type === 'email' ? "none" : undefined}
                 inputMode={(isNumeric || isCurrency) ? "decimal" : type}
                 onChangeText={handleChangeText}
                 onFocus={() => setIsFieldFocused(true)}

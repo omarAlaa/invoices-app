@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, useColorScheme, View } from 'react-native';
 import TextField from '../shared/TextField';
 
 type Props = {
-    name: string | null;
+    name?: string | null;
     onPress: () => void;
 };
 
