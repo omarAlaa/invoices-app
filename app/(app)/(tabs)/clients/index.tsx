@@ -2,9 +2,9 @@ import ClientOverview from "@/components/clientsTab/ClientOverview"
 import ClientsHeader from "@/components/clientsTab/ClientsHeader"
 import FloatingAddButton from "@/components/shared/FloatingAddButton"
 import TextField from "@/components/shared/TextField"
-import { useClients } from "@/features/clients/api"
+import { useClientsWithStats } from "@/features/clients/api"
 import { useScrollFAB } from "@/hooks/useScrollFAB"
-import { Client, ClientsSection } from "@/lib/definitons"
+import { ClientsSection, ClientStats } from "@/lib/definitons"
 import { groupByLetter } from "@/lib/utils"
 import { Stack } from "expo-router"
 import { User } from "lucide-react-native"
@@ -13,12 +13,12 @@ import { RefreshControl, SectionList, SectionListRenderItemInfo, View } from "re
 import Animated from "react-native-reanimated"
 
 export default function Clients() {
-    const { data: clients, isLoading, isError, refetch, isRefetching } = useClients()
+    const { data: clients, isLoading, isError, refetch, isRefetching } = useClientsWithStats()
     const { onScroll, buttonStyle, titleStyle, onHeaderLayout } = useScrollFAB()
     const sections = useMemo(() => groupByLetter(clients), [clients])
 
     const renderItem = useCallback(
-        ({ item }: SectionListRenderItemInfo<Client>) => <ClientOverview client={item} />,
+        ({ item }: SectionListRenderItemInfo<ClientStats>) => <ClientOverview clientStats={item} />,
         [],
     );
 
@@ -42,7 +42,7 @@ export default function Clients() {
                 }}
             />
 
-            <SectionList<Client, ClientsSection>
+            <SectionList<ClientStats, ClientsSection>
                 ListHeaderComponent={
                     <View className="mb-4">
                         <View onLayout={onHeaderLayout}>
@@ -55,7 +55,7 @@ export default function Clients() {
                 onScroll={onScroll}
                 scrollEventThrottle={16}
                 sections={sections}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.client_id}
                 renderItem={renderItem}
                 renderSectionHeader={renderSectionHeader}
                 stickySectionHeadersEnabled

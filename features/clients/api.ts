@@ -62,6 +62,22 @@ export function useClientStats(clientId: string | undefined) {
     })
 }
 
+export function useClientsWithStats() {
+    return useQuery({
+        queryKey: [...clientKeys.lists(), 'withStats'] as const,
+        queryFn: async (): Promise<ClientStats[]> => {
+            const { data, error } = await supabase
+                .from('client_stats')
+                .select('*')
+                .order('first_name', { ascending: true })
+
+            if (error) throw error
+
+            return data
+        },
+    });
+}
+
 export function useCreateClient() {
     const queryClient = useQueryClient()
 

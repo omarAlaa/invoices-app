@@ -18,7 +18,7 @@ export function ClientSelector({ name, onPress }: Props) {
             {name ?
                 <View className="flex-row items-center gap-2">
                     <View className="w-12 h-12 rounded-full bg-blue-200 justify-center items-center">
-                        <Text className="font-bold text-xl text-blue-600">{name[0]}</Text>
+                        <Text className="font-bold text-xl text-blue-600">{name.trim().split(/\s+/).map(word => word.charAt(0).toUpperCase()).join('')}</Text>
                     </View>
 
                     <TextField text={name} className='font-bold text-lg' />

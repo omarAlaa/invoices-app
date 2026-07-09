@@ -32,7 +32,7 @@ export type ClientStats = {
 
 export interface ClientsSection {
     title: string;
-    data: Client[];
+    data: ClientStats[];
 }
 
 export type InvoiceStatus = 'pending' | 'paid' | 'overdue'

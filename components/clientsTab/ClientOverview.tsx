@@ -1,26 +1,26 @@
-import { Client } from "@/lib/definitons";
+import { ClientStats } from "@/lib/definitons";
 import { Link } from "expo-router";
 import { ChevronRight } from "lucide-react-native";
 import { Text, TouchableOpacity, View } from "react-native";
 import TextField from "../shared/TextField";
 
-export default function ClientOverview({ client }: { client: Client }) {
+export default function ClientOverview({ clientStats }: { clientStats: ClientStats }) {
     return (
         <Link href={{
             pathname: '/client/[clientId]',
-            params: { clientId: client.id, fullName: `${client.first_name} ${client.last_name}` }
+            params: { clientId: clientStats.client_id, fullName: `${clientStats.first_name} ${clientStats.last_name}` }
         }} asChild>
             <TouchableOpacity className="flex-row justify-between items-center py-4 mt-1 border-t border-gray-300">
                 <View className="flex-row gap-2 items-center">
                     <View className="w-12 h-12 rounded-full bg-blue-200 justify-center items-center">
-                        <Text className="font-bold text-xl text-blue-600">OA</Text>
+                        <Text className="font-bold text-xl text-blue-600">{`${clientStats.first_name[0]}${clientStats.last_name && clientStats.last_name[0]}`}</Text>
                     </View>
 
                     <View>
-                        <TextField text={`${client.first_name} ${client.last_name}`} className="font-bold text-lg" />
+                        <TextField text={`${clientStats.first_name} ${clientStats.last_name}`} className="font-bold text-lg" />
 
                         <TextField
-                            text={`${client.email} `}
+                            text={`${clientStats.invoice_count} invoices. ${clientStats.total_invoiced} billed`}
                             type="secondary" />
                     </View>
                 </View>
