@@ -44,9 +44,13 @@ export const ClientPickerSheet = forwardRef<ClientPickerSheetRef, Props>(
         );
 
         const handleAddNewClient = () => {
-            bottomSheetRef.current?.dismiss();
-            router.push('/createEditClient');
-        };
+            bottomSheetRef.current?.dismiss()
+
+            router.navigate({
+                pathname: '/createEditClient',
+                params: { type: 'New' }
+            })
+        }
 
         const renderItem = useCallback(
             ({ item }: { item: Client }) => {
