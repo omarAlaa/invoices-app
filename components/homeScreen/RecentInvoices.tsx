@@ -1,11 +1,14 @@
+import { useRecentInvoices } from "@/features/invoices/api";
 import { Link } from "expo-router";
-import { TouchableOpacity, View } from "react-native";
+import { FlatList, TouchableOpacity, View } from "react-native";
 import InvoiceOverview from "../shared/InvoiceOverview";
 import TextField from "../shared/TextField";
 
 export default function RecentInvoices() {
+    const { data: recentInvoices, isLoading, isError, refetch, isRefetching } = useRecentInvoices()
+
     return (
-        <View className="flex-1 gap-7 mb-[-4rem]">
+        <View className="flex-1 gap-5 mb-[-4rem]">
             <View className="flex-row justify-between">
                 <TextField text="Recent invoices" className="font-bold text-xl" />
 
@@ -16,13 +19,14 @@ export default function RecentInvoices() {
                 </Link>
             </View>
 
-            <InvoiceOverview />
-
-            <InvoiceOverview />
-
-            <InvoiceOverview />
-
-            <InvoiceOverview />
+            <FlatList
+                data={recentInvoices}
+                keyExtractor={item => item.id}
+                contentContainerClassName="gap-5"
+                renderItem={({ item }) =>
+                    <InvoiceOverview invoiceListRow={item} />
+                }
+            />
         </View>
     )
 }

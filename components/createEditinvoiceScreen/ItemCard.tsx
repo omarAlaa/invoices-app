@@ -1,3 +1,4 @@
+import { NewInvoiceItem } from "@/lib/definitons";
 import { Trash2 } from "lucide-react-native";
 import { TextInput, TouchableOpacity, View, useColorScheme } from "react-native";
 import Animated, { Easing, FadeInDown, FadeOutLeft } from "react-native-reanimated";
@@ -5,18 +6,11 @@ import Card from "../shared/Card";
 import InputField from "../shared/InputField";
 import TextField from "../shared/TextField";
 
-export type InvoiceItem = {
-    id: number;
-    name: string;
-    quantity: string;
-    rate: string;
-}
-
 type ItemCardProps = {
-    item: InvoiceItem;
+    item: NewInvoiceItem;
     autoFocus?: boolean;
     onRemove?: () => void;
-    onChange?: (item: InvoiceItem) => void;
+    onChange?: (item: NewInvoiceItem) => void;
 }
 
 export default function ItemCard({ item, autoFocus = false, onRemove, onChange }: ItemCardProps) {
@@ -35,8 +29,8 @@ export default function ItemCard({ item, autoFocus = false, onRemove, onChange }
                     <TextInput
                         autoFocus={autoFocus}
                         className="dark:text-white flex-1"
-                        value={item.name}
-                        onChangeText={(name) => onChange?.({ ...item, name })}
+                        value={item.title}
+                        onChangeText={(title) => onChange?.({ ...item, title })}
                         placeholder="Item description"
                         placeholderTextColor="gray"
                     />

@@ -33,9 +33,25 @@ export function useInvoices(filter: InvoiceFilter = 'all') {
             const statuses = filterToStatuses[filter]
             if (statuses) query = query.in('status', statuses);
 
-            const { data, error } = await query;
-            if (error) throw error;
-            return data;
+            const { data, error } = await query
+            if (error) throw error
+            return data
+        },
+    })
+}
+
+export function useRecentInvoices() {
+    return useQuery({
+        queryKey: invoiceKeys.lists(),
+        queryFn: async (): Promise<InvoiceListRow[]> => {
+            const { data, error } = await supabase
+                .from('invoice_list_view')
+                .select('*')
+                .limit(4)
+                .order('due_date', { ascending: true })
+
+            if (error) throw error
+            return data
         },
     })
 }
@@ -116,9 +132,9 @@ export function useCreateInvoice() {
                 const { error: itemsError } = await supabase.from('invoice_items').insert(
                     payload.items.map((item, index) => ({
                         invoice_id: invoice.id,
-                        description: item.description,
+                        title: item.title,
                         quantity: item.quantity,
-                        unit_price: item.unit_price,
+                        rate: item.rate,
                         position: index,
                     }))
                 )

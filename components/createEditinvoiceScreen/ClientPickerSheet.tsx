@@ -9,7 +9,7 @@ import TextField from '../shared/TextField';
 
 type Props = {
     clients: Client[] | undefined;
-    selectedId: string | null;
+    selectedId: string | undefined;
     onSelect: (client: Client) => void;
 };
 

@@ -64,21 +64,28 @@ export type InvoiceListRow = Invoice & {
 export type InvoiceItem = {
     id: string;
     invoice_id: string;
-    description: string;
+    title: string;
     quantity: number;
-    unit_price: number;
+    rate: number;
     amount: number;
     position: number;
-};
+}
+
+export type NewInvoiceItem = {
+    id: number;
+    title: string;
+    quantity: string;
+    rate: string;
+}
 
 export type InvoiceFilter = 'all' | 'paid' | 'pending' | 'overdue'
 
 export type NewInvoicePayload = {
     clientId: string;
-    issueDate: string;
-    dueDate: string;
+    issueDate: Date;
+    dueDate: Date;
     taxRate: number;
     discountAmount: number;
-    items: InvoiceItem[];
+    items: NewInvoiceItem[];
     status: string;
 }

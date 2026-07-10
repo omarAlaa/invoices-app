@@ -1,36 +1,35 @@
+import { InvoiceListRow } from "@/lib/definitons";
+import { formatCurrency } from "@/lib/utils";
 import { Link } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 import Status from "./Status";
 import TextField from "./TextField";
+type Props = {
+    invoiceListRow: InvoiceListRow;
+}
 
-export default function InvoiceOverview() {
+export default function InvoiceOverview({ invoiceListRow }: Props) {
     return (
         <Link href="/invoice/INV-0042" asChild>
             <TouchableOpacity className="flex-row justify-between">
                 <View className="flex-row gap-2 items-center">
                     <View className="w-12 h-12 rounded-full bg-blue-200 justify-center items-center">
-                        <Text className="font-bold text-xl text-blue-600">OA</Text>
+                        <Text className="font-bold text-xl text-blue-600">
+                            {`${invoiceListRow.client_first_name[0]}${invoiceListRow.client_last_name && invoiceListRow.client_last_name[0]}`}
+                        </Text>
                     </View>
 
                     <View>
-                        <TextField text="Nova Media" className="font-bold text-lg" />
+                        <TextField text={`${invoiceListRow.client_first_name} ${invoiceListRow.client_last_name}`} className="font-bold text-lg" />
 
-                        <TextField text="#INV-0042 · Due Jun 18" type="secondary" />
+                        <TextField text={`${invoiceListRow.invoice_number} · Due ${invoiceListRow.due_date}`} type="secondary" />
                     </View>
                 </View>
 
                 <View className="justify-center items-end">
-                    <TextField text="EGP 2400" className="font-bold text-lg" />
+                    <TextField text={formatCurrency(invoiceListRow.total)} className="font-bold text-lg" />
 
-                    {/* <View className="bg-green-200 px-3 py-1 rounded-full">
-                    <Text className="text-green-500">Paid</Text>
-                </View> */}
-
-                    {/* <View className="bg-yellow-200 px-3 py-1 rounded-full">
-                    <Text className="text-yellow-700">Pending</Text>
-                </View> */}
-
-                    <Status status="Pending" />
+                    <Status status={invoiceListRow.status} />
                 </View>
             </TouchableOpacity>
         </Link>

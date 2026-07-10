@@ -5,15 +5,12 @@ import DateFieldsSection from "@/components/createEditinvoiceScreen/DateFieldsSe
 import InvoiceItemsSection from "@/components/createEditinvoiceScreen/InvoiceItemsSection";
 import InvoiceStatusSelector from "@/components/createEditinvoiceScreen/InvoiceStatusSelector";
 import SelectClientField from "@/components/createEditinvoiceScreen/SelectClientField";
-import TextField from "@/components/shared/TextField";
-import { Client } from "@/lib/definitons";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { useRef, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { useRef } from "react";
+import { View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 export default function CreateEditInvoice() {
-    const [selectedClient, setSelectedClient] = useState<Client | null>(null)
     const clientPickerRef = useRef<ClientPickerSheetRef>(null)
     const { type } = useLocalSearchParams()
 
@@ -26,16 +23,10 @@ export default function CreateEditInvoice() {
                             title: `${type} invoice`,
                             headerBackButtonDisplayMode: 'minimal',
                             headerShadowVisible: false,
-                            headerRight: () => (
-                                <TouchableOpacity>
-                                    <TextField text="Save" type="highlighted" />
-                                </TouchableOpacity>
-                            )
                         }}
                     />
 
                     <SelectClientField
-                        selectedClient={selectedClient}
                         onPress={() => clientPickerRef.current?.open()}
                     />
 
@@ -51,8 +42,6 @@ export default function CreateEditInvoice() {
 
             <ClientsList
                 ref={clientPickerRef}
-                selectedId={selectedClient?.id ?? null}
-                onSelect={setSelectedClient}
             />
         </View>
     )

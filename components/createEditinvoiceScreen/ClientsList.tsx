@@ -1,23 +1,24 @@
 import { useClients } from '@/features/clients/api'
 import { Client } from "@/lib/definitons"
+import { useInvoiceDraftStore } from '@/store/useInvoiceDraftStore'
 import { forwardRef } from 'react'
 import { ClientPickerSheet, ClientPickerSheetRef } from './ClientPickerSheet'
 
 type Props = {
-    selectedId: string | null;
     onSelect: (client: Client) => void;
 }
 
-const ClientsList = forwardRef<ClientPickerSheetRef, Props>(
-    ({ selectedId, onSelect }, ref) => {
+const ClientsList = forwardRef<ClientPickerSheetRef>(
+    ({ }, ref) => {
+        const { selectedClient, setSelectedClient } = useInvoiceDraftStore()
         const { data: clients, isLoading, isError, refetch, isRefetching } = useClients()
 
         return (
             <ClientPickerSheet
                 ref={ref}
                 clients={clients}
-                selectedId={selectedId}
-                onSelect={onSelect}
+                selectedId={selectedClient?.id}
+                onSelect={setSelectedClient}
             />
         )
     }

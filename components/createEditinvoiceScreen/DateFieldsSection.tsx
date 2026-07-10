@@ -1,10 +1,9 @@
-import { useState } from 'react';
+import { useInvoiceDraftStore } from '@/store/useInvoiceDraftStore';
 import { View } from 'react-native';
 import { DateField } from './DateField';
 
 export default function DateFieldsSection() {
-    const [issueDate, setIssueDate] = useState<Date>(new Date());
-    const [dueDate, setDueDate] = useState<Date>(new Date(Date.now() + 12096e5));
+    const { issueDate, dueDate, setIssueDate, setDueDate } = useInvoiceDraftStore()
 
     return (
         <View className="flex-row gap-3">
