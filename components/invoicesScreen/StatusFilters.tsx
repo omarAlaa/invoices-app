@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { InvoiceFilter, InvoiceStatus } from "@/lib/definitons";
 import { FlatList, View } from "react-native";
 import StatusChip from "./StatusChip";
 
-const CHIPS_DATA = ['All', 'Paid', 'Pending', 'Overdue']
+type Props = {
+    filter: InvoiceFilter;
+    setFilter: (filter: InvoiceFilter) => void;
+}
 
-export default function StatusFilters() {
-    const [filterSelected, setFilterSelected] = useState('All')
 
+const CHIPS_DATA: InvoiceStatus[] = ['all', 'paid', 'pending', 'overdue']
+
+export default function StatusFilters({ setFilter, filter }: Props) {
     return (
         <View>
             <FlatList
@@ -18,8 +22,8 @@ export default function StatusFilters() {
                 renderItem={({ item }) =>
                     <StatusChip
                         label={item}
-                        onPress={() => setFilterSelected(item)}
-                        filterSelected={filterSelected} />}
+                        onPress={() => setFilter(item)}
+                        filterSelected={filter} />}
             />
         </View>
     )

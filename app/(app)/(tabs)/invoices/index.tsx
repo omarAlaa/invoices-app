@@ -2,24 +2,18 @@ import InvoicesHeader from "@/components/invoicesScreen/InvoicesHeader";
 import StatusFilters from "@/components/invoicesScreen/StatusFilters";
 import FloatingAddButton from "@/components/shared/FloatingAddButton";
 import InvoiceOverview from "@/components/shared/InvoiceOverview";
-import ItemsList from "@/components/shared/ItemsList";
+import { useInvoices } from "@/features/invoices/api";
 import { useScrollFAB } from "@/hooks/useScrollFAB";
+import { InvoiceFilter } from "@/lib/definitons";
 import { Stack } from "expo-router";
 import { useState } from "react";
 import { RefreshControl, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 export default function InvoicesScreen() {
+    const [filter, setFilter] = useState<InvoiceFilter>('all')
+    const { data: invoices, isLoading, isError, refetch, isRefetching } = useInvoices(filter)
     const { scrollHandler, buttonStyle, titleStyle, onHeaderLayout } = useScrollFAB()
-    const [refreshing, setRefreshing] = useState(false)
-
-    const onRefresh = () => {
-        setRefreshing(true)
-
-        setTimeout(() => {
-            setRefreshing(false)
-        }, 2000)
-    }
 
     return (
         <View className="flex-1">
@@ -36,30 +30,30 @@ export default function InvoicesScreen() {
                 }}
             />
 
-            <Animated.ScrollView
+            <Animated.FlatList
+                data={invoices}
                 onScroll={scrollHandler}
                 scrollEventThrottle={16}
-                contentContainerClassName="px-8 pb-16 gap-8"
+                contentContainerClassName="flex-1 px-8 pb-16 gap-8"
+                ListHeaderComponent={
+                    <View className="gap-8">
+                        <View onLayout={onHeaderLayout}>
+                            <InvoicesHeader />
+                        </View>
+
+                        <StatusFilters filter={filter} setFilter={setFilter} />
+                    </View>
+                }
+                keyExtractor={item => item.id}
+                renderItem={({ item }) =>
+                    <InvoiceOverview invoiceListRow={item} />}
                 refreshControl={
                     <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
+                        refreshing={isRefetching}
+                        onRefresh={refetch}
                     />
                 }
-            >
-                <View onLayout={onHeaderLayout}>
-                    <InvoicesHeader />
-                </View>
-
-                <StatusFilters />
-
-                <ItemsList screen="invoice">
-                    {Array.from({ length: 20 }).map((_, index) => (
-                        <InvoiceOverview key={index} />
-                    ))}
-                </ItemsList>
-            </Animated.ScrollView>
-
+            />
             <FloatingAddButton animatedStyle={buttonStyle} screen='invoice' />
         </View>
     )

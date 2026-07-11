@@ -35,7 +35,7 @@ export interface ClientsSection {
     data: ClientStats[];
 }
 
-export type InvoiceStatus = 'pending' | 'paid' | 'overdue'
+export type InvoiceStatus = 'all' | 'pending' | 'paid' | 'overdue'
 
 export type Invoice = {
     id: string;
