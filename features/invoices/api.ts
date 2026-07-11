@@ -91,9 +91,9 @@ export function useInvoiceItems(invoiceId: string | undefined) {
 export function useClientInvoices(clientId: string | undefined) {
     return useQuery({
         queryKey: invoiceKeys.byClient(clientId ?? ''),
-        queryFn: async (): Promise<Invoice[]> => {
+        queryFn: async (): Promise<InvoiceListRow[]> => {
             const { data, error } = await supabase
-                .from('invoices')
+                .from('invoice_list_view')
                 .select('*')
                 .eq('client_id', clientId)
                 .order('issue_date', { ascending: false })
