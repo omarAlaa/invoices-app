@@ -18,7 +18,7 @@ export function formatCurrency(amount: number | undefined): string {
         }).format(amount);
     }
 
-    return ''
+    return '0'
 }
 
 export function groupByLetter(clients: ClientStats[] | undefined): ClientsSection[] {
