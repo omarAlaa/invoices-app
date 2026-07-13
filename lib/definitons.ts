@@ -59,6 +59,7 @@ export type Invoice = {
 export type InvoiceListRow = Invoice & {
     client_first_name: string;
     client_last_name: string | null;
+    client_email: string | undefined;
 }
 
 export type InvoiceItem = {

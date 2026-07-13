@@ -9,12 +9,16 @@ export const formatDate = (date: Date) => {
     })
 }
 
-export function formatCurrency(amount: number): string {
-    return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        maximumFractionDigits: 0,
-    }).format(amount);
+export function formatCurrency(amount: number | undefined): string {
+    if (amount) {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'EGP',
+            maximumFractionDigits: 0,
+        }).format(amount);
+    }
+
+    return ''
 }
 
 export function groupByLetter(clients: ClientStats[] | undefined): ClientsSection[] {

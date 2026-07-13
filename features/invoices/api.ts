@@ -59,8 +59,8 @@ export function useRecentInvoices() {
 export function useInvoice(id: string | undefined) {
     return useQuery({
         queryKey: invoiceKeys.detail(id ?? ''),
-        queryFn: async (): Promise<Invoice> => {
-            const { data, error } = await supabase.from('invoices').select('*').eq('id', id).single()
+        queryFn: async (): Promise<InvoiceListRow> => {
+            const { data, error } = await supabase.from('invoice_list_view').select('*').eq('id', id).single()
 
             if (error) throw error
 

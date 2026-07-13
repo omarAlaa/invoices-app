@@ -10,7 +10,10 @@ type Props = {
 
 export default function InvoiceOverview({ invoiceListRow }: Props) {
     return (
-        <Link href="/invoice/INV-0042" asChild>
+        <Link href={{
+            pathname: '/invoice/[invoiceId]',
+            params: { invoiceNumber: invoiceListRow.invoice_number, invoiceId: invoiceListRow.id }
+        }} asChild>
             <TouchableOpacity className="flex-row justify-between">
                 <View className="flex-row gap-2 items-center">
                     <View className="w-12 h-12 rounded-full bg-blue-200 justify-center items-center">
