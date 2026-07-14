@@ -40,17 +40,18 @@ export function useInvoices(filter: InvoiceFilter = 'all') {
     })
 }
 
-export function useRecentInvoices() {
+export function useRecentInvoices(limit = 4) {
     return useQuery({
         queryKey: invoiceKeys.lists(),
         queryFn: async (): Promise<InvoiceListRow[]> => {
             const { data, error } = await supabase
                 .from('invoice_list_view')
                 .select('*')
-                .limit(4)
-                .order('due_date', { ascending: true })
+                .order('created_at', { ascending: false })
+                .limit(limit)
 
             if (error) throw error
+
             return data
         },
     })

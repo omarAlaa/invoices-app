@@ -1,12 +1,13 @@
+import { formatCurrency } from "@/lib/utils";
 import { View } from "react-native";
 import TextField from "../shared/TextField";
 
 type Props = {
-    status: string,
-    money: number
+    status: string;
+    amount: number | undefined;
 }
 
-export default function StatusMoney({ status, money }: Props) {
+export default function StatusMoney({ status, amount }: Props) {
     return (
         <View className="gap-2">
             <View className="flex-row items-center gap-2">
@@ -15,7 +16,7 @@ export default function StatusMoney({ status, money }: Props) {
                 <TextField text={status} type="secondary" />
             </View>
 
-            <TextField text={`EGP ${money}`} className="text-lg font-bold" />
+            <TextField text={formatCurrency(amount)} className="text-lg font-bold" />
         </View>
     )
 }
