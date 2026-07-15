@@ -1,3 +1,4 @@
+import { useDeleteInvoice } from "@/features/invoices/api"
 import { Client, InvoiceItem, InvoiceListRow, NewInvoiceItem } from "@/lib/definitons"
 import { useClientDraftStore } from "@/store/useClientDraftStore"
 import { useInvoiceDraftStore } from "@/store/useInvoiceDraftStore"
@@ -16,6 +17,7 @@ type Props = {
 export default function OptionsMenu({ screen, invoice, client, items }: Props) {
     const { setInvoice, setClientName } = useInvoiceDraftStore()
     const { setClient } = useClientDraftStore()
+    const deleteInvoice = useDeleteInvoice()
     const systemColorScheme = useColorScheme()
 
     const handleMenuSelect = (id: string) => {
@@ -43,7 +45,17 @@ export default function OptionsMenu({ screen, invoice, client, items }: Props) {
                     {
                         text: "Delete",
                         style: "destructive",
-                        onPress: () => { }
+                        onPress: async () => {
+                            if (screen === 'invoice' && invoice) {
+                                try {
+                                    await deleteInvoice.mutateAsync(invoice.id)
+                                    Alert.alert('Invoice deleted')
+                                    router.back()
+                                } catch (err) {
+                                    Alert.alert('Could not delete invoice', (err as Error).message)
+                                }
+                            }
+                        }
                     }
                 ]
             )
