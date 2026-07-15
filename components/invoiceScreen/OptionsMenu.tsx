@@ -1,4 +1,5 @@
-import { InvoiceItem, InvoiceListRow, NewInvoiceItem } from "@/lib/definitons"
+import { Client, InvoiceItem, InvoiceListRow, NewInvoiceItem } from "@/lib/definitons"
+import { useClientDraftStore } from "@/store/useClientDraftStore"
 import { useInvoiceDraftStore } from "@/store/useInvoiceDraftStore"
 import { router } from "expo-router"
 import { Ellipsis } from "lucide-react-native"
@@ -7,20 +8,26 @@ import AnimatedMenu from "../shared/AnimatedMenu"
 
 type Props = {
     screen: string;
-    object: InvoiceListRow | undefined;
+    invoice?: InvoiceListRow | undefined;
+    client?: Client | undefined;
     items?: InvoiceItem[] | undefined;
 }
 
-export default function OptionsMenu({ screen, object, items }: Props) {
+export default function OptionsMenu({ screen, invoice, client, items }: Props) {
     const { setInvoice, setClientName } = useInvoiceDraftStore()
+    const { setClient } = useClientDraftStore()
     const systemColorScheme = useColorScheme()
 
     const handleMenuSelect = (id: string) => {
         if (id === 'edit') {
-            if (screen === 'invoice' && object && items) {
+            if (screen === 'invoice' && invoice && items) {
                 const invItems: NewInvoiceItem[] = items.map(item => { return { id: item.id, title: item.title, quantity: item.quantity.toString(), rate: item.rate.toString() } })
-                setInvoice(object.id, object.client_id, new Date(object.issue_date), new Date(object.due_date), invItems, object?.status)
-                setClientName(`${object.client_first_name}  ${object.client_last_name}`)
+                setInvoice(invoice.id, invoice.client_id, new Date(invoice.issue_date), new Date(invoice.due_date), invItems, invoice.status)
+                setClientName(`${invoice.client_first_name}  ${invoice.client_last_name}`)
+            }
+
+            if (screen === 'client' && client) {
+                setClient(client.id, client.first_name, client.last_name || '', client.email || '', client.phone || '')
             }
 
             router.navigate({

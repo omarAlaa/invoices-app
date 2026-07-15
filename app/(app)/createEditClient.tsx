@@ -20,7 +20,7 @@ export default function CreateEditClient() {
 
                 <AvatarController />
 
-                <ClientForm />
+                <ClientForm type={type} />
             </View>
         </KeyboardAwareScrollView>
     );

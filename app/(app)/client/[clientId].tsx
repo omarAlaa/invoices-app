@@ -4,6 +4,7 @@ import OptionsMenu from "@/components/invoiceScreen/OptionsMenu";
 import FloatingAddButton from "@/components/shared/FloatingAddButton";
 import InvoiceOverview from "@/components/shared/InvoiceOverview";
 import TextField from "@/components/shared/TextField";
+import { useClient } from "@/features/clients/api";
 import { useClientInvoices } from "@/features/invoices/api";
 import { useScrollFAB } from "@/hooks/useScrollFAB";
 import { Stack, useLocalSearchParams } from "expo-router";
@@ -13,7 +14,8 @@ import Animated from "react-native-reanimated";
 export default function ClientScreen() {
     const { clientId, fullName } = useLocalSearchParams()
     const { scrollHandler, buttonStyle } = useScrollFAB()
-    const { data: clientInvoices, isLoading, isError, refetch, isRefetching } = useClientInvoices(clientId.toString())
+    const { data: clientInfo, isLoading, isError, refetch, isRefetching } = useClient(clientId.toString())
+    const { data: clientInvoices, isLoading: isInvoicesLoading, isError: isInvoicesError, refetch: refetchInvoices, isRefetching: isInvoicesRefetching } = useClientInvoices(clientId.toString())
 
     return (
         <View className="flex-1 px-8">
@@ -22,7 +24,7 @@ export default function ClientScreen() {
                     title: `${fullName}`,
                     headerBackButtonDisplayMode: 'minimal',
                     headerShadowVisible: false,
-                    headerRight: () => <OptionsMenu screen="client" />
+                    headerRight: () => <OptionsMenu client={clientInfo} screen="client" />
                 }}
             />
 
@@ -33,7 +35,7 @@ export default function ClientScreen() {
                 contentContainerClassName="flex-1 gap-4 pt-4 pb-16"
                 ListHeaderComponent={
                     <View className="gap-4">
-                        <ClientInfo clientId={clientId} />
+                        <ClientInfo client={clientInfo} />
 
                         <ClientStatusCards clientId={clientId} />
 
@@ -45,8 +47,8 @@ export default function ClientScreen() {
                     <InvoiceOverview invoiceListRow={item} />}
                 refreshControl={
                     <RefreshControl
-                        refreshing={isRefetching}
-                        onRefresh={refetch}
+                        refreshing={isInvoicesRefetching}
+                        onRefresh={refetchInvoices}
                     />
                 }
             />

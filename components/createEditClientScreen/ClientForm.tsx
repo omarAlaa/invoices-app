@@ -1,24 +1,26 @@
-import { useCreateClient } from "@/features/clients/api";
+import { useCreateClient, useUpdateClient } from "@/features/clients/api";
+import { useClientDraftStore } from "@/store/useClientDraftStore";
 import { useRouter } from "expo-router";
-import { useState } from "react";
 import { Alert, View } from "react-native";
 import ActionButton from "../shared/ActionButton";
 import InputField from "../shared/InputField";
 import TextField from "../shared/TextField";
 
-export default function ClientForm() {
+type Props = {
+    type: string | string[];
+}
+
+export default function ClientForm({ type }: Props) {
     const createClient = useCreateClient()
-    const [fName, setFName] = useState('')
-    const [lName, setLName] = useState('')
-    const [email, setEmail] = useState('')
-    const [phone, setPhone] = useState('')
+    const updateClient = useUpdateClient()
+    const { id, firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone, reset } = useClientDraftStore()
     const router = useRouter()
 
-    const handleCreateEditClient = async () => {
+    const handleCreateClient = async () => {
         try {
             await createClient.mutateAsync({
-                first_name: fName,
-                last_name: lName,
+                first_name: firstName,
+                last_name: lastName,
                 email: email,
                 phone: phone,
             })
@@ -30,18 +32,36 @@ export default function ClientForm() {
         }
     }
 
+    const handleUpdateClient = async () => {
+        try {
+            await updateClient.mutateAsync({
+                id,
+                first_name: firstName,
+                last_name: lastName,
+                email,
+                phone,
+            })
+
+            Alert.alert('Client updated')
+            reset()
+            router.back()
+        } catch (error) {
+            Alert.alert('Could not create client')
+        }
+    }
+
     return (
         <View className="gap-4">
             <View className="gap-2">
                 <TextField text="First name" type="secondary" />
 
-                <InputField value={fName} setValue={setFName} />
+                <InputField value={firstName} setValue={setFirstName} />
             </View>
 
             <View className="gap-2">
                 <TextField text="Last name" type="secondary" />
 
-                <InputField value={lName} setValue={setLName} />
+                <InputField value={lastName} setValue={setLastName} />
             </View>
 
             <View className="gap-2">
@@ -56,9 +76,14 @@ export default function ClientForm() {
                 <InputField type="tel" value={phone} setValue={setPhone} />
             </View>
 
-            <ActionButton onPress={handleCreateEditClient}>
-                <TextField text="Save client" type="highlighted" />
-            </ActionButton>
+            {type === 'New' ?
+                <ActionButton onPress={handleCreateClient}>
+                    <TextField text="Create client" type="highlighted" />
+                </ActionButton>
+                :
+                <ActionButton onPress={handleUpdateClient}>
+                    <TextField text="Update client" type="highlighted" />
+                </ActionButton>}
         </View>
     )
 }

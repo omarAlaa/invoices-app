@@ -25,7 +25,7 @@ export default function Invoice() {
                             title: `Invoice #${invoiceNumber}`,
                             headerBackButtonDisplayMode: 'minimal',
                             headerShadowVisible: false,
-                            headerRight: () => <OptionsMenu object={invoice} items={items} screen="invoice" />
+                            headerRight: () => <OptionsMenu invoice={invoice} items={items} screen="invoice" />
                         }}
                     />
 
