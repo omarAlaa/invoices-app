@@ -6,9 +6,10 @@ import Animated from "react-native-reanimated";
 type Props = {
     animatedStyle: any;
     screen?: string;
+    onPress?: () => void;
 }
 
-export default function FloatingAddButton({ animatedStyle, screen }: Props) {
+export default function FloatingAddButton({ animatedStyle, screen, onPress }: Props) {
     return (
         <Animated.View
             style={animatedStyle}
@@ -20,7 +21,7 @@ export default function FloatingAddButton({ animatedStyle, screen }: Props) {
                     params: { type: 'New' }
                 }}
                 asChild>
-                <TouchableOpacity className="items-center justify-center w-20 h-20 rounded-full bg-blue-200 dark:bg-blue-950">
+                <TouchableOpacity onPress={onPress} className="items-center justify-center w-20 h-20 rounded-full bg-blue-200 dark:bg-blue-950">
                     <Plus size={40} color='#2563eb' />
                 </TouchableOpacity>
             </Link>

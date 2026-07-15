@@ -7,6 +7,7 @@ import TextField from "@/components/shared/TextField";
 import { useClient } from "@/features/clients/api";
 import { useClientInvoices } from "@/features/invoices/api";
 import { useScrollFAB } from "@/hooks/useScrollFAB";
+import { useInvoiceDraftStore } from "@/store/useInvoiceDraftStore";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { RefreshControl, View } from "react-native";
 import Animated from "react-native-reanimated";
@@ -16,6 +17,12 @@ export default function ClientScreen() {
     const { scrollHandler, buttonStyle } = useScrollFAB()
     const { data: clientInfo, isLoading, isError, refetch, isRefetching } = useClient(clientId.toString())
     const { data: clientInvoices, isLoading: isInvoicesLoading, isError: isInvoicesError, refetch: refetchInvoices, isRefetching: isInvoicesRefetching } = useClientInvoices(clientId.toString())
+    const { setSelectedClientId, setClientName } = useInvoiceDraftStore()
+
+    const handleNewInvoice = () => {
+        setSelectedClientId(clientId.toString())
+        setClientName(fullName.toString())
+    }
 
     return (
         <View className="flex-1 px-8">
@@ -53,7 +60,7 @@ export default function ClientScreen() {
                 }
             />
 
-            <FloatingAddButton animatedStyle={buttonStyle} screen="clientInvoices" />
+            <FloatingAddButton animatedStyle={buttonStyle} screen="clientInvoices" onPress={handleNewInvoice} />
         </View>
     )
 }
