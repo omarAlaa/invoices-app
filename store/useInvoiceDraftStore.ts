@@ -1,8 +1,10 @@
-import { Client, InvoiceStatus, NewInvoiceItem } from '@/lib/definitons';
+import { InvoiceStatus, NewInvoiceItem } from '@/lib/definitons';
 import { create } from 'zustand';
 
 interface InvoiceDraftState {
-    selectedClient: Client | null;
+    id: string,
+    selectedClientId: string | null;
+    clientName: string;
     issueDate: Date;
     dueDate: Date;
     invoiceItems: NewInvoiceItem[];
@@ -10,18 +12,22 @@ interface InvoiceDraftState {
     discountAmount: number;
     invoiceStatus: InvoiceStatus;
 
-    setSelectedClient: (selectedClient: Client) => void;
+    setSelectedClientId: (selectedClient: string) => void;
+    setClientName: (name: string) => void;
     setIssueDate: (issueDate: Date) => void;
     setDueDate: (dueDate: Date) => void;
     setStatus: (status: InvoiceStatus) => void;
     addItem: () => void;
     setInvoiceItems: (items: NewInvoiceItem[]) => void;
     setTaxRate: (taxRate: number) => void;
+    setInvoice: (id: string, selectedClientId: string, issueDate: Date, dueDate: Date, items: NewInvoiceItem[], invoiceStatus: InvoiceStatus) => void;
     reset: () => void;
 }
 
 export const useInvoiceDraftStore = create<InvoiceDraftState>((set) => ({
-    selectedClient: null,
+    id: '',
+    selectedClientId: null,
+    clientName: '',
     issueDate: new Date(),
     dueDate: new Date(Date.now() + 12096e5),
     invoiceItems: [],
@@ -29,7 +35,8 @@ export const useInvoiceDraftStore = create<InvoiceDraftState>((set) => ({
     discountAmount: 0,
     invoiceStatus: 'pending',
 
-    setSelectedClient: (selectedClient: Client) => set({ selectedClient }),
+    setSelectedClientId: (selectedClientId: string) => set({ selectedClientId }),
+    setClientName: (name: string) => set({ clientName: name }),
     setIssueDate: (issueDate: Date) => set({ issueDate }),
     setDueDate: (dueDate: Date) => set({ dueDate }),
     setStatus: (status: InvoiceStatus) => set({ invoiceStatus: status }),
@@ -37,13 +44,15 @@ export const useInvoiceDraftStore = create<InvoiceDraftState>((set) => ({
         set((state) => ({
             invoiceItems: [
                 ...state.invoiceItems,
-                { id: Date.now(), title: '', quantity: '', rate: '' },
+                { id: Date.now().toString(), title: '', quantity: '', rate: '' },
             ],
         })),
     setInvoiceItems: (items: NewInvoiceItem[]) => set({ invoiceItems: items }),
     setTaxRate: (taxRate: number) => set({ taxRate }),
+    setInvoice: (id, selectedClientId, issueDate, dueDate, items, invoiceStatus) => set({ id, selectedClientId, issueDate, dueDate, invoiceItems: items, invoiceStatus }),
     reset: () => set({
-        selectedClient: null,
+        id: '',
+        selectedClientId: null,
         issueDate: new Date(),
         dueDate: new Date(Date.now() + 12096e5),
         invoiceItems: [],

@@ -198,17 +198,17 @@ export function useDeleteInvoice() {
 export type UpdateInvoicePayload = {
     id: string;
     clientId?: string;
-    issueDate?: string;
-    dueDate?: string;
+    issueDate?: Date;
+    dueDate?: Date;
     taxRate?: number;
-    discountAmount?: number;
+    status?: InvoiceStatus;
 }
 
 export function useUpdateInvoice() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: async ({ id, clientId, issueDate, dueDate, taxRate, discountAmount }: UpdateInvoicePayload): Promise<Invoice> => {
+        mutationFn: async ({ id, clientId, issueDate, dueDate, taxRate, status }: UpdateInvoicePayload): Promise<Invoice> => {
             const { data, error } = await supabase
                 .from('invoices')
                 .update({
@@ -216,7 +216,7 @@ export function useUpdateInvoice() {
                     issue_date: issueDate,
                     due_date: dueDate,
                     tax_rate: taxRate,
-                    discount_amount: discountAmount,
+                    status,
                 })
                 .eq('id', id)
                 .select()
@@ -277,16 +277,16 @@ export function useUpdateInvoiceItem() {
         mutationFn: async (input: {
             id: string;
             invoiceId: string;
-            description?: string;
+            title?: string;
             quantity?: number;
-            unitPrice?: number;
+            rate?: number;
         }): Promise<InvoiceItem> => {
             const { data, error } = await supabase
                 .from('invoice_items')
                 .update({
-                    description: input.description,
+                    title: input.title,
                     quantity: input.quantity,
-                    unit_price: input.unitPrice,
+                    rate: input.rate,
                 })
                 .eq('id', input.id)
                 .select()

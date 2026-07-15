@@ -10,15 +10,20 @@ type Props = {
 
 const ClientsList = forwardRef<ClientPickerSheetRef>(
     ({ }, ref) => {
-        const { selectedClient, setSelectedClient } = useInvoiceDraftStore()
+        const { selectedClientId, setSelectedClientId, setClientName } = useInvoiceDraftStore()
         const { data: clients, isLoading, isError, refetch, isRefetching } = useClients()
+
+        const handleSelect = (client: Client) => {
+            setSelectedClientId(client.id)
+            setClientName(`${client.first_name} ${client.last_name}`)
+        }
 
         return (
             <ClientPickerSheet
                 ref={ref}
                 clients={clients}
-                selectedId={selectedClient?.id}
-                onSelect={setSelectedClient}
+                selectedId={selectedClientId || undefined}
+                onSelect={handleSelect}
             />
         )
     }

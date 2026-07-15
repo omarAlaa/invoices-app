@@ -73,7 +73,7 @@ export type InvoiceItem = {
 }
 
 export type NewInvoiceItem = {
-    id: number;
+    id: string;
     title: string;
     quantity: string;
     rate: string;

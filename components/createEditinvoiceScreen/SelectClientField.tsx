@@ -8,14 +8,14 @@ type Props = {
 }
 
 export default function SelectClientField({ onPress }: Props) {
-    const { selectedClient } = useInvoiceDraftStore()
+    const { clientName } = useInvoiceDraftStore()
 
     return (
         <View className='gap-2'>
             <TextField text="Bill to" type="secondary" />
 
             <ClientSelector
-                name={selectedClient ? `${selectedClient.first_name} ${selectedClient.last_name}` : null}
+                name={clientName}
                 onPress={onPress}
             />
         </View>

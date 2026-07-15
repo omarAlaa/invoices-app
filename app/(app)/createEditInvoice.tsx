@@ -36,7 +36,7 @@ export default function CreateEditInvoice() {
 
                     <InvoiceStatusSelector />
 
-                    <CreateEditInvoiceActions />
+                    <CreateEditInvoiceActions type={type} />
                 </View>
             </KeyboardAwareScrollView>
 

@@ -1,11 +1,30 @@
+import { useDeleteInvoiceItem } from "@/features/invoices/api";
+import { NewInvoiceItem } from "@/lib/definitons";
 import { useInvoiceDraftStore } from "@/store/useInvoiceDraftStore";
-import { TouchableOpacity, View } from "react-native";
+import { Alert, TouchableOpacity, View } from "react-native";
 import TextField from "../shared/TextField";
 import ItemCard from "./ItemCard";
 import TotalPriceCard from "./TotalPriceCard";
 
 export default function InvoiceItemsSection() {
-    const { invoiceItems, addItem, setInvoiceItems } = useInvoiceDraftStore()
+    const { invoiceItems, addItem, setInvoiceItems, id } = useInvoiceDraftStore()
+    const deleteInvoiceItem = useDeleteInvoiceItem()
+
+    const handleRemove = async (item: NewInvoiceItem) => {
+        if (id) {
+            try {
+                deleteInvoiceItem.mutateAsync({
+                    id: item.id,
+                    invoiceId: id
+                })
+            } catch (err) {
+                Alert.alert('Could not delete item', (err as Error).message)
+                return
+            }
+        }
+
+        setInvoiceItems(invoiceItems.filter(i => i.id !== item.id))
+    }
 
     return (
         <View className="flex-1 gap-2 pb-1">
@@ -15,12 +34,11 @@ export default function InvoiceItemsSection() {
                 <ItemCard
                     key={item.id}
                     item={item}
-                    onChange={(updated) =>
+                    onChange={(updated) => {
                         setInvoiceItems(invoiceItems.map(i => i.id === updated.id ? updated : i))
                     }
-                    onRemove={() =>
-                        setInvoiceItems(invoiceItems.filter(i => i.id !== item.id))
                     }
+                    onRemove={() => handleRemove(item)}
                     autoFocus={index === invoiceItems.length - 1 && invoiceItems.length >= 1}
                 />
             ))}
