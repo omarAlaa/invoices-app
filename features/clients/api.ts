@@ -17,6 +17,7 @@ export function useClients() {
             const { data, error } = await supabase
                 .from('clients')
                 .select('*')
+                .eq('is_archived', false)
                 .order('first_name', { ascending: true })
 
             if (error) throw error
@@ -69,6 +70,7 @@ export function useClientsWithStats() {
             const { data, error } = await supabase
                 .from('client_stats')
                 .select('*')
+                .eq('is_archived', false)
                 .order('first_name', { ascending: true })
 
             if (error) throw error

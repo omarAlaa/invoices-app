@@ -1,3 +1,4 @@
+import { useArchiveClient } from "@/features/clients/api"
 import { useDeleteInvoice } from "@/features/invoices/api"
 import { Client, InvoiceItem, InvoiceListRow, NewInvoiceItem } from "@/lib/definitons"
 import { useClientDraftStore } from "@/store/useClientDraftStore"
@@ -18,6 +19,7 @@ export default function OptionsMenu({ screen, invoice, client, items }: Props) {
     const { setInvoice, setClientName } = useInvoiceDraftStore()
     const { setClient } = useClientDraftStore()
     const deleteInvoice = useDeleteInvoice()
+    const deleteClient = useArchiveClient()
     const systemColorScheme = useColorScheme()
 
     const handleMenuSelect = (id: string) => {
@@ -54,6 +56,18 @@ export default function OptionsMenu({ screen, invoice, client, items }: Props) {
                                 } catch (err) {
                                     Alert.alert('Could not delete invoice', (err as Error).message)
                                 }
+                                finally {
+                                    return
+                                }
+                            }
+                            if (screen === 'client' && client) {
+                                try {
+                                    await deleteClient.mutateAsync(client.id)
+                                    Alert.alert('Client deleted')
+                                    router.back()
+                                } catch (err) {
+                                    Alert.alert('Could not delete client', (err as Error).message)
+                                }
                             }
                         }
                     }
@@ -63,7 +77,7 @@ export default function OptionsMenu({ screen, invoice, client, items }: Props) {
     }
 
     return (
-        <AnimatedMenu
+        !client?.is_archived && <AnimatedMenu
             onPressAction={handleMenuSelect}
             actions={[
                 { id: 'edit', title: 'Edit' },
