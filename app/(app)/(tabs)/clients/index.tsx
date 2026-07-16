@@ -3,9 +3,10 @@ import ClientsHeader from "@/components/clientsTab/ClientsHeader"
 import FloatingAddButton from "@/components/shared/FloatingAddButton"
 import TextField from "@/components/shared/TextField"
 import { useClientsWithStats } from "@/features/clients/api"
+import { useDashboardSummary } from "@/features/stats/api"
 import { useScrollFAB } from "@/hooks/useScrollFAB"
 import { ClientsSection, ClientStats } from "@/lib/definitons"
-import { groupByLetter } from "@/lib/utils"
+import { formatCurrency, groupByLetter } from "@/lib/utils"
 import { Stack } from "expo-router"
 import { User } from "lucide-react-native"
 import { useCallback, useMemo } from "react"
@@ -14,6 +15,7 @@ import Animated from "react-native-reanimated"
 
 export default function Clients() {
     const { data: clients, isLoading, isError, refetch, isRefetching } = useClientsWithStats()
+    const { data: dashboardSummary } = useDashboardSummary()
     const { onScroll, buttonStyle, titleStyle, onHeaderLayout } = useScrollFAB()
     const sections = useMemo(() => groupByLetter(clients), [clients])
 
@@ -49,7 +51,7 @@ export default function Clients() {
                             <ClientsHeader />
                         </View>
 
-                        <TextField text="24 clients · $42,180 billed all-time" type="secondary" className="text-lg" />
+                        <TextField text={`${clients?.length} clients · ${formatCurrency(dashboardSummary?.totalOutstanding)} billed all-time`} type="secondary" className="text-lg" />
                     </View>
                 }
                 onScroll={onScroll}
@@ -65,7 +67,7 @@ export default function Clients() {
                         <TextField text="No clients yet" />
                     </View>
                 }
-                contentContainerStyle={{ paddingBottom: 100 }}
+                contentContainerStyle={{ paddingBottom: 100, flex: 1 }}
                 refreshControl={
                     <RefreshControl
                         refreshing={isRefetching}
