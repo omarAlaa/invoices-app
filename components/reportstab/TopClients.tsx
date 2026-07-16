@@ -1,33 +1,38 @@
-import { View } from "react-native";
+import { formatCurrency } from "@/lib/utils";
+import { Link } from "expo-router";
+import { TouchableOpacity, View } from "react-native";
 import TextField from "../shared/TextField";
 
-export default function TopClients() {
+type Props = {
+    topClients: {
+        clientId: string;
+        name: string;
+        total: number;
+    }[] | undefined;
+}
+
+export default function TopClients({ topClients }: Props) {
     return (
-        <View className="gap-1">
+        topClients && <View className="gap-1">
             <TextField text="Top clients" className="font-bold text-lg" />
 
             <View className="gap-2">
-                <View className="flex-row justify-between items-center py-2">
-                    <TextField text="1. Nova Midea" className="text-lg" />
+                {topClients.map((client, index) =>
+                    <>
+                        <Link href={{
+                            pathname: '/client/[clientId]',
+                            params: { clientId: client.clientId, fullName: client.name }
+                        }} asChild>
+                            <TouchableOpacity key={client.clientId} className="flex-row justify-between items-center py-2">
+                                <TextField text={`${index + 1}. ${client.name}`} className="text-lg" />
 
-                    <TextField text="3,200" className="font-bold" />
-                </View>
+                                <TextField text={formatCurrency(client.total)} className="font-bold" />
+                            </TouchableOpacity>
+                        </Link>
 
-                <View className="border-b border-gray-400" />
-
-                <View className="flex-row justify-between items-center py-2">
-                    <TextField text="2. Nova Midea" className="text-lg" />
-
-                    <TextField text="3,200" className="font-bold" />
-                </View>
-
-                <View className="border-b border-gray-400" />
-
-                <View className="flex-row justify-between items-center py-2">
-                    <TextField text="3. Nova Midea" className="text-lg" />
-
-                    <TextField text="3,200" className="font-bold" />
-                </View>
+                        {index !== topClients.length - 1 && <View className="border-b border-gray-400" />}
+                    </>
+                )}
             </View>
         </View>
     )

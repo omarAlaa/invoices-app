@@ -3,6 +3,7 @@ import ReportsHeader from "@/components/reportstab/ReportsHeader"
 import RevenueChart from "@/components/reportstab/RevenueChart"
 import StatsCard from "@/components/reportstab/StatsCards"
 import TopClients from "@/components/reportstab/TopClients"
+import { useReportsSummary } from "@/features/reports/api"
 import { useScrollFAB } from "@/hooks/useScrollFAB"
 import { Stack } from "expo-router"
 import { useState } from "react"
@@ -10,16 +11,9 @@ import { RefreshControl, ScrollView, View } from "react-native"
 import Animated from "react-native-reanimated"
 
 export default function Reports() {
+    const { data: summary, isLoading, isError, refetch, isRefetching } = useReportsSummary(('this_month'))
     const [refreshing, setRefreshing] = useState(false)
     const { onScrollNoFAB, titleStyle, onHeaderLayout } = useScrollFAB()
-
-    const onRefresh = () => {
-        setRefreshing(true)
-
-        setTimeout(() => {
-            setRefreshing(false)
-        }, 2000)
-    }
 
     return (
         <ScrollView
@@ -27,8 +21,8 @@ export default function Reports() {
             onScroll={onScrollNoFAB}
             refreshControl={
                 <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
+                    refreshing={isRefetching}
+                    onRefresh={refetch}
                 />
             }
         >
@@ -49,13 +43,18 @@ export default function Reports() {
                 <ReportsHeader />
             </View>
 
-            <StatsCard />
+            <StatsCard
+                revenue={summary?.revenue}
+                oustanding={summary?.outstanding}
+                invoicesSent={summary?.invoicesSent}
+                avgValue={summary?.averageValue}
+            />
 
             <RevenueChart />
 
-            <InvoicesStatus />
+            <InvoicesStatus statusBreakdown={summary?.statusBreakdown} invsCount={summary?.invoicesSent} />
 
-            <TopClients />
+            <TopClients topClients={summary?.topClients} />
         </ScrollView>
     )
 }
