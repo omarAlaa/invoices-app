@@ -53,6 +53,7 @@ export const useInvoiceDraftStore = create<InvoiceDraftState>((set) => ({
     reset: () => set({
         id: '',
         selectedClientId: null,
+        clientName: '',
         issueDate: new Date(),
         dueDate: new Date(Date.now() + 12096e5),
         invoiceItems: [],

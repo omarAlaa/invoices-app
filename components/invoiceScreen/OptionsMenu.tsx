@@ -5,7 +5,10 @@ import { useClientDraftStore } from "@/store/useClientDraftStore"
 import { useInvoiceDraftStore } from "@/store/useInvoiceDraftStore"
 import { router } from "expo-router"
 import { Ellipsis } from "lucide-react-native"
-import { Alert, TouchableOpacity, useColorScheme } from "react-native"
+import { useState } from "react"
+import { Alert, Modal, TouchableOpacity, useColorScheme, View } from "react-native"
+import CreateEditClient from "../createEditClientScreen/CreateEditClient"
+import CreateEditInvoice from "../createEditinvoiceScreen/CreateEditInvoice"
 import AnimatedMenu from "../shared/AnimatedMenu"
 
 type Props = {
@@ -21,6 +24,8 @@ export default function OptionsMenu({ screen, invoice, client, items }: Props) {
     const deleteInvoice = useDeleteInvoice()
     const deleteClient = useArchiveClient()
     const systemColorScheme = useColorScheme()
+    const [showClientModal, setShowClientModal] = useState(false)
+    const [showInvoiceModal, setShowInvoiceModal] = useState(false)
 
     const handleMenuSelect = (id: string) => {
         if (id === 'edit') {
@@ -34,10 +39,11 @@ export default function OptionsMenu({ screen, invoice, client, items }: Props) {
                 setClient(client.id, client.first_name, client.last_name || '', client.email || '', client.phone || '')
             }
 
-            router.navigate({
-                pathname: screen === 'invoice' ? '/createEditInvoice' : '/createEditClient',
-                params: { type: 'Edit' }
-            })
+            if (screen === 'client') {
+                setShowClientModal(true)
+            } else {
+                setShowInvoiceModal(true)
+            }
         } else {
             Alert.alert(
                 `Delete ${screen}`,
@@ -77,16 +83,36 @@ export default function OptionsMenu({ screen, invoice, client, items }: Props) {
     }
 
     return (
-        !client?.is_archived && <AnimatedMenu
-            onPressAction={handleMenuSelect}
-            actions={[
-                { id: 'edit', title: 'Edit' },
-                { id: 'delete', title: 'Delete', destructive: true },
-            ]}
-        >
-            <TouchableOpacity className="flex-1 justify-center items-end w-14">
-                <Ellipsis color={systemColorScheme === 'dark' ? 'white' : 'black'} />
-            </TouchableOpacity>
-        </AnimatedMenu>
+        !client?.is_archived && <View className="justify-center items-center">
+            <AnimatedMenu
+                onPressAction={handleMenuSelect}
+                actions={[
+                    { id: 'edit', title: 'Edit' },
+                    { id: 'delete', title: 'Delete', destructive: true },
+                ]}
+            >
+                <TouchableOpacity className="flex-1 justify-center items-center w-14">
+                    <Ellipsis color={systemColorScheme === 'dark' ? 'white' : 'black'} />
+                </TouchableOpacity>
+            </AnimatedMenu>
+
+            <Modal
+                visible={showClientModal}
+                animationType="slide"
+                presentationStyle="pageSheet"
+                onRequestClose={() => setShowClientModal(false)}
+            >
+                <CreateEditClient type='Edit' onClose={() => setShowClientModal(false)} />
+            </Modal>
+
+            <Modal
+                visible={showInvoiceModal}
+                animationType="slide"
+                presentationStyle="pageSheet"
+                onRequestClose={() => setShowInvoiceModal(false)}
+            >
+                <CreateEditInvoice type='Edit' onClose={() => setShowInvoiceModal(false)} />
+            </Modal>
+        </View>
     )
 }

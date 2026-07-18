@@ -76,14 +76,16 @@ export default function ClientForm({ type }: Props) {
                 <InputField type="tel" value={phone} setValue={setPhone} />
             </View>
 
-            {type === 'New' ?
-                <ActionButton onPress={handleCreateClient}>
-                    <TextField text="Create client" type="highlighted" />
-                </ActionButton>
-                :
-                <ActionButton onPress={handleUpdateClient}>
-                    <TextField text="Update client" type="highlighted" />
-                </ActionButton>}
+            {
+                type === 'New' ?
+                    <ActionButton onPress={handleCreateClient}>
+                        <TextField text="Save client" type="highlighted" />
+                    </ActionButton>
+                    :
+                    <ActionButton onPress={handleUpdateClient}>
+                        <TextField text="Update client" type="highlighted" />
+                    </ActionButton>
+            }
         </View>
     )
 }

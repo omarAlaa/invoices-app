@@ -7,9 +7,10 @@ import TextField from "../shared/TextField";
 
 type Props = {
     type: string | string[];
+    saveDraft: () => void;
 }
 
-export default function CreateEditInvoiceActions({ type }: Props) {
+export default function CreateEditInvoiceActions({ type, saveDraft }: Props) {
     const draftInvoice = useInvoiceDraftStore()
     const createInvoice = useCreateInvoice()
     const updateInvoice = useUpdateInvoice()
@@ -73,7 +74,7 @@ export default function CreateEditInvoiceActions({ type }: Props) {
 
         type === 'New' ?
             <View className="flex-row gap-2 p-2">
-                <ActionButton isSecondary>
+                <ActionButton isSecondary onPress={saveDraft}>
                     <TextField text="Save as draft" className="font-bold text-lg" />
                 </ActionButton>
 

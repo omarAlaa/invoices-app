@@ -1,7 +1,9 @@
-import { Link } from "expo-router";
 import { Plus } from "lucide-react-native";
-import { TouchableOpacity } from "react-native";
+import { useState } from "react";
+import { Modal, TouchableOpacity } from "react-native";
 import Animated from "react-native-reanimated";
+import CreateEditClient from "../createEditClientScreen/CreateEditClient";
+import CreateEditInvoice from "../createEditinvoiceScreen/CreateEditInvoice";
 
 type Props = {
     animatedStyle: any;
@@ -10,21 +12,46 @@ type Props = {
 }
 
 export default function FloatingAddButton({ animatedStyle, screen, onPress }: Props) {
+    const [showClientModal, setShowClientModal] = useState(false)
+    const [showInvoiceModal, setShowInvoiceModal] = useState(false)
+
+    const handlePress = () => {
+        if (onPress) onPress
+
+        if (screen === 'client') {
+            setShowClientModal(true)
+        } else {
+            setShowInvoiceModal(true)
+        }
+    }
+
     return (
         <Animated.View
             style={animatedStyle}
             className={`absolute ${screen === 'clientInvoices' ? 'bottom-16 right-12' : 'bottom-10 right-10'}`}
         >
-            <Link
-                href={{
-                    pathname: screen === 'client' ? '/createEditClient' : '/createEditInvoice',
-                    params: { type: 'New' }
-                }}
-                asChild>
-                <TouchableOpacity onPress={onPress} className="items-center justify-center w-20 h-20 rounded-full bg-blue-200 dark:bg-blue-950">
-                    <Plus size={40} color='#2563eb' />
-                </TouchableOpacity>
-            </Link>
+
+            <TouchableOpacity onPress={handlePress} className="items-center justify-center w-20 h-20 rounded-full bg-blue-200 dark:bg-blue-950">
+                <Plus size={40} color='#2563eb' />
+            </TouchableOpacity>
+
+            <Modal
+                visible={showClientModal}
+                animationType="slide"
+                presentationStyle="pageSheet"
+                onRequestClose={() => setShowClientModal(false)}
+            >
+                <CreateEditClient type='New' onClose={() => setShowClientModal(false)} />
+            </Modal>
+
+            <Modal
+                visible={showInvoiceModal}
+                animationType="slide"
+                presentationStyle="pageSheet"
+                onRequestClose={() => setShowInvoiceModal(false)}
+            >
+                <CreateEditInvoice type='New' onClose={() => setShowInvoiceModal(false)} />
+            </Modal>
         </Animated.View>
     )
 }
