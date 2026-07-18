@@ -1,4 +1,4 @@
-import { SquarePen, Trash2 } from 'lucide-react-native';
+import { Copy, SquarePen, Trash2 } from 'lucide-react-native';
 import React, { useRef, useState } from 'react';
 import { Dimensions, Modal, Pressable, StyleSheet, TouchableOpacity, useColorScheme, View } from 'react-native';
 import TextField from './TextField';
@@ -78,7 +78,7 @@ export default function AnimatedMenu({ actions, onPressAction, children }: Anima
                             >
                                 <TextField text={action.title} className='text-xl' type={action.destructive ? 'destructive' : undefined} />
 
-                                {action.destructive ? <Trash2 color='red' /> : <SquarePen color={isDark ? 'white' : 'black'} />}
+                                {action.destructive ? <Trash2 color='red' /> : action.id === 'duplicate' ? <Copy color={isDark ? 'white' : 'black'} /> : <SquarePen color={isDark ? 'white' : 'black'} />}
                             </TouchableOpacity>
                             {index < actions.length - 1 && <View className='border-b border-gray-300' />}
                         </View>

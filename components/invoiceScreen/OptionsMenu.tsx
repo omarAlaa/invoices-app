@@ -29,22 +29,20 @@ export default function OptionsMenu({ screen, invoice, client, items }: Props) {
     const [showInvoiceModal, setShowInvoiceModal] = useState(false)
 
     const handleMenuSelect = (id: string) => {
-        if (id === 'edit') {
-            if (screen === 'invoice' && invoice && items) {
+        if (id === 'duplicate') {
+            if (invoice && items) {
                 const invItems: NewInvoiceItem[] = items.map(item => { return { id: item.id, title: item.title, quantity: item.quantity.toString(), rate: item.rate.toString() } })
-                setInvoice(invoice.id, invoice.client_id, new Date(invoice.issue_date), new Date(invoice.due_date), invItems, invoice.status)
-                setClientName(`${invoice.client_first_name}  ${invoice.client_last_name}`)
+                setInvoice(invoice.id, invoice.client_id, new Date(), new Date(Date.now() + 12096e5), invItems, 'pending')
+                setClientName(`${invoice.client_first_name} ${invoice.client_last_name}`)
             }
 
-            if (screen === 'client' && client) {
+            setShowInvoiceModal(true)
+        } else if (id === 'edit') {
+            if (client) {
                 setClient(client.id, client.first_name, client.last_name || '', client.email || '', client.phone || '')
             }
 
-            if (screen === 'client') {
-                setShowClientModal(true)
-            } else {
-                setShowInvoiceModal(true)
-            }
+            setShowClientModal(true)
         } else {
             Alert.alert(
                 `Delete ${screen}`,
@@ -88,7 +86,7 @@ export default function OptionsMenu({ screen, invoice, client, items }: Props) {
             <AnimatedMenu
                 onPressAction={handleMenuSelect}
                 actions={[
-                    { id: 'edit', title: 'Edit' },
+                    screen === 'invoice' ? { id: 'duplicate', title: 'Duplicate' } : { id: 'edit', title: 'Edit' },
                     { id: 'delete', title: 'Delete', destructive: true },
                 ]}
             >
@@ -101,7 +99,6 @@ export default function OptionsMenu({ screen, invoice, client, items }: Props) {
                 visible={showClientModal}
                 animationType="slide"
                 presentationStyle="pageSheet"
-                onRequestClose={() => setShowClientModal(false)}
             >
                 <CreateEditClient type='Edit' onClose={() => setShowClientModal(false)} />
             </Modal>
@@ -110,10 +107,9 @@ export default function OptionsMenu({ screen, invoice, client, items }: Props) {
                 visible={showInvoiceModal}
                 animationType="slide"
                 presentationStyle="pageSheet"
-                onRequestClose={() => setShowInvoiceModal(false)}
             >
                 <BottomSheetModalProvider>
-                    <CreateEditInvoice type='Edit' onClose={() => setShowInvoiceModal(false)} />
+                    <CreateEditInvoice type='New' onClose={() => setShowInvoiceModal(false)} />
                 </BottomSheetModalProvider>
             </Modal>
         </View>
