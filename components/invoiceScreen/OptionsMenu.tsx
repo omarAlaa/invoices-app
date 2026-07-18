@@ -3,6 +3,7 @@ import { useDeleteInvoice } from "@/features/invoices/api"
 import { Client, InvoiceItem, InvoiceListRow, NewInvoiceItem } from "@/lib/definitons"
 import { useClientDraftStore } from "@/store/useClientDraftStore"
 import { useInvoiceDraftStore } from "@/store/useInvoiceDraftStore"
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet"
 import { router } from "expo-router"
 import { Ellipsis } from "lucide-react-native"
 import { useState } from "react"
@@ -111,7 +112,9 @@ export default function OptionsMenu({ screen, invoice, client, items }: Props) {
                 presentationStyle="pageSheet"
                 onRequestClose={() => setShowInvoiceModal(false)}
             >
-                <CreateEditInvoice type='Edit' onClose={() => setShowInvoiceModal(false)} />
+                <BottomSheetModalProvider>
+                    <CreateEditInvoice type='Edit' onClose={() => setShowInvoiceModal(false)} />
+                </BottomSheetModalProvider>
             </Modal>
         </View>
     )
