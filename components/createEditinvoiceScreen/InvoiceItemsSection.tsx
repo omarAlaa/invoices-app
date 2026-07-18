@@ -6,7 +6,11 @@ import TextField from "../shared/TextField";
 import ItemCard from "./ItemCard";
 import TotalPriceCard from "./TotalPriceCard";
 
-export default function InvoiceItemsSection() {
+type Props = {
+    hasItems: boolean;
+}
+
+export default function InvoiceItemsSection({ hasItems }: Props) {
     const { invoiceItems, addItem, setInvoiceItems, id } = useInvoiceDraftStore()
     const deleteInvoiceItem = useDeleteInvoiceItem()
 
@@ -39,7 +43,7 @@ export default function InvoiceItemsSection() {
                     }
                     }
                     onRemove={() => handleRemove(item)}
-                    autoFocus={index === invoiceItems.length - 1 && invoiceItems.length >= 1}
+                    autoFocus={!hasItems && index === invoiceItems.length - 1 && invoiceItems.length >= 1}
                 />
             ))}
 

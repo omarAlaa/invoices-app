@@ -17,7 +17,9 @@ export default function FloatingAddButton({ animatedStyle, screen, onPress }: Pr
     const [showInvoiceModal, setShowInvoiceModal] = useState(false)
 
     const handlePress = () => {
-        if (onPress) onPress
+        if (onPress) {
+            onPress()
+        }
 
         if (screen === 'client') {
             setShowClientModal(true)

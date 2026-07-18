@@ -15,9 +15,10 @@ import TextField from "../shared/TextField";
 type Props = {
     type: string;
     onClose: () => void;
+    hasItems?: boolean;
 }
 
-export default function CreateEditInvoice({ type, onClose }: Props) {
+export default function CreateEditInvoice({ type, onClose, hasItems }: Props) {
     const clientPickerRef = useRef<ClientPickerSheetRef>(null)
     const isDark = useColorScheme() === 'dark'
     const { reset } = useInvoiceDraftStore()
@@ -58,11 +59,11 @@ export default function CreateEditInvoice({ type, onClose }: Props) {
 
                     <DateFieldsSection />
 
-                    <InvoiceItemsSection />
+                    <InvoiceItemsSection hasItems={hasItems || false} />
 
                     <InvoiceStatusSelector />
 
-                    <CreateEditInvoiceActions type={type} saveDraft={onClose} />
+                    <CreateEditInvoiceActions type={type} dismiss={onClose} />
                 </View>
             </View>
 

@@ -21,9 +21,9 @@ export default function ItemCard({ item, autoFocus = false, onRemove, onChange }
     const amount = (quantity * rate).toFixed(2)
 
     return (
-        <Animated.View entering={FadeInDown.duration(250).springify()} exiting={FadeOutLeft
-            .duration(200)
-            .easing(Easing.inOut(Easing.quad))}>
+        <Animated.View
+            entering={FadeInDown.duration(250).springify()}
+            exiting={FadeOutLeft.duration(200).easing(Easing.inOut(Easing.quad))}>
             <Card>
                 <View className="flex-row justify-between">
                     <TextInput

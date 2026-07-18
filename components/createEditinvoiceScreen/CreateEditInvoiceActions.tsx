@@ -1,16 +1,15 @@
 import { useCreateInvoice, useUpdateInvoice } from "@/features/invoices/api";
 import { useInvoiceDraftStore } from "@/store/useInvoiceDraftStore";
-import { router } from "expo-router";
 import { Alert, Text, View } from "react-native";
 import ActionButton from "../shared/ActionButton";
 import TextField from "../shared/TextField";
 
 type Props = {
     type: string | string[];
-    saveDraft: () => void;
+    dismiss: () => void;
 }
 
-export default function CreateEditInvoiceActions({ type, saveDraft }: Props) {
+export default function CreateEditInvoiceActions({ type, dismiss }: Props) {
     const draftInvoice = useInvoiceDraftStore()
     const createInvoice = useCreateInvoice()
     const updateInvoice = useUpdateInvoice()
@@ -37,7 +36,7 @@ export default function CreateEditInvoiceActions({ type, saveDraft }: Props) {
             })
             Alert.alert('Invoice created')
             draftInvoice.reset()
-            router.back()
+            dismiss()
         } catch (err) {
             Alert.alert('Could not save invoice', (err as Error).message)
         }
@@ -64,7 +63,7 @@ export default function CreateEditInvoiceActions({ type, saveDraft }: Props) {
             })
             Alert.alert('Invoice updated')
             draftInvoice.reset()
-            router.back()
+            dismiss()
         } catch (err) {
             Alert.alert('Could not update invoice', (err as Error).message)
         }
@@ -74,7 +73,7 @@ export default function CreateEditInvoiceActions({ type, saveDraft }: Props) {
 
         type === 'New' ?
             <View className="flex-row gap-2 p-2">
-                <ActionButton isSecondary onPress={saveDraft}>
+                <ActionButton isSecondary onPress={dismiss}>
                     <TextField text="Save as draft" className="font-bold text-lg" />
                 </ActionButton>
 
