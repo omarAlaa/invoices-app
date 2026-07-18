@@ -6,9 +6,10 @@ import Status from "./Status";
 import TextField from "./TextField";
 type Props = {
     invoiceListRow: InvoiceListRow;
+    isClientInvoice?: boolean;
 }
 
-export default function InvoiceOverview({ invoiceListRow }: Props) {
+export default function InvoiceOverview({ invoiceListRow, isClientInvoice }: Props) {
     return (
         <Link href={{
             pathname: '/invoice/[invoiceId]',
@@ -16,16 +17,25 @@ export default function InvoiceOverview({ invoiceListRow }: Props) {
         }} asChild>
             <TouchableOpacity className="flex-row justify-between">
                 <View className="flex-row gap-2 items-center">
-                    <View className="w-12 h-12 rounded-full bg-blue-200 justify-center items-center">
-                        <Text className="font-bold text-xl text-blue-600">
-                            {`${invoiceListRow.client_first_name[0]}${invoiceListRow.client_last_name && invoiceListRow.client_last_name[0]}`}
-                        </Text>
-                    </View>
+                    {
+                        !isClientInvoice &&
+                        <View className="w-12 h-12 rounded-full bg-blue-200 justify-center items-center">
+                            <Text className="font-bold text-xl text-blue-600">
+                                {`${invoiceListRow.client_first_name[0]}${invoiceListRow.client_last_name && invoiceListRow.client_last_name[0]}`}
+                            </Text>
+                        </View>
+                    }
 
                     <View>
-                        <TextField text={`${invoiceListRow.client_first_name} ${invoiceListRow.client_last_name}`} className="font-bold text-lg" />
+                        <TextField
+                            text={isClientInvoice ? `#${invoiceListRow.invoice_number}` : `${invoiceListRow.client_first_name} ${invoiceListRow.client_last_name}`}
+                            className="font-bold text-lg"
+                        />
 
-                        <TextField text={`${invoiceListRow.invoice_number} · Due ${invoiceListRow.due_date}`} type="secondary" />
+                        <TextField
+                            text={`${!isClientInvoice ? `${invoiceListRow.invoice_number} · ` : ''}Due ${invoiceListRow.due_date}`}
+                            type="secondary"
+                        />
                     </View>
                 </View>
 

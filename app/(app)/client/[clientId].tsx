@@ -51,7 +51,7 @@ export default function ClientScreen() {
                 }
                 keyExtractor={item => item.id}
                 renderItem={({ item }) =>
-                    <InvoiceOverview invoiceListRow={item} />}
+                    <InvoiceOverview invoiceListRow={item} isClientInvoice />}
                 refreshControl={
                     <RefreshControl
                         refreshing={isInvoicesRefetching}

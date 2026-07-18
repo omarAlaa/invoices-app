@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 
 type Props = {
     status: string | undefined,
-    date: string | undefined;
+    date?: string | undefined;
     isDetailed?: boolean,
 }
 
