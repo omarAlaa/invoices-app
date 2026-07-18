@@ -18,12 +18,14 @@ export default function TopClients({ topClients }: Props) {
 
             <View className="gap-2">
                 {topClients.map((client, index) =>
-                    <>
-                        <Link href={{
-                            pathname: '/client/[clientId]',
-                            params: { clientId: client.clientId, fullName: client.name }
-                        }} asChild>
-                            <TouchableOpacity key={client.clientId} className="flex-row justify-between items-center py-2">
+                    <View key={client.clientId}>
+                        <Link
+                            href={{
+                                pathname: '/client/[clientId]',
+                                params: { clientId: client.clientId, fullName: client.name }
+                            }}
+                            asChild>
+                            <TouchableOpacity className="flex-row justify-between items-center py-2">
                                 <TextField text={`${index + 1}. ${client.name}`} className="text-lg" />
 
                                 <TextField text={formatCurrency(client.total)} className="font-bold" />
@@ -31,7 +33,7 @@ export default function TopClients({ topClients }: Props) {
                         </Link>
 
                         {index !== topClients.length - 1 && <View className="border-b border-gray-400" />}
-                    </>
+                    </View>
                 )}
             </View>
         </View>

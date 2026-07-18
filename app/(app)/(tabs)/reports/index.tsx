@@ -6,13 +6,11 @@ import TopClients from "@/components/reportstab/TopClients"
 import { useReportsSummary } from "@/features/reports/api"
 import { useScrollFAB } from "@/hooks/useScrollFAB"
 import { Stack } from "expo-router"
-import { useState } from "react"
 import { RefreshControl, ScrollView, View } from "react-native"
 import Animated from "react-native-reanimated"
 
 export default function Reports() {
     const { data: summary, isLoading, isError, refetch, isRefetching } = useReportsSummary(('this_month'))
-    const [refreshing, setRefreshing] = useState(false)
     const { onScrollNoFAB, titleStyle, onHeaderLayout } = useScrollFAB()
 
     return (
