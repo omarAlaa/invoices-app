@@ -1,3 +1,4 @@
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { Plus } from "lucide-react-native";
 import { useState } from "react";
 import { Modal, TouchableOpacity } from "react-native";
@@ -39,7 +40,6 @@ export default function FloatingAddButton({ animatedStyle, screen, onPress }: Pr
                 visible={showClientModal}
                 animationType="slide"
                 presentationStyle="pageSheet"
-                onRequestClose={() => setShowClientModal(false)}
             >
                 <CreateEditClient type='New' onClose={() => setShowClientModal(false)} />
             </Modal>
@@ -48,9 +48,10 @@ export default function FloatingAddButton({ animatedStyle, screen, onPress }: Pr
                 visible={showInvoiceModal}
                 animationType="slide"
                 presentationStyle="pageSheet"
-                onRequestClose={() => setShowInvoiceModal(false)}
             >
-                <CreateEditInvoice type='New' onClose={() => setShowInvoiceModal(false)} />
+                <BottomSheetModalProvider>
+                    <CreateEditInvoice type='New' onClose={() => setShowInvoiceModal(false)} />
+                </BottomSheetModalProvider>
             </Modal>
         </Animated.View>
     )

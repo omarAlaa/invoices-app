@@ -1,3 +1,4 @@
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { Plus, UserPlus } from "lucide-react-native";
 import { useState } from "react";
 import { Modal, Text, View, useColorScheme } from "react-native";
@@ -30,7 +31,6 @@ export default function AddButtons() {
                 visible={showClientModal}
                 animationType="slide"
                 presentationStyle="pageSheet"
-                onRequestClose={() => setShowClientModal(false)}
             >
                 <CreateEditClient type='New' onClose={() => setShowClientModal(false)} />
             </Modal>
@@ -39,9 +39,10 @@ export default function AddButtons() {
                 visible={showInvoiceModal}
                 animationType="slide"
                 presentationStyle="pageSheet"
-                onRequestClose={() => setShowInvoiceModal(false)}
             >
-                <CreateEditInvoice type='New' onClose={() => setShowInvoiceModal(false)} />
+                <BottomSheetModalProvider>
+                    <CreateEditInvoice type='New' onClose={() => setShowInvoiceModal(false)} />
+                </BottomSheetModalProvider>
             </Modal>
         </View>
     )

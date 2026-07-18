@@ -1,9 +1,9 @@
 import { Client } from "@/lib/definitons";
 import { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
-import { router } from 'expo-router';
 import { Check, Plus } from 'lucide-react-native';
-import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
-import { Text, TouchableOpacity, View, useColorScheme } from 'react-native';
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { Modal, Text, TouchableOpacity, View, useColorScheme } from 'react-native';
+import CreateEditClient from "../createEditClientScreen/CreateEditClient";
 import InputField from '../shared/InputField';
 import TextField from '../shared/TextField';
 
@@ -20,10 +20,11 @@ export type ClientPickerSheetRef = {
 
 export const ClientPickerSheet = forwardRef<ClientPickerSheetRef, Props>(
     ({ clients, selectedId, onSelect }, ref) => {
-        const bottomSheetRef = useRef<BottomSheetModal>(null);
-        const snapPoints = useMemo(() => ['85%'], []);
-        const systemColorScheme = useColorScheme();
-        const isDark = systemColorScheme === 'dark';
+        const bottomSheetRef = useRef<BottomSheetModal>(null)
+        const snapPoints = useMemo(() => ['85%'], [])
+        const systemColorScheme = useColorScheme()
+        const isDark = systemColorScheme === 'dark'
+        const [showClientModal, setShowClientModal] = useState(false)
 
         useImperativeHandle(ref, () => ({
             open: () => bottomSheetRef.current?.present(),
@@ -44,12 +45,9 @@ export const ClientPickerSheet = forwardRef<ClientPickerSheetRef, Props>(
         );
 
         const handleAddNewClient = () => {
-            bottomSheetRef.current?.dismiss()
+            // bottomSheetRef.current?.dismiss()
 
-            router.navigate({
-                pathname: '/createEditClient',
-                params: { type: 'New' }
-            })
+            setShowClientModal(true)
         }
 
         const renderItem = useCallback(
@@ -115,6 +113,14 @@ export const ClientPickerSheet = forwardRef<ClientPickerSheetRef, Props>(
                         </TouchableOpacity>
                     </View>
                 </View>
+
+                <Modal
+                    visible={showClientModal}
+                    animationType="slide"
+                    presentationStyle="pageSheet"
+                >
+                    <CreateEditClient type='New' onClose={() => setShowClientModal(false)} />
+                </Modal>
             </BottomSheetModal>
         )
     }
