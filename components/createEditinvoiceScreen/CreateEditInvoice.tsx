@@ -41,8 +41,8 @@ export default function CreateEditInvoice({ type, onClose }: Props) {
     }
 
     return (
-        <View className={`flex-1 ${isDark ? 'bg-black' : 'bg-[#f2f2f2]'}`}>
-            <KeyboardAwareScrollView style={{ flex: 1 }} bottomOffset={40}>
+        <KeyboardAwareScrollView className={`flex-1 ${isDark ? 'bg-black' : 'bg-[#f2f2f2]'}`} bottomOffset={40}>
+            <View style={{ flex: 1 }} >
                 <View className="flex-1 pt-4 pb-16 px-8 gap-6">
                     <View className="flex-row justify-center items-center">
                         <TouchableOpacity className="absolute left-0" onPress={handleClose}>
@@ -64,11 +64,11 @@ export default function CreateEditInvoice({ type, onClose }: Props) {
 
                     <CreateEditInvoiceActions type={type} saveDraft={onClose} />
                 </View>
-            </KeyboardAwareScrollView>
+            </View>
 
             <ClientsList
                 ref={clientPickerRef}
             />
-        </View>
+        </KeyboardAwareScrollView>
     )
 }
