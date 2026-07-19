@@ -109,7 +109,7 @@ export default function OptionsMenu({ screen, invoice, client, items }: Props) {
                 presentationStyle="pageSheet"
             >
                 <BottomSheetModalProvider>
-                    <CreateEditInvoice type='New' onClose={() => setShowInvoiceModal(false)} hasItems />
+                    <CreateEditInvoice type='New' onClose={() => setShowInvoiceModal(false)} />
                 </BottomSheetModalProvider>
             </Modal>
         </View>
