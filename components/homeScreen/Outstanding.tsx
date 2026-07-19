@@ -3,10 +3,15 @@ import { formatCurrency } from "@/lib/utils";
 import { View } from "react-native";
 import Card from "../shared/Card";
 import TextField from "../shared/TextField";
+import OutstandingSkeleton from "./OutstandingSkeleton";
 import StatusMoney from "./StatusMoney";
 
 export default function Outstanding() {
     const { data: dashboardSummary, isLoading, isError, refetch, isRefetching } = useDashboardSummary()
+
+    if (isLoading) {
+        return <OutstandingSkeleton />
+    }
 
     return (
         <Card>

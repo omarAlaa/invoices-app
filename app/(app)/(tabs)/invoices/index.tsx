@@ -2,6 +2,7 @@ import InvoicesHeader from "@/components/invoicesScreen/InvoicesHeader";
 import StatusFilters from "@/components/invoicesScreen/StatusFilters";
 import FloatingAddButton from "@/components/shared/FloatingAddButton";
 import InvoiceOverview from "@/components/shared/InvoiceOverview";
+import InvoiceOverviewSkeleton from "@/components/shared/InvoiceOverviewSkeleton";
 import { useInvoices } from "@/features/invoices/api";
 import { useScrollFAB } from "@/hooks/useScrollFAB";
 import { InvoiceFilter } from "@/lib/definitons";
@@ -42,6 +43,12 @@ export default function InvoicesScreen() {
                         </View>
 
                         <StatusFilters filter={filter} setFilter={setFilter} />
+
+                        {isLoading && <View className="gap-8">
+                            {Array.from({ length: 4 }).map((_, index) => (
+                                <InvoiceOverviewSkeleton key={index} />
+                            ))}
+                        </View>}
                     </View>
                 }
                 keyExtractor={item => item.id}
