@@ -13,7 +13,8 @@ type Props = {
 
 export default function TopClients({ topClients }: Props) {
     return (
-        topClients && <View className="gap-1">
+        topClients &&
+        <View className="gap-1">
             <TextField text="Top clients" className="font-bold text-lg" />
 
             <View className="gap-2">

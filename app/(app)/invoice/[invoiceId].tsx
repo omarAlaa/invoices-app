@@ -1,8 +1,11 @@
 import InvItem from "@/components/invoiceScreen/InvItem";
+import InvItemSkeleton from "@/components/invoiceScreen/InvItemSkeleton";
 import InvoiceActions from "@/components/invoiceScreen/InvoiceActions";
 import InvoiceInfo from "@/components/invoiceScreen/InvoiceInfo";
+import InvoiceInfoSkeleton from "@/components/invoiceScreen/InvoiceInfoSkeleton";
 import OptionsMenu from "@/components/invoiceScreen/OptionsMenu";
 import TotalAmount from "@/components/invoiceScreen/TotalAmount";
+import SkeletonBlock from "@/components/shared/SkeletonBlock";
 import Status from "@/components/shared/Status";
 import TextField from "@/components/shared/TextField";
 import { useInvoice, useInvoiceItems } from "@/features/invoices/api";
@@ -33,13 +36,31 @@ export default function Invoice() {
                         }}
                     />
 
-                    <View className="justify-center items-center">
-                        <Status status={invoice?.status} date={invoice?.due_date} isDetailed />
-                    </View>
+                    {isLoading ?
+                        <>
+                            <View className="justify-center items-center">
+                                <SkeletonBlock className="w-60 h-8" isCircle />
+                            </View>
 
-                    <InvoiceInfo invoice={invoice} />
+                            <InvoiceInfoSkeleton />
 
-                    <TextField text='Items' className="font-bold text-xl mb-3" />
+                            <TextField text='Items' className="font-bold text-xl" />
+
+                            <InvItemSkeleton />
+                            <View className="my-4 border-b border-gray-400" />
+                            <InvItemSkeleton />
+                        </>
+                        :
+                        <>
+                            <View className="justify-center items-center">
+                                <Status status={invoice?.status} date={invoice?.due_date} isDetailed />
+                            </View>
+
+                            <InvoiceInfo invoice={invoice} />
+
+                            <TextField text='Items' className="font-bold text-xl mb-3" />
+                        </>
+                    }
                 </View>
             }
             keyExtractor={item => item.id}

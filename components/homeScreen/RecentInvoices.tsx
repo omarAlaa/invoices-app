@@ -2,7 +2,7 @@ import { useRecentInvoices } from "@/features/invoices/api";
 import { Link } from "expo-router";
 import { TouchableOpacity, View } from "react-native";
 import InvoiceOverview from "../shared/InvoiceOverview";
-import InvoiceOverviewSkeleton from "../shared/InvoiceOverviewSkeleton";
+import OverviewSkeleton from "../shared/OverviewSkeleton";
 import TextField from "../shared/TextField";
 
 export default function RecentInvoices() {
@@ -23,7 +23,7 @@ export default function RecentInvoices() {
             <View className="gap-5">
                 {isLoading ?
                     Array.from({ length: 4 }).map((_, index) => (
-                        <InvoiceOverviewSkeleton key={index} />
+                        <OverviewSkeleton key={index} isInvoice />
                     ))
                     :
                     recentInvoices?.map(invoice =>

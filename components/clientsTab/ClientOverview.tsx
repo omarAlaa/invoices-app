@@ -1,4 +1,5 @@
 import { ClientStats } from "@/lib/definitons";
+import { formatCurrency } from "@/lib/utils";
 import { Link } from "expo-router";
 import { ChevronRight } from "lucide-react-native";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -20,7 +21,7 @@ export default function ClientOverview({ clientStats }: { clientStats: ClientSta
                         <TextField text={`${clientStats.first_name} ${clientStats.last_name}`} className="font-bold text-lg" />
 
                         <TextField
-                            text={`${clientStats.invoice_count} invoices. ${clientStats.total_invoiced} billed`}
+                            text={`${clientStats.invoice_count} invoices. ${formatCurrency(clientStats.total_invoiced)} billed`}
                             type="secondary" />
                     </View>
                 </View>

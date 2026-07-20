@@ -1,8 +1,12 @@
 import InvoicesStatus from "@/components/reportstab/InvoicesStatus"
+import InvoicesStatusSkeleton from "@/components/reportstab/InvoicesStatusSkeleton"
 import ReportsHeader from "@/components/reportstab/ReportsHeader"
 import RevenueChart from "@/components/reportstab/RevenueChart"
+import RevenueChartSkeleton from "@/components/reportstab/RevenueChartSkeleton"
 import StatsCard from "@/components/reportstab/StatsCards"
+import StatsCardsSkeleton from "@/components/reportstab/StatsCardSkeleton"
 import TopClients from "@/components/reportstab/TopClients"
+import TopClientsSkeleton from "@/components/reportstab/TopClientsSkeleton"
 import { useReportsSummary } from "@/features/reports/api"
 import { useScrollFAB } from "@/hooks/useScrollFAB"
 import { Stack } from "expo-router"
@@ -41,18 +45,31 @@ export default function Reports() {
                 <ReportsHeader />
             </View>
 
-            <StatsCard
-                revenue={summary?.revenue}
-                oustanding={summary?.outstanding}
-                invoicesSent={summary?.invoicesSent}
-                avgValue={summary?.averageValue}
-            />
+            {isLoading ?
+                <>
+                    <StatsCardsSkeleton />
 
-            <RevenueChart />
+                    <RevenueChartSkeleton />
 
-            <InvoicesStatus statusBreakdown={summary?.statusBreakdown} invsCount={summary?.invoicesSent} />
+                    <InvoicesStatusSkeleton />
 
-            <TopClients topClients={summary?.topClients} />
+                    <TopClientsSkeleton />
+                </>
+                :
+                <>
+                    <StatsCard
+                        revenue={summary?.revenue}
+                        oustanding={summary?.outstanding}
+                        invoicesSent={summary?.invoicesSent}
+                        avgValue={summary?.averageValue}
+                    />
+
+                    <RevenueChart />
+
+                    <InvoicesStatus statusBreakdown={summary?.statusBreakdown} invsCount={summary?.invoicesSent} />
+
+                    <TopClients topClients={summary?.topClients} />
+                </>}
         </ScrollView>
     )
 }

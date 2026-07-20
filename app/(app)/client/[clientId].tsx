@@ -1,8 +1,11 @@
 import ClientInfo from "@/components/clientScreen/ClientInfo";
+import ClientInfoSkeleton from "@/components/clientScreen/ClientInfoSkeleton";
 import ClientStatusCards from "@/components/clientScreen/ClientStatusCards";
+import ClientStatusCardsSkeleton from "@/components/clientScreen/ClientStatusCardsSkeleton";
 import OptionsMenu from "@/components/invoiceScreen/OptionsMenu";
 import FloatingAddButton from "@/components/shared/FloatingAddButton";
 import InvoiceOverview from "@/components/shared/InvoiceOverview";
+import OverviewSkeleton from "@/components/shared/OverviewSkeleton";
 import TextField from "@/components/shared/TextField";
 import { useClient } from "@/features/clients/api";
 import { useClientInvoices } from "@/features/invoices/api";
@@ -41,13 +44,25 @@ export default function ClientScreen() {
                 scrollEventThrottle={16}
                 contentContainerClassName="flex-1 gap-4 pt-4 pb-16"
                 ListHeaderComponent={
-                    <View className="gap-4">
-                        <ClientInfo client={clientInfo} />
+                    isLoading ?
+                        <View className="gap-4">
+                            <ClientInfoSkeleton />
 
-                        <ClientStatusCards clientId={clientId} />
+                            <ClientStatusCardsSkeleton />
 
-                        <TextField text="Invoices" className="font-bold text-lg" />
-                    </View>
+                            <TextField text="Invoices" className="font-bold text-lg" />
+
+                            <OverviewSkeleton isClientInvoice />
+                            <OverviewSkeleton isClientInvoice />
+                        </View>
+                        :
+                        <View className="gap-4">
+                            <ClientInfo client={clientInfo} />
+
+                            <ClientStatusCards clientId={clientId} />
+
+                            <TextField text="Invoices" className="font-bold text-lg" />
+                        </View>
                 }
                 keyExtractor={item => item.id}
                 renderItem={({ item }) =>
