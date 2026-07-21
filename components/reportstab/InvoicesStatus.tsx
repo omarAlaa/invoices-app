@@ -46,7 +46,7 @@ export default function InvoicesStatus({ statusBreakdown, invsCount = 0 }: Props
                     <View key={seg.label} className="flex-row items-center gap-1">
                         <View className={`w-2 h-2 rounded-full ${seg.color}`} />
 
-                        <TextField text={`${seg.label} ${(seg.number / invsCount) * 100}%`} type="secondary" />
+                        <TextField text={`${seg.label} ${Math.round((seg.number / invsCount) * 100)}%`} type="secondary" />
                     </View>
                 ))}
             </View>
