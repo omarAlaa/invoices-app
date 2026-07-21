@@ -1,4 +1,5 @@
 import { useAuthStore } from "@/store/useAuthStore";
+import { useClientDraftStore } from "@/store/useClientDraftStore";
 import * as ImagePicker from 'expo-image-picker';
 import { Alert } from "react-native";
 import { supabase } from "./supabase";
@@ -40,7 +41,18 @@ export const updateProfile = async (payLoad: UpdateProfilePayload) => {
     }
 }
 
-export const downloadImage = async (path: string) => {
+export const updateClientImage = async (id: string, imageURL: string) => {
+    let { error } = await supabase
+        .from('clients')
+        .update({ image_url: imageURL, updated_at: new Date() })
+        .eq('id', id)
+
+    if (error) {
+        throw error
+    }
+}
+
+export const downloadImage = async (path: string, clientId?: string) => {
     try {
         const { data, error } = await supabase.storage.from('avatars').download(path)
 
@@ -51,14 +63,18 @@ export const downloadImage = async (path: string) => {
         const fr = new FileReader()
         fr.readAsDataURL(data)
         fr.onload = () => {
-            useAuthStore.getState().setAvatarUri(fr.result as string)
+            if (clientId) {
+                useClientDraftStore.getState().setAvatarUri(fr.result as string)
+            } else {
+                useAuthStore.getState().setAvatarUri(fr.result as string)
+            }
         }
     } catch (error: any) {
         console.log('Error downloading image: ', error.message)
     }
 }
 
-export const uploadImage = async () => {
+export const uploadImage = async (clientId?: string) => {
     const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ['images'],
         allowsMultipleSelection: false,
@@ -92,30 +108,42 @@ export const uploadImage = async () => {
         throw uploadError
     }
 
-    await removeImageFromStorage(data.path)
-
-    useAuthStore.getState().setAvatarURL(data.path)
+    if (clientId) {
+        await removeImageFromStorage(data.path, useClientDraftStore.getState().avatarURL, clientId)
+        useClientDraftStore.getState().setAvatarURL(data.path)
+    } else {
+        await removeImageFromStorage(data.path, useAuthStore.getState().avatarURL || '')
+        useAuthStore.getState().setAvatarURL(data.path)
+    }
 }
 
-export const deleteImage = async () => {
-    await removeImageFromStorage('')
-
-    useAuthStore.getState().setAvatarURL(null)
+export const deleteImage = async (clientId?: string) => {
+    if (clientId) {
+        await removeImageFromStorage('', useClientDraftStore.getState().avatarURL, clientId)
+        useClientDraftStore.getState().setAvatarURL('')
+    } else {
+        await removeImageFromStorage('', useAuthStore.getState().avatarURL || '')
+        useAuthStore.getState().setAvatarURL(null)
+    }
 }
 
-const removeImageFromStorage = async (path: string) => {
+const removeImageFromStorage = async (newPath: string, oldPath?: string, clientId?: string) => {
     const { error: deletingError } = await supabase
         .storage
         .from('avatars')
-        .remove([useAuthStore.getState().avatarURL || ''])
+        .remove([oldPath || ''])
 
     if (deletingError) {
         throw deletingError;
     }
 
-    await updateProfile({
-        avatar_url: path
-    })
-
-    useAuthStore.getState().setAvatarUri(null)
+    if (clientId) {
+        await updateClientImage(clientId, newPath)
+        useClientDraftStore.getState().setAvatarUri('')
+    } else {
+        await updateProfile({
+            avatar_url: newPath
+        })
+        useAuthStore.getState().setAvatarUri(null)
+    }
 }

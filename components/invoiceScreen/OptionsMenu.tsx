@@ -39,7 +39,7 @@ export default function OptionsMenu({ screen, invoice, client, items }: Props) {
             setShowInvoiceModal(true)
         } else if (id === 'edit') {
             if (client) {
-                setClient(client.id, client.first_name, client.last_name || '', client.email || '', client.phone || '')
+                setClient(client.id, client.first_name, client.last_name || '', client.email || '', client.phone || '', client.image_url || '')
             }
 
             setShowClientModal(true)

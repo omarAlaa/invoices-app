@@ -1,12 +1,17 @@
 import Avatar from "@/components/settingsScreen/Avatar";
 import { deleteImage, uploadImage } from "@/lib/actions";
 import { useAuthStore } from "@/store/useAuthStore";
+import { useClientDraftStore } from "@/store/useClientDraftStore";
 import { useState } from "react";
 import { Alert, View } from "react-native";
 import SettingsButton from "./SettingsButton";
 
-export default function AvatarController() {
-    const { avatarURL } = useAuthStore()
+type Props = {
+    clientId?: string;
+}
+
+export default function AvatarController({ clientId }: Props) {
+    const { avatarURL } = clientId ? useClientDraftStore() : useAuthStore()
     const [uploading, setUploading] = useState(false)
     const [deleting, setDeleting] = useState(false)
 
@@ -14,7 +19,7 @@ export default function AvatarController() {
         try {
             setUploading(true)
 
-            await uploadImage()
+            await uploadImage(clientId)
 
         } catch (error: any) {
             if (error) {
@@ -40,7 +45,7 @@ export default function AvatarController() {
                         try {
                             setDeleting(true)
 
-                            await deleteImage()
+                            await deleteImage(clientId)
 
                         } catch (error: any) {
                             if (error) {
@@ -59,7 +64,7 @@ export default function AvatarController() {
 
     return (
         <View className="items-center gap-4">
-            <Avatar size='large' />
+            <Avatar size='large' clientId={clientId} />
 
             <View className="flex-row gap-4">
                 <SettingsButton

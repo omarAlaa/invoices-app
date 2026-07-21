@@ -14,6 +14,7 @@ type Props = {
 export default function CreateEditClient({ type, onClose }: Props) {
     const isDark = useColorScheme() === 'dark'
     const { reset } = useClientDraftStore()
+    const { id } = useClientDraftStore()
 
     const handleClose = () => {
         Alert.alert(
@@ -44,7 +45,7 @@ export default function CreateEditClient({ type, onClose }: Props) {
                     <TextField text={`${type} client`} className="font-semibold text-xl" />
                 </View>
 
-                <AvatarController />
+                <AvatarController clientId={id} />
 
                 <ClientForm type={type} />
             </View>

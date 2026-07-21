@@ -1,15 +1,23 @@
 import { downloadImage } from "@/lib/actions";
 import { useAuthStore } from "@/store/useAuthStore";
+import { useClientDraftStore } from "@/store/useClientDraftStore";
 import { Image } from "expo-image";
 import { User } from "lucide-react-native";
 import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function Avatar({ size }: { size: string }) {
-    const { firstName, lastName, avatarURL, avatarUri } = useAuthStore()
+type Props = {
+    size: string;
+    clientId?: string;
+}
+
+export default function Avatar({ size, clientId }: Props) {
+    const { firstName, lastName, avatarURL, avatarUri } = clientId ? useClientDraftStore() : useAuthStore()
 
     useEffect(() => {
-        if (avatarURL && !avatarUri) downloadImage(avatarURL)
+        if (avatarURL && !avatarUri) {
+            downloadImage(avatarURL, clientId)
+        }
     }, [avatarURL])
 
     return (
