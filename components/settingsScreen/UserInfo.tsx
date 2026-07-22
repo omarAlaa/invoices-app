@@ -5,14 +5,20 @@ import { Text, TouchableOpacity, useColorScheme, View } from "react-native";
 import Avatar from "./Avatar";
 
 export default function UserInfo() {
-    const { firstName, lastName } = useAuthStore()
+    const { firstName, lastName, avatarURL, avatarUri } = useAuthStore()
     const systemColorScheme = useColorScheme();
 
     return (
         <Link href="/profile" asChild>
             <TouchableOpacity className="flex-row items-center p-4 bg-white rounded-2xl dark:bg-zinc-800">
                 <View className="flex-row items-center gap-2 mr-auto">
-                    <Avatar size="small" />
+                    <Avatar
+                        size="small"
+                        firstName={firstName}
+                        lastName={lastName}
+                        url={avatarURL}
+                        uri={avatarUri}
+                    />
 
                     <Text className="font-bold text-xl dark:text-white">{firstName || lastName ? `${firstName || ''} ${lastName || ''}` : 'Complete your profile'}</Text>
                 </View>

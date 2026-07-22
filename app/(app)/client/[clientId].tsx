@@ -20,11 +20,15 @@ export default function ClientScreen() {
     const { scrollHandler, buttonStyle } = useScrollFAB()
     const { data: clientInfo, isLoading, isError, refetch, isRefetching } = useClient(clientId.toString())
     const { data: clientInvoices, isLoading: isInvoicesLoading, isError: isInvoicesError, refetch: refetchInvoices, isRefetching: isInvoicesRefetching } = useClientInvoices(clientId.toString())
-    const { setSelectedClientId, setClientName } = useInvoiceDraftStore()
+    const { setSelectedClientId, setClientName, setClientImageUrl, reset } = useInvoiceDraftStore()
 
     const handleNewInvoice = () => {
+        reset()
         setSelectedClientId(clientId.toString())
         setClientName(fullName.toString())
+        if (clientInfo?.image_url) {
+            setClientImageUrl(clientInfo.image_url)
+        }
     }
 
     return (
@@ -57,7 +61,7 @@ export default function ClientScreen() {
                         </View>
                         :
                         <View className="gap-4">
-                            <ClientInfo client={clientInfo} />
+                            {clientInfo && <ClientInfo client={clientInfo} />}
 
                             <ClientStatusCards clientId={clientId} />
 

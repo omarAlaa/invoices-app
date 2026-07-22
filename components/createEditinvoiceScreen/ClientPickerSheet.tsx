@@ -2,8 +2,9 @@ import { Client } from "@/lib/definitons";
 import { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
 import { Check, Plus } from 'lucide-react-native';
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
-import { Modal, Text, TouchableOpacity, View, useColorScheme } from 'react-native';
+import { Modal, TouchableOpacity, View, useColorScheme } from 'react-native';
 import CreateEditClient from "../createEditClientScreen/CreateEditClient";
+import Avatar from "../settingsScreen/Avatar";
 import InputField from '../shared/InputField';
 import TextField from '../shared/TextField';
 
@@ -42,13 +43,7 @@ export const ClientPickerSheet = forwardRef<ClientPickerSheetRef, Props>(
                 />
             ),
             [isDark]
-        );
-
-        const handleAddNewClient = () => {
-            // bottomSheetRef.current?.dismiss()
-
-            setShowClientModal(true)
-        }
+        )
 
         const renderItem = useCallback(
             ({ item }: { item: Client }) => {
@@ -62,9 +57,13 @@ export const ClientPickerSheet = forwardRef<ClientPickerSheetRef, Props>(
                         className="flex-row items-center justify-between py-3"
                     >
                         <View className="flex-row items-center gap-3">
-                            <View className="w-12 h-12 rounded-full bg-blue-200 justify-center items-center">
-                                <Text className="font-bold text-xl text-blue-600">{`${item.first_name[0]}${item.last_name && item.last_name[0]}`}</Text>
-                            </View>
+                            <Avatar
+                                size='xs'
+                                firstName={item.first_name}
+                                lastName={item.last_name}
+                                url={item.image_url}
+                                isInvAvatar
+                            />
                             <TextField text={`${item.first_name} ${item.last_name}`} />
                         </View>
                         {isSelected && <Check color="#2563EB" />}
@@ -103,7 +102,7 @@ export const ClientPickerSheet = forwardRef<ClientPickerSheetRef, Props>(
 
                     <View className="border-t border-gray-200 px-4 pt-3 pb-10">
                         <TouchableOpacity
-                            onPress={handleAddNewClient}
+                            onPress={() => setShowClientModal(true)}
                             className="flex-row items-center gap-3 py-2"
                         >
                             <View className="w-9 h-9 rounded-full bg-zinc-200 items-center justify-center">

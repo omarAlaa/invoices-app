@@ -1,32 +1,52 @@
 import { downloadImage } from "@/lib/actions";
-import { useAuthStore } from "@/store/useAuthStore";
-import { useClientDraftStore } from "@/store/useClientDraftStore";
 import { Image } from "expo-image";
 import { User } from "lucide-react-native";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 type Props = {
     size: string;
     clientId?: string;
+    firstName: string;
+    lastName: string;
+    url: string;
+    uri?: string;
+    isInvAvatar?: boolean;
 }
 
-export default function Avatar({ size, clientId }: Props) {
-    const { firstName, lastName, avatarURL, avatarUri } = clientId ? useClientDraftStore() : useAuthStore()
+export default function Avatar({ size, clientId, firstName, lastName, url, uri, isInvAvatar }: Props) {
+    const [invUri, setInvUri] = useState('')
 
     useEffect(() => {
-        if (avatarURL && !avatarUri) {
-            downloadImage(avatarURL, clientId)
+        const getImage = async () => {
+            if (isInvAvatar) {
+                setInvUri(await downloadImage(url, '', isInvAvatar))
+            } else if (!uri) {
+                downloadImage(url, clientId)
+            }
         }
-    }, [avatarURL])
+
+        if (url) {
+            getImage()
+        } else if (invUri) {
+            console.log('emptying');
+
+            setInvUri('')
+        }
+    }, [url])
 
     return (
-        <View className={`bg-blue-200 rounded-full justify-center items-center ${size === 'small' ? 'h-16 w-16' : 'h-28 w-28'}`}>
-            {avatarUri ?
-                <Image source={{ uri: avatarUri }} style={size === 'small' ? styles.smallAvatar : styles.largeAvatar} />
+        <View className={`bg-blue-200 rounded-full justify-center items-center ${size === 'small' ? 'h-[64px] w-[64px]' : size === 'xs' ? 'h-[48px] w-[48px]' : 'h-[112px] w-[112px]'}`}>
+            {uri || invUri ?
+                <Image
+                    source={{ uri: invUri ? invUri : uri }}
+                    style={size === 'small' ? styles.smallAvatar : size === 'xs' ? styles.xsAvatar : styles.largeAvatar}
+                    contentFit="cover"
+                    transition={200}
+                />
                 :
                 firstName || lastName ?
-                    <Text className="font-bold text-3xl color-blue-600">{`${firstName?.[0] || ''}${lastName?.[0] || ''}`.toUpperCase()}</Text>
+                    <Text className={`font-bold ${size === 'large' ? 'text-3xl' : 'text-xl'} color-blue-600`}>{`${firstName?.[0] || ''}${lastName?.[0] || ''}`.toUpperCase()}</Text>
                     :
                     <User />}
         </View>
@@ -35,10 +55,16 @@ export default function Avatar({ size, clientId }: Props) {
 
 const styles = StyleSheet.create(
     {
+        xsAvatar: {
+            width: 48,
+            height: 48,
+            borderRadius: 24
+        },
+
         smallAvatar: {
-            width: 56,
-            height: 56,
-            borderRadius: 28
+            width: 64,
+            height: 64,
+            borderRadius: 32
         },
 
         largeAvatar: {

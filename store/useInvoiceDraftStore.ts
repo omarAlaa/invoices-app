@@ -5,6 +5,7 @@ interface InvoiceDraftState {
     id: string,
     selectedClientId: string | null;
     clientName: string;
+    clientImageUrl: string;
     issueDate: Date;
     dueDate: Date;
     invoiceItems: NewInvoiceItem[];
@@ -14,6 +15,7 @@ interface InvoiceDraftState {
 
     setSelectedClientId: (selectedClient: string) => void;
     setClientName: (name: string) => void;
+    setClientImageUrl: (clientImageUrl: string) => void;
     setIssueDate: (issueDate: Date) => void;
     setDueDate: (dueDate: Date) => void;
     setStatus: (status: InvoiceStatus) => void;
@@ -28,6 +30,7 @@ export const useInvoiceDraftStore = create<InvoiceDraftState>((set) => ({
     id: '',
     selectedClientId: null,
     clientName: '',
+    clientImageUrl: '',
     issueDate: new Date(),
     dueDate: new Date(Date.now() + 12096e5),
     invoiceItems: [],
@@ -37,6 +40,7 @@ export const useInvoiceDraftStore = create<InvoiceDraftState>((set) => ({
 
     setSelectedClientId: (selectedClientId: string) => set({ selectedClientId }),
     setClientName: (name: string) => set({ clientName: name }),
+    setClientImageUrl: (clientImageUrl) => set({ clientImageUrl }),
     setIssueDate: (issueDate: Date) => set({ issueDate }),
     setDueDate: (dueDate: Date) => set({ dueDate }),
     setStatus: (status: InvoiceStatus) => set({ invoiceStatus: status }),
@@ -54,6 +58,7 @@ export const useInvoiceDraftStore = create<InvoiceDraftState>((set) => ({
         id: '',
         selectedClientId: null,
         clientName: '',
+        clientImageUrl: '',
         issueDate: new Date(),
         dueDate: new Date(Date.now() + 12096e5),
         invoiceItems: [],

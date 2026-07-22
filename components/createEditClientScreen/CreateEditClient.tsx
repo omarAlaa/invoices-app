@@ -45,7 +45,7 @@ export default function CreateEditClient({ type, onClose }: Props) {
                     <TextField text={`${type} client`} className="font-semibold text-xl" />
                 </View>
 
-                <AvatarController clientId={id} />
+                <AvatarController clientId={id} isNewClient={type === 'New'} />
 
                 <ClientForm type={type} />
             </View>

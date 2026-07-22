@@ -5,7 +5,7 @@ import Avatar from "../settingsScreen/Avatar";
 import TextField from "../shared/TextField";
 
 export default function GreetingsSection() {
-    const { firstName, lastName } = useAuthStore()
+    const { firstName, lastName, avatarURL, avatarUri } = useAuthStore()
     return (
         <View className="flex-row justify-between items-center">
             <View>
@@ -16,7 +16,13 @@ export default function GreetingsSection() {
 
             <Link href='/profile' asChild>
                 <TouchableOpacity>
-                    <Avatar size="small" />
+                    <Avatar
+                        size="small"
+                        firstName={firstName}
+                        lastName={lastName}
+                        url={avatarURL}
+                        uri={avatarUri}
+                    />
                 </TouchableOpacity>
             </Link>
         </View>

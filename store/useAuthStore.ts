@@ -1,29 +1,29 @@
 import { create } from 'zustand';
 
 interface AuthState {
-    userId: string | null;
-    email: string | null;
-    firstName: string | null;
-    lastName: string | null;
-    avatarURL: string | null;
-    avatarUri: string | null;
+    userId: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    avatarURL: string;
+    avatarUri: string;
     isInitialized: boolean;
-    setAuth: (userId: string | null, email: string | null) => void;
-    setInfo: (firstName: string | null, lastName: string | null, avatarURL: string | null) => void;
-    setName: (firstName: string | null, lastName: string | null) => void;
-    setAvatarURL: (avatarURL: string | null) => void;
-    setAvatarUri: (avatarURL: string | null) => void;
+    setAuth: (userId: string, email: string) => void;
+    setInfo: (firstName: string, lastName: string, avatarURL: string) => void;
+    setName: (firstName: string, lastName: string) => void;
+    setAvatarURL: (avatarURL: string) => void;
+    setAvatarUri: (avatarURL: string) => void;
     clearAuthInfo: () => void;
     setIsInitialized: (isInitialized: boolean) => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-    userId: null,
-    email: null,
-    firstName: null,
-    lastName: null,
-    avatarURL: null,
-    avatarUri: null,
+    userId: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    avatarURL: '',
+    avatarUri: '',
     isInitialized: false,
 
     setAuth: (userId, email) => set({ userId, email }),
@@ -36,7 +36,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
     setAvatarUri: (avatarUri) => { set({ avatarUri }) },
 
-    clearAuthInfo: () => set({ userId: null, email: null, firstName: null, lastName: null, avatarURL: null, avatarUri: null }),
+    clearAuthInfo: () => set({ userId: '', email: '', firstName: '', lastName: '', avatarURL: '', avatarUri: '' }),
 
     setIsInitialized: (isInitialized) => set({ isInitialized }),
 }));

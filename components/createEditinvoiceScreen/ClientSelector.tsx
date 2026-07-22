@@ -1,27 +1,33 @@
+import { useInvoiceDraftStore } from '@/store/useInvoiceDraftStore';
 import { ChevronDown } from 'lucide-react-native';
-import { Text, TouchableOpacity, useColorScheme, View } from 'react-native';
+import { TouchableOpacity, useColorScheme, View } from 'react-native';
+import Avatar from '../settingsScreen/Avatar';
 import TextField from '../shared/TextField';
 
 type Props = {
-    name?: string | null;
     onPress: () => void;
 };
 
-export function ClientSelector({ name, onPress }: Props) {
-    const systemColorScheme = useColorScheme();
+export function ClientSelector({ onPress }: Props) {
+    const systemColorScheme = useColorScheme()
+    const { clientName, clientImageUrl } = useInvoiceDraftStore()
 
     return (
         <TouchableOpacity
             onPress={onPress}
             className="flex-row justify-between items-center p-3 rounded-xl dark:border-zinc-700 bg-zinc-200 dark:bg-zinc-800"
         >
-            {name ?
+            {clientName ?
                 <View className="flex-row items-center gap-2">
-                    <View className="w-12 h-12 rounded-full bg-blue-200 justify-center items-center">
-                        <Text className="font-bold text-xl text-blue-600">{name.trim().split(/\s+/).map(word => word.charAt(0).toUpperCase()).join('')}</Text>
-                    </View>
+                    <Avatar
+                        size='xs'
+                        firstName={clientName.split(' ')[0]}
+                        lastName={clientName.split(' ')[1]}
+                        url={clientImageUrl}
+                        isInvAvatar
+                    />
 
-                    <TextField text={name} className='font-bold text-lg' />
+                    <TextField text={clientName} className='font-bold text-lg' />
                 </View>
                 :
                 <TextField text='Select a client' />

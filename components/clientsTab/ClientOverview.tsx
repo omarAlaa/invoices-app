@@ -2,7 +2,8 @@ import { ClientStats } from "@/lib/definitons";
 import { formatCurrency } from "@/lib/utils";
 import { Link } from "expo-router";
 import { ChevronRight } from "lucide-react-native";
-import { Text, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
+import Avatar from "../settingsScreen/Avatar";
 import TextField from "../shared/TextField";
 
 export default function ClientOverview({ clientStats }: { clientStats: ClientStats }) {
@@ -13,9 +14,13 @@ export default function ClientOverview({ clientStats }: { clientStats: ClientSta
         }} asChild>
             <TouchableOpacity className="flex-row justify-between items-center py-4 mt-1 border-t border-gray-300">
                 <View className="flex-row gap-2 items-center">
-                    <View className="w-12 h-12 rounded-full bg-blue-200 justify-center items-center">
-                        <Text className="font-bold text-xl text-blue-600">{`${clientStats.first_name[0]}${clientStats.last_name && clientStats.last_name[0]}`}</Text>
-                    </View>
+                    <Avatar
+                        size='xs'
+                        firstName={clientStats.first_name}
+                        lastName={clientStats.last_name}
+                        url={clientStats.image_url}
+                        isInvAvatar
+                    />
 
                     <View>
                         <TextField text={`${clientStats.first_name} ${clientStats.last_name}`} className="font-bold text-lg" />

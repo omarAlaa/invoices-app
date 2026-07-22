@@ -8,10 +8,11 @@ import SettingsButton from "./SettingsButton";
 
 type Props = {
     clientId?: string;
+    isNewClient?: boolean;
 }
 
-export default function AvatarController({ clientId }: Props) {
-    const { avatarURL } = clientId ? useClientDraftStore() : useAuthStore()
+export default function AvatarController({ clientId, isNewClient }: Props) {
+    const { firstName, lastName, avatarURL, avatarUri } = clientId ? useClientDraftStore() : !isNewClient ? useAuthStore() : { firstName: '', lastName: '', avatarURL: '', avatarUri: '' }
     const [uploading, setUploading] = useState(false)
     const [deleting, setDeleting] = useState(false)
 
@@ -64,7 +65,14 @@ export default function AvatarController({ clientId }: Props) {
 
     return (
         <View className="items-center gap-4">
-            <Avatar size='large' clientId={clientId} />
+            <Avatar
+                size='large'
+                clientId={clientId}
+                firstName={firstName}
+                lastName={lastName}
+                url={avatarURL}
+                uri={avatarUri}
+            />
 
             <View className="flex-row gap-4">
                 <SettingsButton

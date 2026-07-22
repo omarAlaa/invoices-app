@@ -1,17 +1,22 @@
 import TextField from "@/components/shared/TextField";
 import { Client } from "@/lib/definitons";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import Avatar from "../settingsScreen/Avatar";
 
 type Props = {
-    client: Client | undefined;
+    client: Client;
 }
 
 export default function ClientInfo({ client }: Props) {
     return (
         <View className="items-center">
-            <View className="w-20 h-20 rounded-full bg-blue-200 justify-center items-center">
-                <Text className="font-bold text-3xl text-blue-600">{`${client?.first_name[0]}${client?.last_name && client.last_name[0]}`}</Text>
-            </View>
+            <Avatar
+                size='large'
+                firstName={client.first_name}
+                lastName={client.last_name}
+                url={client.image_url}
+                isInvAvatar
+            />
 
             <TextField text={client?.email} type="secondary" className="text-lg" />
 

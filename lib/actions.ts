@@ -52,26 +52,33 @@ export const updateClientImage = async (id: string, imageURL: string) => {
     }
 }
 
-export const downloadImage = async (path: string, clientId?: string) => {
+export const downloadImage = async (path: string, clientId?: string, isInvAvatar?: boolean) => {
     try {
-        const { data, error } = await supabase.storage.from('avatars').download(path)
+        const { data, error } = await supabase.storage.from('avatars').createSignedUrl(path, 60 * 60)
 
         if (error) {
             throw error
         }
 
-        const fr = new FileReader()
-        fr.readAsDataURL(data)
-        fr.onload = () => {
-            if (clientId) {
-                useClientDraftStore.getState().setAvatarUri(fr.result as string)
-            } else {
-                useAuthStore.getState().setAvatarUri(fr.result as string)
-            }
+        if (isInvAvatar) {
+            console.log('invavatar');
+            return data.signedUrl;
         }
+
+        if (clientId) {
+            console.log('clientavatar');
+            useClientDraftStore.getState().setAvatarUri(data.signedUrl)
+        } else {
+            console.log('useravatar');
+            useAuthStore.getState().setAvatarUri(data.signedUrl)
+        }
+
+        return ''
     } catch (error: any) {
         console.log('Error downloading image: ', error.message)
+        return ''
     }
+
 }
 
 export const uploadImage = async (clientId?: string) => {
@@ -123,7 +130,7 @@ export const deleteImage = async (clientId?: string) => {
         useClientDraftStore.getState().setAvatarURL('')
     } else {
         await removeImageFromStorage('', useAuthStore.getState().avatarURL || '')
-        useAuthStore.getState().setAvatarURL(null)
+        useAuthStore.getState().setAvatarURL('')
     }
 }
 
@@ -144,6 +151,6 @@ const removeImageFromStorage = async (newPath: string, oldPath?: string, clientI
         await updateProfile({
             avatar_url: newPath
         })
-        useAuthStore.getState().setAvatarUri(null)
+        useAuthStore.getState().setAvatarUri('')
     }
 }

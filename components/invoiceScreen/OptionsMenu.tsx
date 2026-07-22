@@ -20,7 +20,7 @@ type Props = {
 }
 
 export default function OptionsMenu({ screen, invoice, client, items }: Props) {
-    const { setInvoice, setClientName } = useInvoiceDraftStore()
+    const { setInvoice, setClientName, setClientImageUrl } = useInvoiceDraftStore()
     const { setClient } = useClientDraftStore()
     const deleteInvoice = useDeleteInvoice()
     const deleteClient = useArchiveClient()
@@ -34,6 +34,7 @@ export default function OptionsMenu({ screen, invoice, client, items }: Props) {
                 const invItems: NewInvoiceItem[] = items.map(item => { return { id: item.id, title: item.title, quantity: item.quantity.toString(), rate: item.rate.toString() } })
                 setInvoice(invoice.id, invoice.client_id, new Date(), new Date(Date.now() + 12096e5), invItems, 'pending')
                 setClientName(`${invoice.client_first_name} ${invoice.client_last_name}`)
+                setClientImageUrl(invoice.client_image_url)
             }
 
             setShowInvoiceModal(true)

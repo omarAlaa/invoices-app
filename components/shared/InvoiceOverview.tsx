@@ -1,7 +1,8 @@
 import { InvoiceListRow } from "@/lib/definitons";
 import { formatCurrency } from "@/lib/utils";
 import { Link } from "expo-router";
-import { Text, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
+import Avatar from "../settingsScreen/Avatar";
 import Status from "./Status";
 import TextField from "./TextField";
 type Props = {
@@ -19,11 +20,13 @@ export default function InvoiceOverview({ invoiceListRow, isClientInvoice }: Pro
                 <View className="flex-row gap-2 items-center">
                     {
                         !isClientInvoice &&
-                        <View className="w-12 h-12 rounded-full bg-blue-200 justify-center items-center">
-                            <Text className="font-bold text-xl text-blue-600">
-                                {`${invoiceListRow.client_first_name[0]}${invoiceListRow.client_last_name && invoiceListRow.client_last_name[0]}`}
-                            </Text>
-                        </View>
+                        <Avatar
+                            size='xs'
+                            firstName={invoiceListRow.client_first_name}
+                            lastName={invoiceListRow.client_last_name}
+                            url={invoiceListRow.client_image_url}
+                            isInvAvatar
+                        />
                     }
 
                     <View>

@@ -2,10 +2,10 @@ export type Client = {
     id: string;
     user_id: string;
     first_name: string;
-    last_name: string | null;
+    last_name: string;
     email: string | null;
     phone: string | null;
-    image_url: string | null;
+    image_url: string;
     is_archived: boolean;
     created_at: string;
     updated_at: string;
@@ -25,7 +25,8 @@ export type ClientStats = {
     client_id: string;
     user_id: string;
     first_name: string;
-    last_name: string | null;
+    last_name: string;
+    image_url: string;
     invoice_count: number;
     total_invoiced: number;
     total_paid: number;
@@ -60,8 +61,9 @@ export type Invoice = {
 
 export type InvoiceListRow = Invoice & {
     client_first_name: string;
-    client_last_name: string | null;
-    client_email: string | undefined;
+    client_last_name: string;
+    client_email: string;
+    client_image_url: string;
 }
 
 export type InvoiceItem = {
