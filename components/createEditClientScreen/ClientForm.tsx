@@ -1,6 +1,6 @@
 import { useCreateClient, useUpdateClient } from "@/features/clients/api";
 import { useClientDraftStore } from "@/store/useClientDraftStore";
-import { useRouter } from "expo-router";
+import { useState } from "react";
 import { Alert, View } from "react-native";
 import ActionButton from "../shared/ActionButton";
 import InputField from "../shared/InputField";
@@ -8,16 +8,20 @@ import TextField from "../shared/TextField";
 
 type Props = {
     type: string | string[];
+    onClose: () => void;
 }
 
-export default function ClientForm({ type }: Props) {
+export default function ClientForm({ type, onClose }: Props) {
     const createClient = useCreateClient()
     const updateClient = useUpdateClient()
     const { id, firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone, reset } = useClientDraftStore()
-    const router = useRouter()
+    const [submitLoading, setSubmitLoading] = useState(false)
+    const submitDisabled = !firstName || !email || !phone || !email || submitLoading
 
     const handleCreateClient = async () => {
         try {
+            setSubmitLoading(true)
+
             await createClient.mutateAsync({
                 first_name: firstName,
                 last_name: lastName,
@@ -26,14 +30,19 @@ export default function ClientForm({ type }: Props) {
             })
 
             Alert.alert('Client created')
-            router.back()
+            reset()
+            onClose()
         } catch (error) {
             Alert.alert('Could not create client')
+        } finally {
+            setSubmitLoading(false)
         }
     }
 
     const handleUpdateClient = async () => {
         try {
+            setSubmitLoading(true)
+
             await updateClient.mutateAsync({
                 id,
                 first_name: firstName,
@@ -44,9 +53,11 @@ export default function ClientForm({ type }: Props) {
 
             Alert.alert('Client updated')
             reset()
-            router.back()
+            onClose()
         } catch (error) {
             Alert.alert('Could not create client')
+        } finally {
+            setSubmitLoading(false)
         }
     }
 
@@ -78,11 +89,11 @@ export default function ClientForm({ type }: Props) {
 
             {
                 type === 'New' ?
-                    <ActionButton onPress={handleCreateClient}>
+                    <ActionButton onPress={handleCreateClient} isDisabled={submitDisabled}>
                         <TextField text="Save client" type="highlighted" />
                     </ActionButton>
                     :
-                    <ActionButton onPress={handleUpdateClient}>
+                    <ActionButton onPress={handleUpdateClient} disabled={submitDisabled}>
                         <TextField text="Update client" type="highlighted" />
                     </ActionButton>
             }

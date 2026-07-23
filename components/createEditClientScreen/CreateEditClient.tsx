@@ -47,7 +47,7 @@ export default function CreateEditClient({ type, onClose }: Props) {
 
                 <AvatarController clientId={id} isNewClient={type === 'New'} />
 
-                <ClientForm type={type} />
+                <ClientForm type={type} onClose={onClose} />
             </View>
         </KeyboardAwareScrollView>
     )
