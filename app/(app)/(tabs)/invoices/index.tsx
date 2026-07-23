@@ -3,9 +3,11 @@ import StatusFilters from "@/components/invoicesScreen/StatusFilters";
 import FloatingAddButton from "@/components/shared/FloatingAddButton";
 import InvoiceOverview from "@/components/shared/InvoiceOverview";
 import OverviewSkeleton from "@/components/shared/OverviewSkeleton";
+import TextField from "@/components/shared/TextField";
 import { useInvoices } from "@/features/invoices/api";
 import { useScrollFAB } from "@/hooks/useScrollFAB";
 import { InvoiceFilter } from "@/lib/definitons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { Stack } from "expo-router";
 import { useState } from "react";
 import { RefreshControl, View } from "react-native";
@@ -50,6 +52,14 @@ export default function InvoicesScreen() {
                             ))}
                         </View>}
                     </View>
+                }
+                ListEmptyComponent={
+                    !isLoading ? <View className="items-center mt-24">
+                        <Ionicons name='receipt' color={'white'} size={40} />
+                        <TextField text="No invoices yet" />
+                    </View>
+                        :
+                        <></>
                 }
                 keyExtractor={item => item.id}
                 renderItem={({ item }) =>

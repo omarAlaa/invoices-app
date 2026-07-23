@@ -1,4 +1,5 @@
 import { useRecentInvoices } from "@/features/invoices/api";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { Link } from "expo-router";
 import { TouchableOpacity, View } from "react-native";
 import InvoiceOverview from "../shared/InvoiceOverview";
@@ -26,9 +27,16 @@ export default function RecentInvoices() {
                         <OverviewSkeleton key={index} isInvoice />
                     ))
                     :
-                    recentInvoices?.map(invoice =>
-                        <InvoiceOverview key={invoice.id} invoiceListRow={invoice} />
-                    )}
+                    recentInvoices?.length ?
+                        recentInvoices.map(invoice =>
+                            <InvoiceOverview key={invoice.id} invoiceListRow={invoice} />
+                        )
+                        :
+                        <View className="items-center mt-24">
+                            <Ionicons name='receipt' color={'white'} size={40} />
+                            <TextField text="No invoices yet" />
+                        </View>
+                }
             </View>
         </View>
     )

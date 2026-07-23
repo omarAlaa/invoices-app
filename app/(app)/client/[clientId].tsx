@@ -11,6 +11,7 @@ import { useClient } from "@/features/clients/api";
 import { useClientInvoices } from "@/features/invoices/api";
 import { useScrollFAB } from "@/hooks/useScrollFAB";
 import { useInvoiceDraftStore } from "@/store/useInvoiceDraftStore";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { RefreshControl, View } from "react-native";
 import Animated from "react-native-reanimated";
@@ -67,6 +68,14 @@ export default function ClientScreen() {
 
                             <TextField text="Invoices" className="font-bold text-lg" />
                         </View>
+                }
+                ListEmptyComponent={
+                    !isInvoicesLoading ? <View className="items-center mt-24">
+                        <Ionicons name='receipt' color={'white'} size={40} />
+                        <TextField text="No invoices yet" />
+                    </View>
+                        :
+                        <></>
                 }
                 keyExtractor={item => item.id}
                 renderItem={({ item }) =>

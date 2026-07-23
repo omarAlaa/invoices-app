@@ -10,6 +10,7 @@ import { useScrollFAB } from "@/hooks/useScrollFAB"
 import { ClientsSection, ClientStats } from "@/lib/definitons"
 import { formatCurrency, groupByLetter } from "@/lib/utils"
 import { Stack } from "expo-router"
+import { User } from "lucide-react-native"
 import { useCallback, useMemo } from "react"
 import { RefreshControl, SectionList, SectionListRenderItemInfo, View } from "react-native"
 import Animated from "react-native-reanimated"
@@ -31,7 +32,7 @@ export default function Clients() {
     );
 
     return (
-        <View className="flex-1 px-8">
+        <View className="flex-1">
             <Stack.Screen
                 options={{
                     headerTitle: () => (
@@ -52,7 +53,10 @@ export default function Clients() {
                             <ClientsHeader />
                         </View>
 
-                        {isLoading ? <SkeletonBlock className="w-72 h-5 mt-2" /> : <TextField text={`${clients?.length} clients · ${formatCurrency(dashboardSummary?.totalOutstanding)} billed all-time`} type="secondary" className="text-lg" />}
+                        {isLoading ?
+                            <SkeletonBlock className="w-72 h-5 mt-2" />
+                            :
+                            <TextField text={`${clients?.length} clients · ${formatCurrency(dashboardSummary?.totalOutstanding)} billed all-time`} type="secondary" className="text-lg" />}
 
                         {isLoading && <View className="mt-4 gap-8">
                             {Array.from({ length: 4 }).map((_, index) => (
@@ -68,13 +72,16 @@ export default function Clients() {
                 renderItem={renderItem}
                 renderSectionHeader={renderSectionHeader}
                 stickySectionHeadersEnabled
-                // ListEmptyComponent={
-                //     <View className="items-center mt-24">
-                //         <User size={40} color="#d4d4d4" />
-                //         <TextField text="No clients yet" />
-                //     </View>
-                // }
-                contentContainerStyle={{ paddingBottom: 100, flex: 1 }}
+                ListEmptyComponent={
+                    !isLoading ?
+                        <View className="items-center mt-24">
+                            <User size={40} color="#d4d4d4" />
+                            <TextField text="No clients yet" />
+                        </View>
+                        :
+                        <></>
+                }
+                contentContainerClassName="flex-1 px-8 pb-16"
                 refreshControl={
                     <RefreshControl
                         refreshing={isRefetching}

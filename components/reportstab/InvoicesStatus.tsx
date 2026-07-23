@@ -1,3 +1,4 @@
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 import TextField from "../shared/TextField";
@@ -31,25 +32,35 @@ export default function InvoicesStatus({ statusBreakdown, invsCount = 0 }: Props
         <View className="gap-2">
             <TextField text="Invoices status" className="font-bold text-lg" />
 
-            <View className="flex-row rounded-full overflow-hidden h-2.5">
-                {segments.map((seg) => (
-                    <View
-                        key={seg.label}
-                        className={seg.color}
-                        style={{ flex: seg.number }}
-                    />
-                ))}
-            </View>
-
-            <View className="flex-row justify-between gap-4">
-                {segments.map((seg) => (
-                    <View key={seg.label} className="flex-row items-center gap-1">
-                        <View className={`w-2 h-2 rounded-full ${seg.color}`} />
-
-                        <TextField text={`${seg.label} ${Math.round((seg.number / invsCount) * 100)}%`} type="secondary" />
+            {statusBreakdown?.paid ?
+                <>
+                    <View className="flex-row rounded-full overflow-hidden h-2.5">
+                        {segments.map((seg) => (
+                            <View
+                                key={seg.label}
+                                className={seg.color}
+                                style={{ flex: seg.number }}
+                            />
+                        ))}
                     </View>
-                ))}
-            </View>
+
+                    <View className="flex-row justify-between gap-4">
+                        {segments.map((seg) => (
+                            <View key={seg.label} className="flex-row items-center gap-1">
+                                <View className={`w-2 h-2 rounded-full ${seg.color}`} />
+
+                                <TextField text={`${seg.label} ${Math.round((seg.number / invsCount) * 100)}%`} type="secondary" />
+                            </View>
+
+                        ))}
+                    </View>
+                </>
+                :
+                <View className="items-center mt-4">
+                    <Ionicons name='receipt' color={'white'} size={40} />
+                    <TextField text="No invoices yet" />
+                </View>
+            }
         </View>
     )
 }
